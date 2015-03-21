@@ -11,13 +11,36 @@
 	position: absolute !important;
 	width: 250px;
 	height: 50px;
-	overflow: hidden;
+	overflow: visible;
 	border: 3px solid grey;
 	border-radius: 10px;
 }
 
+.cell .port {
+    position: absolute;
+    z-index: 8;
+    height: 15px;
+    width: 15px;
+    top: 15px;
+    cursor: pointer;
+    border-radius: 10px;
+    border: inherit;
+}
+
+.cell .port-left {
+	background: white;
+	left: -10px;
+}
+
+.cell .port-right {
+	right: -10px;
+	width:0px;
+	height:0px;
+	border-width: 10px;
+}
+
 .cell.selected {
-	border: 3px solid green;
+	border: 3px solid #118adb;
 }
 
 .cell .left{
@@ -25,6 +48,8 @@
 	width:50%;
 	height:100%;
 	background-color:white;
+	border-top-left-radius: inherit;
+	border-bottom-left-radius: inherit;
 }
 
 .cell .right{
@@ -34,13 +59,21 @@
 	border-left: 2px solid grey;
 	margin-left: -2px;
 	background-color: #DEDEDE;
+	border-top-right-radius: inherit;
+	border-bottom-right-radius: inherit;
 }
 
 .cell p {
 	text-align: center;
-	font-size: 1.5em;
+	font-size: 1.6em;
 	margin:0px;
 	height:100%;
+}
+
+.cell .left p {
+	padding: 0px 9px;
+	word-break: break-word;
+	font-size: 1.1em;
 }
 
 .clear {
