@@ -11,12 +11,14 @@ function addCell(x,y,label,value,color){
 	};
 
 	var rendered = Mustache.render(cellTemplate, data);
-	var cell = $(rendered).draggable({snap:true});
-	cell.css("top", y);
-	cell.css("left", x);
-	cell.click(onCellClick);
-	cell.dblclick(onCellDblClick);
-	cell.on('keydown',onCellKeyDown);
+	var ID = addNode();
+	var cell = $(rendered).draggable({snap:true})
+		.attr("id", ID)
+		.css("top", y)
+		.css("left", x)
+		.click(onCellClick)
+		.dblclick(onCellDblClick)
+		.on('keydown',onCellKeyDown);
 	$(".wrapper").append(cell);
 	toggleSelected(cell.get(0));
 	cell.get(0).children[0].children[0].focus();
@@ -37,6 +39,10 @@ function onCellDblClick(e){
 	}
 }
 function onCellKeyDown(e){
+	var cell = document.activeElement.parentNode.parentNode;
+	var id = cell.id;
+	setLabel(id, cell.children[0].children[0].innerHTML);
+	setValue(id, cell.children[1].children[0].innerHTML);
 	if (e.which == 13) {
 	  	e.stopPropagation();
 	    if ("activeElement" in document){
