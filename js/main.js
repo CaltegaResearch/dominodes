@@ -1,6 +1,7 @@
 var selectedCell = null;
 var selectedInput = null;
 var selectedOutput = null;
+var edges = [];
 
 var cellTemplate = $('#cell-template').html();
 Mustache.parse(cellTemplate);
@@ -32,6 +33,20 @@ function onInputClicked(element){
 	if(selectedOutput){
 		addInput(selectedInput,selectedOutput);
 		addOutput(selectedOutput,selectedInput);
+		var inOff = $("#"+selectedInput).offset();
+		var outOff = $("#"+selectedOutput).offset();
+		var outX = outOff.left+250;
+		var outY = outOff.top+25;
+		var inX = inOff.left;
+		var inY = inOff.top+25;
+		var dstr = "M"+outX+","+outY+" C"+(outX+50)+","+outY
+					+" "+(inX-50)+","+inY+" "+inX+","+inY;
+		var path = "<path id=\""+selectedOutput+selectedInput+"\" d=\""+dstr+"\" />";
+		edges.push(path);
+		var edge = document.createElementNS("http://www.w3.org/2000/svg", "path");
+		edge.setAttribute('d',dstr);
+		edge.setAttribute('id',selectedOutput+selectedInput);
+		$("#edgesSvg").append(edge);
 	}
 	selectedInput = null;
 	selectedOutput = null;
