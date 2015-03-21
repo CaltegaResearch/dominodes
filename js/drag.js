@@ -1,1 +1,3 @@
-$( ".draggable" ).draggable();
+function setDraggable(){
+    $( ".draggable" ).draggable();
+}
