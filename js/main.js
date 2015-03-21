@@ -11,7 +11,7 @@ function addCell(x,y,label,value,color){
 	};
 
 	var rendered = Mustache.render(cellTemplate, data);
-	var cell = $(rendered).draggable();
+	var cell = $(rendered).draggable({snap:true});
 	cell.css("top", y);
 	cell.css("left", x);
 	cell.click(onCellClick);
