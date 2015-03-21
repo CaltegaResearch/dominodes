@@ -1,0 +1,45 @@
+.wrapper {
+	position:absolute;
+	top:0;
+	left:0;
+	right:0;
+	bottom:0;
+	overflow: hidden;
+}
+
+.cell {
+	position: absolute;
+	top: 129px;
+	left: 256px;
+	width: 299.667px;
+	height: 59.6667px;
+	overflow: hidden;
+	border: 3px solid green;
+	border-radius: 10px;
+	right: auto; bottom: auto;
+}
+
+.cell .left{
+	float:left;
+	width:50%;
+	height:100%;
+	background-color:white;
+}
+
+.cell .right{
+	float:right;
+	width:50%;
+	height:100%;
+	border-left: 2px solid grey;
+	margin-left: -2px;
+	background-color: #DEDEDE;
+}
+
+.cell p {
+	text-align: center;
+	font-size: 2em;
+}
+
+.clear {
+	clear: both;
+}
