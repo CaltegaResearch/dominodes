@@ -1,4 +1,6 @@
 var selectedCell = null;
+var selectedInput = null;
+var selectedOutput = null;
 
 var cellTemplate = $('#cell-template').html();
 Mustache.parse(cellTemplate);
@@ -22,6 +24,22 @@ function addCell(x,y,label,value,color){
 	$(".wrapper").append(cell);
 	toggleSelected(cell.get(0));
 	cell.get(0).children[0].children[0].focus();
+}
+
+function onInputClicked(element){
+	console.log(element);
+	selectedInput = element.parentNode.id;
+	if(selectedOutput){
+		addInput(selectedInput,selectedOutput);
+		addOutput(selectedOutput,selectedInput);
+	}
+	selectedInput = null;
+	selectedOutput = null;
+}
+function onOutputClicked(element){
+	console.log(element);
+	selectedInput = null;
+	selectedOutput = element.parentNode.id;
 }
 
 function onCellClick(e){
