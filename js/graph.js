@@ -20,6 +20,21 @@ function addNode(){
 	uniqueNum += 1;
 	return id;
 }
+function removeNode(id){
+	var n = nodes[id];
+	for(var i=0; i<n.inputs.length; i++){
+		nodes[n.inputs[i]].outputs.splice(nodes[n.inputs[i]].outputs.indexOf(id),1);
+		$("#"+n.inputs[i]+id).remove();
+		delete edges[n.inputs[i] + id];
+	}
+	for(var i=0; i<n.outputs.length; i++){
+		nodes[n.outputs[i]].inputs.splice(nodes[n.outputs[i]].inputs.indexOf(id),1);
+		$("#"+id+n.outputs[i]).remove();
+		delete edges[id+n.outputs[i]];
+	}
+	delete nodes.id;
+	$("#"+id).remove();
+}
 
 function setLabel(id, label){
 	nodes[id].label = label;
@@ -48,6 +63,7 @@ function setColor(id, color){
 function setComment(id, comment){
 	nodes[id].comment = comment;
 }
+<<<<<<< HEAD
 
 function evalFormula(id){
 	var replace = nodes[id].formula;
@@ -85,3 +101,5 @@ function evalGraph(){
 		traverse(notYet[0]);
 	}
 }
+=======
+>>>>>>> origin/master

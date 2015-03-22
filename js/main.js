@@ -1,7 +1,7 @@
 var selectedCell = null;
 var selectedInput = null;
 var selectedOutput = null;
-var edges = [];
+var edges = {};
 
 var cellTemplate = $('#cell-template').html();
 Mustache.parse(cellTemplate);
@@ -27,8 +27,26 @@ function addCell(x,y,label,value,color){
 	cell.get(0).children[0].children[0].focus();
 }
 
+function setColor(color){
+	if(selectedCell){
+		clearColor();
+		selectedCell.classList.add(color);
+	}
+}
+
+function clearColor(){
+	if(selectedCell){
+		selectedCell.classList.remove('blue');
+		selectedCell.classList.remove('teal');
+		selectedCell.classList.remove('green');
+		selectedCell.classList.remove('yellow');
+		selectedCell.classList.remove('orange');
+		selectedCell.classList.remove('red');
+		selectedCell.classList.remove('pink');
+	}
+}
+
 function onInputClicked(element){
-	console.log(element);
 	selectedInput = element.parentNode.id;
 	if(selectedOutput){
 		addInput(selectedInput,selectedOutput);
@@ -39,10 +57,11 @@ function onInputClicked(element){
 		var outY = outOff.top+25;
 		var inX = inOff.left;
 		var inY = inOff.top+25;
-		var dstr = "M"+outX+","+outY+" C"+(outX+50)+","+outY
-					+" "+(inX-50)+","+inY+" "+inX+","+inY;
+		var diff= (inX-outX)/2;
+		var dstr = "M"+outX+","+outY+" C"+(outX+diff)+","+outY
+					+" "+(inX-diff)+","+inY+" "+inX+","+inY;
 		var path = "<path id=\""+selectedOutput+selectedInput+"\" d=\""+dstr+"\" />";
-		edges.push(path);
+		edges[selectedOutput+selectedInput] = path;
 		var edge = document.createElementNS("http://www.w3.org/2000/svg", "path");
 		edge.setAttribute('d',dstr);
 		edge.setAttribute('id',selectedOutput+selectedInput);
@@ -52,14 +71,17 @@ function onInputClicked(element){
 	selectedOutput = null;
 }
 function onOutputClicked(element){
-	console.log(element);
 	selectedInput = null;
 	selectedOutput = element.parentNode.id;
 }
 
 function onCellClick(e){
-	e.stopPropagation();
-	toggleSelected(e.currentTarget);
+	if(selectedCell == e.currentTarget){
+		onCellDblClick(e);
+	}else{
+		e.stopPropagation();
+		toggleSelected(e.currentTarget);
+	}
 }
 function onCellDblClick(e){
 	e.stopPropagation();
@@ -78,17 +100,22 @@ function onCellKeyDown(e){
 	setValue(id, cell.children[1].children[0].innerHTML);
 	if (e.which == 13) {
 	  	e.stopPropagation();
-	    if ("activeElement" in document){
-    		document.activeElement.blur();
-	    }
+		clearFocus();
 		clearSelected();
 		return false;
+	}
+}
+
+function clearFocus(){
+	if ("activeElement" in document){
+		document.activeElement.blur();
 	}
 }
 
 function toggleSelected(cell){
 	var tmp = selectedCell;
 	clearSelected();
+	clearFocus();
 	cell.classList.add("selected");
 	selectedCell = cell;
 }
@@ -99,6 +126,12 @@ function clearSelected(){
 	selectedCell = null;
 }
 
+$("#trash").droppable({
+	hoverClass: "not-transparent",
+    drop: function( event, ui ) {
+    	removeNode(ui.draggable.get(0).id);
+    }
+});
 $(".wrapper").dblclick(function(e){
 	addCell(e.pageX - 150,e.pageY - 30);
 });

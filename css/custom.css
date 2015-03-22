@@ -12,6 +12,79 @@ body {
 	height:100%;
 }
 
+.colorBar {
+    position: absolute;
+    bottom:0;
+    left:0;
+    right: 200px;
+    margin-bottom: 30px;
+}
+
+.colorBar .color{
+	height: 50px;
+    margin-right: 15px;
+    width: 50px;
+    float:right;
+    cursor:pointer;
+}
+
+.color{
+	transition: background-color 0.8s ease;
+	    -webkit-transition: background-color 500ms ease-out 1s;
+}
+
+.color:hover:before{
+	content: "";
+	display: block;
+	width:50px;
+	height:50px;
+	background: rgba(0,0,0, 0.1);
+}
+
+.color.blue{ background-color: rgb(172, 172, 231); }
+.color.teal{ background-color: rgb(89, 222, 239); }
+.color.green{ background-color: rgb(88, 232, 167); }
+.color.yellow{ background-color: rgb(214, 242, 130); }
+.color.orange{ background-color: rgb(247, 209, 111); }
+.color.red{ background-color: rgb(250, 161, 135); }
+.color.pink{ background-color: rgb(247, 158, 212); }
+
+.cell.blue .left { background: rgba(172, 172, 231, 0.2); }
+.cell.teal .left { background: rgba(89, 222, 239, 0.2); }
+.cell.green .left { background: rgba(88, 232, 167, 0.2); }
+.cell.yellow .left { background: rgba(214, 242, 130, 0.2); }
+.cell.orange .left { background: rgba(247, 209, 111, 0.2); }
+.cell.red .left { background: rgba(250, 161, 135, 0.2); }
+.cell.pink .left { background: rgba(247, 158, 212, 0.2); }
+
+.cell.blue .right { background: rgb(172, 172, 231); }
+.cell.teal .right { background: rgb(89, 222, 239); }
+.cell.green .right { background: rgb(88, 232, 167); }
+.cell.yellow .right { background: rgb(214, 242, 130); }
+.cell.orange .right { background: rgb(247, 209, 111); }
+.cell.red .right { background: rgb(250, 161, 135); }
+.cell.pink .right { background: rgb(247, 158, 212); }
+
+.not-transparent {
+	opacity: 0.8 !important;
+}
+
+#trash {
+	background-image: url("../trash.png");
+	width:128px;
+	height:128px;
+	margin:30px;
+	position:absolute;
+	bottom:0;
+	right:0;
+	background-size: cover;
+	opacity: 0.5;
+
+}
+#trash:hover{
+	opacity: 0.8;
+}
+
 path {
 	stroke-width: 2px;
 	stroke: grey;
@@ -33,8 +106,13 @@ path {
 	width: 250px;
 	height: 50px;
 	overflow: visible;
-	border: 3px solid grey;
+	border: 3px solid #888;
 	border-radius: 10px;
+	z-index: 10;
+}
+
+.cell:hover{
+	border-color:#666;
 }
 
 .cell .port {
@@ -69,8 +147,8 @@ path {
 	width:50%;
 	height:100%;
 	background-color:white;
-	border-top-left-radius: inherit;
-	border-bottom-left-radius: inherit;
+	border-top-left-radius: 6px;
+	border-bottom-left-radius: 6px;
 }
 
 .cell .right{
@@ -80,8 +158,8 @@ path {
 	border-left: 2px solid grey;
 	margin-left: -2px;
 	background-color: #DEDEDE;
-	border-top-right-radius: inherit;
-	border-bottom-right-radius: inherit;
+	border-top-right-radius: 6px;
+	border-bottom-right-radius: 6px;
 }
 
 .cell p {
