@@ -55,7 +55,7 @@ function setSelectedColor(color){
 	if(selectedCell){
 		clearSelectedColor();
 		selectedCell.classList.add(color);
-		setColor(selectedCell,color);
+		setColor(selectedCell.id,color);
 	}
 }
 
