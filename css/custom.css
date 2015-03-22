@@ -164,6 +164,7 @@ path {
 	border-top-right-radius: 6px;
 	border-bottom-right-radius: 6px;
 	overflow:hidden;
+	white-space: nowrap;
 }
 
 .cell p {
