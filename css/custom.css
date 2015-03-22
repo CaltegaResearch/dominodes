@@ -12,6 +12,21 @@ body {
 	height:100%;
 }
 
+.transparent-half {
+	opacity: 0.8;
+}
+
+#trash {
+	background-image: url("../trash.png");
+	width:128px;
+	height:128px;
+	margin:30px;
+	position:absolute;
+	bottom:0;
+	right:0;
+	background-size: cover;
+}
+
 path {
 	stroke-width: 2px;
 	stroke: grey;

@@ -28,7 +28,6 @@ function addCell(x,y,label,value,color){
 }
 
 function onInputClicked(element){
-	console.log(element);
 	selectedInput = element.parentNode.id;
 	if(selectedOutput){
 		addInput(selectedInput,selectedOutput);
@@ -53,7 +52,6 @@ function onInputClicked(element){
 	selectedOutput = null;
 }
 function onOutputClicked(element){
-	console.log(element);
 	selectedInput = null;
 	selectedOutput = element.parentNode.id;
 }
@@ -100,6 +98,12 @@ function clearSelected(){
 	selectedCell = null;
 }
 
+$("#trash").droppable({
+	hoverClass: "transparent-half",
+    drop: function( event, ui ) {
+    	removeNode(ui.draggable.get(0).id);
+    }
+});
 $(".wrapper").dblclick(function(e){
 	addCell(e.pageX - 150,e.pageY - 30);
 });
