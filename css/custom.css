@@ -109,6 +109,7 @@ path {
 	border: 3px solid #888;
 	border-radius: 10px;
 	z-index: 10;
+	cursor:move;
 }
 
 .cell:hover{
@@ -140,6 +141,7 @@ path {
 
 .cell.selected {
 	border: 3px solid #118adb;
+	cursor: text;
 }
 
 .cell .left{
@@ -149,6 +151,7 @@ path {
 	background-color:white;
 	border-top-left-radius: 6px;
 	border-bottom-left-radius: 6px;
+	overflow:hidden;
 }
 
 .cell .right{
@@ -160,6 +163,7 @@ path {
 	background-color: #DEDEDE;
 	border-top-right-radius: 6px;
 	border-bottom-right-radius: 6px;
+	overflow:hidden;
 }
 
 .cell p {
