@@ -76,8 +76,12 @@ function onOutputClicked(element){
 }
 
 function onCellClick(e){
-	e.stopPropagation();
-	toggleSelected(e.currentTarget);
+	if(selectedCell == e.currentTarget){
+		onCellDblClick(e);
+	}else{
+		e.stopPropagation();
+		toggleSelected(e.currentTarget);
+	}
 }
 function onCellDblClick(e){
 	e.stopPropagation();
@@ -96,17 +100,22 @@ function onCellKeyDown(e){
 	setValue(id, cell.children[1].children[0].innerHTML);
 	if (e.which == 13) {
 	  	e.stopPropagation();
-	    if ("activeElement" in document){
-    		document.activeElement.blur();
-	    }
+		clearFocus();
 		clearSelected();
 		return false;
+	}
+}
+
+function clearFocus(){
+	if ("activeElement" in document){
+		document.activeElement.blur();
 	}
 }
 
 function toggleSelected(cell){
 	var tmp = selectedCell;
 	clearSelected();
+	clearFocus();
 	cell.classList.add("selected");
 	selectedCell = cell;
 }
