@@ -92,6 +92,7 @@ function onCellDblClick(e){
 		e.currentTarget.children[0].children[0].focus();
 	}else{
 		e.currentTarget.children[1].children[0].focus();
+		e.currentTarget.children[1].children[0].innerHTML = nodes[selectedCell.id].formula;
 	}
 }
 function onCellKeyDown(e){
@@ -125,6 +126,7 @@ function toggleSelected(cell){
 function clearSelected(){
 	if(selectedCell){
 		selectedCell.classList.remove("selected");
+		refreshGraph();
 	}
 	selectedCell = null;
 }
