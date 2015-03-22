@@ -86,11 +86,11 @@ function clearSelectedColor(){
 
 function onInputClicked(element){
 	selectedInput = element.parentNode.id;
-	if(selectedInput in nodes[selectedOutput].outputs){
+	if(nodes[selectedOutput].outputs.indexOf(selectedInput) !== -1){
 		nodes[selectedInput].inputs.splice(nodes[selectedInput].inputs.indexOf(selectedOutput),1);
 		nodes[selectedOutput].outputs.splice(nodes[selectedOutput].outputs.indexOf(selectedInput),1);
 		$("#"+selectedOutput+selectedInput).remove();
-		delete edges[selectedOutput+selectedInput];s
+		delete edges[selectedOutput+selectedInput];
 	}
 	else if(selectedOutput!==selectedInput){
 		addInput(selectedInput,selectedOutput);
