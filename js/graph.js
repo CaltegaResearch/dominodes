@@ -1,5 +1,3 @@
-var math = require('mathjs');
-
 var uniqueNum = 0;
 
 var nodes = {};
