@@ -27,6 +27,25 @@ function addCell(x,y,label,value,color){
 	cell.get(0).children[0].children[0].focus();
 }
 
+function setColor(color){
+	if(selectedCell){
+		clearColor();
+		selectedCell.classList.add(color);
+	}
+}
+
+function clearColor(){
+	if(selectedCell){
+		selectedCell.classList.remove('blue');
+		selectedCell.classList.remove('teal');
+		selectedCell.classList.remove('green');
+		selectedCell.classList.remove('yellow');
+		selectedCell.classList.remove('orange');
+		selectedCell.classList.remove('red');
+		selectedCell.classList.remove('pink');
+	}
+}
+
 function onInputClicked(element){
 	selectedInput = element.parentNode.id;
 	if(selectedOutput){
@@ -99,7 +118,7 @@ function clearSelected(){
 }
 
 $("#trash").droppable({
-	hoverClass: "transparent-half",
+	hoverClass: "not-transparent",
     drop: function( event, ui ) {
     	removeNode(ui.draggable.get(0).id);
     }
