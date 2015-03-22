@@ -11,7 +11,7 @@ function addNode(){
 		inputs: [],
 		outputs: [],
 		formula: "",
-		color: "white",
+		color: "grey",
 		comment: ""
 	};
 
@@ -34,6 +34,13 @@ function removeNode(id){
 	}
 	delete nodes.id;
 	$("#"+id).remove();
+}
+
+function refreshGraph(){
+	evalGraph();
+	Object.keys(nodes).forEach(function(key){
+		$("#"+key+" .right p").html(nodes[key].value);
+	});
 }
 
 function setLabel(id, label){
@@ -63,15 +70,14 @@ function setColor(id, color){
 function setComment(id, comment){
 	nodes[id].comment = comment;
 }
-<<<<<<< HEAD
 
 function evalFormula(id){
-	var replace = nodes[id].formula;
+	var replaced = nodes[id].formula;
 
 	nodes[id].inputs.forEach(function(cell){
-		if(cell.value === '-') return '-';
-		var re = new RegExp(' '+cell.value+' ', "gi");
-		replaced = replaced.replace(re, cell.value);
+		if(nodes[cell].value === '-') return '-';
+		var re = new RegExp(nodes[cell].label, "gi");
+		replaced = replaced.replace(re, nodes[cell].value);
 	});
 
 	try{
@@ -101,5 +107,3 @@ function evalGraph(){
 		traverse(notYet[0]);
 	}
 }
-=======
->>>>>>> origin/master

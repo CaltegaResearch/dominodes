@@ -27,14 +27,15 @@ function addCell(x,y,label,value,color){
 	cell.get(0).children[0].children[0].focus();
 }
 
-function setColor(color){
+function setSelectedColor(color){
 	if(selectedCell){
-		clearColor();
+		clearSelectedColor();
 		selectedCell.classList.add(color);
+		setColor(selectedCell,color);
 	}
 }
 
-function clearColor(){
+function clearSelectedColor(){
 	if(selectedCell){
 		selectedCell.classList.remove('blue');
 		selectedCell.classList.remove('teal');
@@ -98,6 +99,7 @@ function onCellKeyDown(e){
 	var id = cell.id;
 	setLabel(id, cell.children[0].children[0].innerHTML);
 	setValue(id, cell.children[1].children[0].innerHTML);
+	setFormula(id, cell.children[1].children[0].innerHTML);
 	if (e.which == 13) {
 	  	e.stopPropagation();
 		clearFocus();
@@ -109,6 +111,7 @@ function onCellKeyDown(e){
 function clearFocus(){
 	if ("activeElement" in document){
 		document.activeElement.blur();
+		refreshGraph();
 	}
 }
 
