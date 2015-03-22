@@ -86,7 +86,13 @@ function clearSelectedColor(){
 
 function onInputClicked(element){
 	selectedInput = element.parentNode.id;
-	if(selectedOutput){
+	if(selectedInput in nodes[selectedOutput].outputs){
+		nodes[selectedInput].inputs.splice(nodes[selectedInput].inputs.indexOf(selectedOutput),1);
+		nodes[selectedOutput].outputs.splice(nodes[selectedOutput].outputs.indexOf(selectedInput),1);
+		$("#"+selectedOutput+selectedInput).remove();
+		delete edges[selectedOutput+selectedInput];s
+	}
+	else if(selectedOutput!==selectedInput){
 		addInput(selectedInput,selectedOutput);
 		addOutput(selectedOutput,selectedInput);
 		var inOff = $("#"+selectedInput).offset();
@@ -96,8 +102,7 @@ function onInputClicked(element){
 		var inX = inOff.left;
 		var inY = inOff.top+25;
 		var diff= (inX-outX)/2;
-		var dstr = "M"+outX+","+outY+" C"+(outX+diff)+","+outY
-					+" "+(inX-diff)+","+inY+" "+inX+","+inY;
+		var dstr = "M"+outX+","+outY+" C"+(outX+diff)+","+outY+" "+(inX-diff)+","+inY+" "+inX+","+inY;
 		var path = "<path id=\""+selectedOutput+selectedInput+"\" d=\""+dstr+"\" />";
 		edges[selectedOutput+selectedInput] = path;
 		var edge = document.createElementNS("http://www.w3.org/2000/svg", "path");
