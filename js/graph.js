@@ -46,6 +46,7 @@ function setLabel(id, label){
 }
 function setValue(id, value){
 	nodes[id].value = value;
+	$("#"+id+" .right p").html(nodes[id].value);
 }
 function addInput(id, id2){
 	nodes[id].inputs.push(id2);

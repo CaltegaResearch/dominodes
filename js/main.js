@@ -22,10 +22,23 @@ function addCell(x,y,label,value,color){
 		.css("left", x)
 		.click(onCellClick)
 		.dblclick(onCellDblClick)
-		.on('keydown',onCellKeyDown);
+		.on('keydown',onCellKeyDown)
+		.focusout(onCellFocusOut)
+		.focusin(onCellFocusIn);
 	$(".wrapper").append(cell);
 	toggleSelected(cell.get(0));
 	cell.get(0).children[0].children[0].focus();
+}
+function onCellFocusIn(e){
+	e.currentTarget.children[1].children[0].innerHTML = nodes[selectedCell.id].formula;
+}
+
+function onCellFocusOut(e){
+	var cell = e.currentTarget;
+	var id = cell.id;
+	setLabel(id, cell.children[0].children[0].innerHTML);
+	setFormula(id, cell.children[1].children[0].innerHTML);
+	setValue(id, cell.children[1].children[0].innerHTML);
 }
 
 function onCellDragged(event, ui){
@@ -120,11 +133,6 @@ function onCellDblClick(e){
 	}
 }
 function onCellKeyDown(e){
-	var cell = document.activeElement.parentNode.parentNode;
-	var id = cell.id;
-	setLabel(id, cell.children[0].children[0].innerHTML);
-	setValue(id, cell.children[1].children[0].innerHTML);
-	setFormula(id, cell.children[1].children[0].innerHTML);
 	if (e.which == 13) {
 	  	e.stopPropagation();
 		clearFocus();
