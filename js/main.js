@@ -39,8 +39,9 @@ function onInputClicked(element){
 		var outY = outOff.top+25;
 		var inX = inOff.left;
 		var inY = inOff.top+25;
-		var dstr = "M"+outX+","+outY+" C"+(outX+50)+","+outY
-					+" "+(inX-50)+","+inY+" "+inX+","+inY;
+		var diff= (inX-outX)/2;
+		var dstr = "M"+outX+","+outY+" C"+(outX+diff)+","+outY
+					+" "+(inX-diff)+","+inY+" "+inX+","+inY;
 		var path = "<path id=\""+selectedOutput+selectedInput+"\" d=\""+dstr+"\" />";
 		edges.push(path);
 		var edge = document.createElementNS("http://www.w3.org/2000/svg", "path");
