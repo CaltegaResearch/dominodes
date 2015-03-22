@@ -106,9 +106,13 @@ path {
 	width: 250px;
 	height: 50px;
 	overflow: visible;
-	border: 3px solid grey;
+	border: 3px solid #888;
 	border-radius: 10px;
 	z-index: 10;
+}
+
+.cell:hover{
+	border-color:#666;
 }
 
 .cell .port {
