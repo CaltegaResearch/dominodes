@@ -94,8 +94,8 @@ function evalGraph(){
 	notYet = Object.keys(nodes);
 	function traverse(cell){
 		nodes[cell].inputs.forEach(function(next){
-			if (visited.indexOf(next) !== -1){
-				return traverse(next);
+			if (visited.indexOf(next) == -1){
+				traverse(next);
 			}
 		});
 
