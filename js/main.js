@@ -19,10 +19,9 @@ function addCell(x,y,label,value,color){
 		.attr("id", ID)
 		.css("top", y)
 		.css("left", x)
-		.click(onCellClick)
-		.on('keydown',onCellKeyDown);
+		.click(onCellClick);
 	$(".wrapper").append(cell);
-	toggleSelected(cell.get(0));
+	selectCell(cell.get(0));
 	cell.get(0).children[0].children[0].focus();
 }
 
@@ -98,24 +97,13 @@ function onOutputClicked(element){
 }
 
 function onCellClick(e){
-	if(selectedCell == e.currentTarget){
-		onCellDblClick(e);
-	}else{
-		e.stopPropagation();
-		toggleSelected(e.currentTarget);
+	if(selectedCell != e.currentTarget){
+		selectCell(e.currentTarget);
 	}
+	e.stopPropagation();
 }
 
-function onCellKeyDown(e){
-	if (e.which == 13) {
-	  	e.stopPropagation();
-		clearFocus();
-		clearSelected();
-		return false;
-	}
-}
-
-function onCellSelected(cell){
+function selectCell(cell){
 	if(selectedCell){
 		selectedCell.classList.remove("selected");
 	}
@@ -124,14 +112,12 @@ function onCellSelected(cell){
 	loadSideBar(selectedCell.id);
 }
 
-function onCellUnSelected(){
-
-}
-
-function clearFocus(){
-	if ("activeElement" in document){
-		document.activeElement.blur();
+function unselectCell(){
+	if(selectedCell){
+		selectedCell.classList.remove("selected");
 	}
+	selectedCell = null;
+	clearSideBar();
 }
 
 function loadSideBar(id){
@@ -149,12 +135,11 @@ function loadSideBar(id){
 	}
 }
 
-function clearSelected(){
-	if(selectedCell){
-		selectedCell.classList.remove("selected");
-		refreshGraph();
-	}
-	selectedCell = null;
+function clearSideBar(){
+	$("#label").html("");
+	$("#formulaInput").html("");
+	$("#formulaInput").attr("contentEditable","false");
+	$("#inputsList").html("");
 }
 
 $("#trash").droppable({
@@ -167,12 +152,12 @@ $(".wrapper").dblclick(function(e){
 	addCell(e.pageX - 150,e.pageY - 30);
 });
 $(".wrapper").click(function(e){
-	clearSelected();
+	unselectCell();
 })
 $(document).keypress(function(e) {
 	if(e.which == 13) {
  	 	e.stopPropagation();
  		window.blur();
-	    clearSelected();
+	    unselectCell();
  	}
 });
