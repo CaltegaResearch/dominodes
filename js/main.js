@@ -141,6 +141,14 @@ function onCellKeyDown(e){
 	}
 }
 
+function onCellSelected(){
+	loadSideBar(selectedCell.id);
+}
+
+function onCellUnSelected(){
+
+}
+
 function clearFocus(){
 	if ("activeElement" in document){
 		document.activeElement.blur();
@@ -154,7 +162,7 @@ function toggleSelected(cell){
 	clearFocus();
 	cell.classList.add("selected");
 	selectedCell = cell;
-	loadSideBar(selectedCell.id);
+	onCellSelected();
 }
 
 function loadSideBar(id){
@@ -163,6 +171,7 @@ function loadSideBar(id){
 	var inputs = nodes[id].inputs;
 	$("#label").html(label);
 	$("#formulaInput").html(formula);
+	$("#formulaInput").attr("contentEditable","true");
 	$("#inputsList").html("");
 	for(var i=0; i<inputs.length; i++){
 		$("#inputsList").append(
