@@ -154,7 +154,23 @@ function toggleSelected(cell){
 	clearFocus();
 	cell.classList.add("selected");
 	selectedCell = cell;
+	loadSideBar(selectedCell.id);
 }
+
+function loadSideBar(id){
+	var label = nodes[id].label;
+	var formula = nodes[id].formula;
+	var inputs = nodes[id].inputs;
+	$("#label").html(label);
+	$("#formulaInput").html(formula);
+	$("#inputsList").html("");
+	for(var i=0; i<inputs.length; i++){
+		$("#inputsList").append(
+			"<li>"+nodes[inputs[i]].label+"</li>"
+		);
+	}
+}
+
 function clearSelected(){
 	if(selectedCell){
 		selectedCell.classList.remove("selected");
@@ -176,9 +192,9 @@ $(".wrapper").click(function(e){
 	clearSelected();
 })
 $(document).keypress(function(e) {
-  if(e.which == 13) {
-  	e.stopPropagation();
-    window.blur();
-    clearSelected();
-  }
+	if(e.which == 13) {
+ 	 	e.stopPropagation();
+ 		window.blur();
+	    clearSelected();
+ 	}
 });
