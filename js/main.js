@@ -1,7 +1,6 @@
 var selectedCell = null;
 var selectedInput = null;
 var selectedOutput = null;
-var edges = {};
 
 var cellTemplate = $('#cell-template').html();
 Mustache.parse(cellTemplate);
@@ -25,18 +24,6 @@ function addCell(x,y,label,value,color){
 	$(".wrapper").append(cell);
 	toggleSelected(cell.get(0));
 	cell.get(0).children[0].children[0].focus();
-}
-
-function onCellFocusIn(e){
-	e.currentTarget.children[1].children[0].innerHTML = nodes[selectedCell.id].formula;
-}
-
-function onCellFocusOut(e){
-	var cell = e.currentTarget;
-	var id = cell.id;
-	setLabel(id, cell.children[0].children[0].innerHTML);
-	setFormula(id, cell.children[1].children[0].innerHTML);
-	setValue(id, cell.children[1].children[0].innerHTML);
 }
 
 function onCellDragged(event, ui){
@@ -97,7 +84,6 @@ function onInputClicked(element){
 		var dstr = "M"+outX+","+outY+" C"+(outX+diff)+","+outY
 					+" "+(inX-diff)+","+inY+" "+inX+","+inY;
 		var path = "<path id=\""+selectedOutput+selectedInput+"\" d=\""+dstr+"\" />";
-		edges[selectedOutput+selectedInput] = path;
 		var edge = document.createElementNS("http://www.w3.org/2000/svg", "path");
 		edge.setAttribute('d',dstr);
 		edge.setAttribute('id',selectedOutput+selectedInput);

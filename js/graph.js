@@ -23,12 +23,10 @@ function removeNode(id){
 	for(var i=0; i<n.inputs.length; i++){
 		nodes[n.inputs[i]].outputs.splice(nodes[n.inputs[i]].outputs.indexOf(id),1);
 		$("#"+n.inputs[i]+id).remove();
-		delete edges[n.inputs[i] + id];
 	}
 	for(var i=0; i<n.outputs.length; i++){
 		nodes[n.outputs[i]].inputs.splice(nodes[n.outputs[i]].inputs.indexOf(id),1);
 		$("#"+id+n.outputs[i]).remove();
-		delete edges[id+n.outputs[i]];
 	}
 	delete nodes.id;
 	$("#"+id).remove();
@@ -47,7 +45,6 @@ function setLabel(id, label){
 }
 function setValue(id, value){
 	nodes[id].value = value;
-	$("#"+id+" .right p").html(nodes[id].value);
 	refreshGraph();
 }
 function addInput(id, id2){
@@ -96,7 +93,6 @@ function evalGraph(){
 	visited = [];
 	notYet = Object.keys(nodes);
 	function traverse(cell){
-
 		nodes[cell].inputs.forEach(function(next){
 			if (visited.indexOf(next) !== -1){
 				return traverse(next);
