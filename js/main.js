@@ -21,14 +21,12 @@ function addCell(x,y,label,value,color){
 		.css("top", y)
 		.css("left", x)
 		.click(onCellClick)
-		.dblclick(onCellDblClick)
-		.on('keydown',onCellKeyDown)
-		.focusout(onCellFocusOut)
-		.focusin(onCellFocusIn);
+		.on('keydown',onCellKeyDown);
 	$(".wrapper").append(cell);
 	toggleSelected(cell.get(0));
 	cell.get(0).children[0].children[0].focus();
 }
+
 function onCellFocusIn(e){
 	e.currentTarget.children[1].children[0].innerHTML = nodes[selectedCell.id].formula;
 }
@@ -121,17 +119,7 @@ function onCellClick(e){
 		toggleSelected(e.currentTarget);
 	}
 }
-function onCellDblClick(e){
-	e.stopPropagation();
-	var pointX = e.pageX - e.currentTarget.style.left.split("px")[0];
-	var pointY = e.pageY - e.currentTarget.style.top.split("px")[0];
-	if(pointX < 150){
-		e.currentTarget.children[0].children[0].focus();
-	}else{
-		e.currentTarget.children[1].children[0].focus();
-		e.currentTarget.children[1].children[0].innerHTML = nodes[selectedCell.id].formula;
-	}
-}
+
 function onCellKeyDown(e){
 	if (e.which == 13) {
 	  	e.stopPropagation();
@@ -141,7 +129,12 @@ function onCellKeyDown(e){
 	}
 }
 
-function onCellSelected(){
+function onCellSelected(cell){
+	if(selectedCell){
+		selectedCell.classList.remove("selected");
+	}
+	cell.classList.add("selected");
+	selectedCell = cell;
 	loadSideBar(selectedCell.id);
 }
 
@@ -152,17 +145,7 @@ function onCellUnSelected(){
 function clearFocus(){
 	if ("activeElement" in document){
 		document.activeElement.blur();
-		refreshGraph();
 	}
-}
-
-function toggleSelected(cell){
-	var tmp = selectedCell;
-	clearSelected();
-	clearFocus();
-	cell.classList.add("selected");
-	selectedCell = cell;
-	onCellSelected();
 }
 
 function loadSideBar(id){

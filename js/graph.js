@@ -43,10 +43,12 @@ function refreshGraph(){
 
 function setLabel(id, label){
 	nodes[id].label = label;
+	refreshGraph();
 }
 function setValue(id, value){
 	nodes[id].value = value;
 	$("#"+id+" .right p").html(nodes[id].value);
+	refreshGraph();
 }
 function addInput(id, id2){
 	nodes[id].inputs.push(id2);
@@ -56,12 +58,15 @@ function addOutput(id, id2){
 }
 function removeInput(id, id2){
 	nodes[id].inputs.splice(nodes[id].inputs.indexOf(id2),1);
+	refreshGraph();
 }
 function removeOutput(id, id2){
 	nodes[id].outputs.splice(nodes[id].outputs.indexOf(id2),1);
+	refreshGraph();
 }
 function setFormula(id, formula){
 	nodes[id].formula = formula;
+	refreshGraph();
 }
 function setColor(id, color){
 	nodes[id].color = color;
