@@ -116,6 +116,27 @@ path {
 }
 #formulaInput {
 	border-bottom: 1px solid black;
+	min-height:28px;
+	background: rgba(1,1,1,0.1);
+	border-radius: 8px;
+	line-height: 25px;
+	font-size: 25px;
+	padding: 6px 50px;
+}
+
+#inputsList {
+	list-style: none;
+}
+#inputsList li {
+	margin-right: 10px;
+	padding: 5px;
+	border: 3px solid #444;
+	border-radius: 7px;
+	cursor: pointer;
+	display: inline;
+}
+#inputsList li:hover{
+	border-color:#118adb;
 }
 
 .sidebar > div:not(:last-child) {
