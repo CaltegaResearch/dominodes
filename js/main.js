@@ -10,7 +10,7 @@ function createCell(x,y,color){
 	var data = {
 		"label" : nodes[ID].label,
 		"value" : '-',
-		"color" : color
+		"color" : 'grey'
 	};
 
 	var rendered = Mustache.render(cellTemplate, data);
@@ -122,6 +122,12 @@ function unselectCell(){
 	}
 }
 
+function addToFormula(text){
+	var id = selectedCell.id;
+	setFormula(id,nodes[id].formula+text);
+	$("#formulaInput").html(nodes[id].formula);
+}
+
 function loadSideBar(id){
 	var label = nodes[id].label;
 	var formula = nodes[id].formula;
@@ -130,8 +136,10 @@ function loadSideBar(id){
 	$("#formulaInput").html(formula);
 	$("#inputsList").html("");
 	for(var i=0; i<inputs.length; i++){
+		var c = nodes[inputs[i]].color;
+		var l = nodes[inputs[i]].label;
 		$("#inputsList").append(
-			"<li>"+nodes[inputs[i]].label+"</li>"
+			"<li onclick=\"addToFormula('"+l+"')\" class=\""+c+"\">"+l+"</li>"
 		);
 	}
 }

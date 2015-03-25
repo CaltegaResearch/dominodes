@@ -42,30 +42,18 @@ body {
 	background: rgba(0,0,0, 0.1);
 }
 
-.color.blue{ background-color: rgb(172, 172, 231); }
-.color.teal{ background-color: rgb(89, 222, 239); }
-.color.green{ background-color: rgb(88, 232, 167); }
-.color.yellow{ background-color: rgb(214, 242, 130); }
-.color.orange{ background-color: rgb(247, 209, 111); }
-.color.red{ background-color: rgb(250, 161, 135); }
-.color.pink{ background-color: rgb(247, 158, 212); }
-.color.grey{ background-color: #DEDEDE; }
+.cell { background-color: white; }
 
-.cell.blue .left { background: rgba(172, 172, 231, 0.2); }
-.cell.teal .left { background: rgba(89, 222, 239, 0.2); }
-.cell.green .left { background: rgba(88, 232, 167, 0.2); }
-.cell.yellow .left { background: rgba(214, 242, 130, 0.2); }
-.cell.orange .left { background: rgba(247, 209, 111, 0.2); }
-.cell.red .left { background: rgba(250, 161, 135, 0.2); }
-.cell.pink .left { background: rgba(247, 158, 212, 0.2); }
+.blue{ background-color: rgb(172, 172, 231); }
+.teal{ background-color: rgb(89, 222, 239); }
+.green{ background-color: rgb(88, 232, 167); }
+.yellow{ background-color: rgb(214, 242, 130); }
+.orange{ background-color: rgb(247, 209, 111); }
+.red{ background-color: rgb(250, 161, 135); }
+.pink{ background-color: rgb(247, 158, 212); }
+.grey{ background-color: #DEDEDE; }
 
-.cell.blue .right { background: rgb(172, 172, 231); }
-.cell.teal .right { background: rgb(89, 222, 239); }
-.cell.green .right { background: rgb(88, 232, 167); }
-.cell.yellow .right { background: rgb(214, 242, 130); }
-.cell.orange .right { background: rgb(247, 209, 111); }
-.cell.red .right { background: rgb(250, 161, 135); }
-.cell.pink .right { background: rgb(247, 158, 212); }
+.cell .left { background: rgba(255,255,255, 0.8); }
 
 .not-transparent {
 	opacity: 0.8 !important;
@@ -165,7 +153,6 @@ path {
 	border-radius: 10px;
 	z-index: 10;
 	cursor:move;
-	background-color: white;
 }
 
 .cell:hover{
@@ -195,6 +182,10 @@ path {
 	border-width: 10px;
 }
 
+.cell.error {
+	border: 3px solid #EF4F4F;
+}
+
 .cell.selected {
 	border: 3px solid #118adb;
 }
@@ -203,7 +194,6 @@ path {
 	float:left;
 	width:50%;
 	height:100%;
-	background-color:white;
 	border-top-left-radius: 6px;
 	border-bottom-left-radius: 6px;
 	overflow:hidden;
@@ -215,7 +205,6 @@ path {
 	height:100%;
 	border-left: 2px solid grey;
 	margin-left: -2px;
-	background-color: #DEDEDE;
 	border-top-right-radius: 6px;
 	border-bottom-right-radius: 6px;
 	overflow:hidden;
