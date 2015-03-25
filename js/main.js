@@ -97,9 +97,7 @@ function onOutputClicked(element){
 }
 
 function onCellClick(e){
-	if(selectedCell != e.currentTarget){
-		selectCell(e.currentTarget);
-	}
+	selectCell(e.currentTarget);
 	e.stopPropagation();
 }
 

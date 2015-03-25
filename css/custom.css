@@ -195,7 +195,6 @@ path {
 
 .cell.selected {
 	border: 3px solid #118adb;
-	cursor: text;
 }
 
 .cell .left{
