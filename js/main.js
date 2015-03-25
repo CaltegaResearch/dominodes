@@ -86,6 +86,7 @@ function onInputClicked(element){
 		edge.setAttribute('d',dstr);
 		edge.setAttribute('id',selectedOutput+selectedInput);
 		$("#edgesSvg").append(edge);
+		refreshGraph();
 	}
 	selectedInput = null;
 	selectedOutput = null;
@@ -138,6 +139,9 @@ $("#label").keydown(function(e){
 	}
 });
 $("#label").keyup(function(e){
+	if($("#label").html().indexOf("<br>") != -1){
+		$("#label").html($("#label").html().replace("<br>",""));
+	}
 	setLabel(selectedCell.id, $("#label").html());
 });
 $("#formulaInput").keydown(function(e){

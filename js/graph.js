@@ -43,6 +43,7 @@ function refreshGraph(){
 function setLabel(id, label){
 	nodes[id].label = label;
 	$("#"+id+" .left p").html(label);
+	refreshGraph();
 }
 function setValue(id, value){
 	nodes[id].value = value;
@@ -86,14 +87,13 @@ function evalFormula(id){
 		return math.eval(replaced);
 	}
 	catch(err){
-		console.log(err);
 		return '-';
 	}
 }
 
 function evalGraph(){
-	visited = [];
-	notYet = Object.keys(nodes);
+	var visited = [];
+	var notYet = Object.keys(nodes);
 	function traverse(cell){
 		nodes[cell].inputs.forEach(function(next){
 			if (visited.indexOf(next) == -1){
@@ -102,9 +102,8 @@ function evalGraph(){
 		});
 
 		setValue(cell, evalFormula(cell));
-		visited.push(notYet.splice(notYet.indexOf(cell), 1));
+		visited.push(notYet.splice(notYet.indexOf(cell), 1)[0]);
 	}
-
 	while(notYet.length > 0){
 		traverse(notYet[0]);
 	}
