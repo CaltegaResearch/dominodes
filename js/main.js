@@ -124,7 +124,6 @@ function loadSideBar(id){
 	var inputs = nodes[id].inputs;
 	$("#label").html(label);
 	$("#formulaInput").html(formula);
-	$("#formulaInput").attr("contentEditable","true");
 	$("#inputsList").html("");
 	for(var i=0; i<inputs.length; i++){
 		$("#inputsList").append(
@@ -132,6 +131,22 @@ function loadSideBar(id){
 		);
 	}
 }
+
+$("#label").keydown(function(e){
+	if(e.which == 13){
+		e.stopPropagation();
+		e.currentTarget.blur();
+	}
+})
+$("#label").keyup(function(e){
+	if(e.which == 13){
+		$("#label").blur();
+		e.stopPropagation();
+		e.preventDefault();
+	}else{
+		setLabel(selectedCell.id, $("#label").html());
+	}
+});
 
 $("#trash").droppable({
 	hoverClass: "not-transparent",

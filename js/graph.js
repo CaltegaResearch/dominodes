@@ -35,17 +35,17 @@ function removeNode(id){
 function refreshGraph(){
 	evalGraph();
 	Object.keys(nodes).forEach(function(key){
+		$("#"+key+" .left p").html(nodes[key].label);
 		$("#"+key+" .right p").html(nodes[key].value);
 	});
 }
 
 function setLabel(id, label){
 	nodes[id].label = label;
-	refreshGraph();
+	$("#"+id+" .left p").html(label);
 }
 function setValue(id, value){
 	nodes[id].value = value;
-	refreshGraph();
 }
 function addInput(id, id2){
 	nodes[id].inputs.push(id2);
