@@ -115,7 +115,6 @@ function unselectCell(){
 	if(selectedCell){
 		selectedCell.classList.remove("selected");
 	}
-	selectedCell = null;
 }
 
 function loadSideBar(id){
@@ -137,15 +136,18 @@ $("#label").keydown(function(e){
 		e.stopPropagation();
 		e.currentTarget.blur();
 	}
-})
+});
 $("#label").keyup(function(e){
+	setLabel(selectedCell.id, $("#label").html());
+});
+$("#formulaInput").keydown(function(e){
 	if(e.which == 13){
-		$("#label").blur();
 		e.stopPropagation();
-		e.preventDefault();
-	}else{
-		setLabel(selectedCell.id, $("#label").html());
+		e.currentTarget.blur();
 	}
+})
+$("#formulaInput").keyup(function(e){
+	setFormula(selectedCell.id, $("#formulaInput").html());
 });
 
 $("#trash").droppable({

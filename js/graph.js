@@ -30,12 +30,12 @@ function removeNode(id){
 	}
 	delete nodes.id;
 	$("#"+id).remove();
+	refreshGraph();
 }
 
 function refreshGraph(){
 	evalGraph();
 	Object.keys(nodes).forEach(function(key){
-		$("#"+key+" .left p").html(nodes[key].label);
 		$("#"+key+" .right p").html(nodes[key].value);
 	});
 }
@@ -46,6 +46,11 @@ function setLabel(id, label){
 }
 function setValue(id, value){
 	nodes[id].value = value;
+	$("#"+id+" .right p").html(value);
+}
+function setFormula(id, formula){
+	nodes[id].formula = formula;
+	refreshGraph();
 }
 function addInput(id, id2){
 	nodes[id].inputs.push(id2);
@@ -59,10 +64,6 @@ function removeInput(id, id2){
 }
 function removeOutput(id, id2){
 	nodes[id].outputs.splice(nodes[id].outputs.indexOf(id2),1);
-	refreshGraph();
-}
-function setFormula(id, formula){
-	nodes[id].formula = formula;
 	refreshGraph();
 }
 function setColor(id, color){
@@ -85,6 +86,7 @@ function evalFormula(id){
 		return math.eval(replaced);
 	}
 	catch(err){
+		console.log(err);
 		return '-';
 	}
 }
