@@ -2,6 +2,8 @@ var uniqueNum = 1;
 
 var nodes = {};
 
+var ERRORSTRING = "---";
+
 function addNode(){
 	var data = {
 		label: "Node"+uniqueNum,
@@ -48,6 +50,11 @@ function setLabel(id, label){
 function setValue(id, value){
 	nodes[id].value = value;
 	$("#"+id+" .right p").html(value);
+	if(value == ERRORSTRING){
+		$("#"+id).addClass("error");
+	}else{
+		$("#"+id).removeClass("error");
+	}
 }
 function setFormula(id, formula){
 	nodes[id].formula = formula;
@@ -78,7 +85,7 @@ function evalFormula(id){
 	var replaced = nodes[id].formula;
 
 	nodes[id].inputs.forEach(function(cell){
-		if(nodes[cell].value === '-') return '-';
+		if(nodes[cell].value === ERRORSTRING) return ERRORSTRING;
 		var re = new RegExp(nodes[cell].label, "gi");
 		replaced = replaced.replace(re, nodes[cell].value);
 	});
@@ -87,7 +94,7 @@ function evalFormula(id){
 		return math.eval(replaced);
 	}
 	catch(err){
-		return '-';
+		return ERRORSTRING;
 	}
 }
 

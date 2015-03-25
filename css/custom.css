@@ -195,6 +195,10 @@ path {
 	border-width: 10px;
 }
 
+.cell.error {
+	border: 3px solid #EF4F4F;
+}
+
 .cell.selected {
 	border: 3px solid #118adb;
 }
