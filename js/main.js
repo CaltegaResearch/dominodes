@@ -10,7 +10,7 @@ function createCell(x,y,color){
 	var data = {
 		"label" : nodes[ID].label,
 		"value" : '-',
-		"color" : color
+		"color" : 'grey'
 	};
 
 	var rendered = Mustache.render(cellTemplate, data);
@@ -131,7 +131,7 @@ function loadSideBar(id){
 	$("#inputsList").html("");
 	for(var i=0; i<inputs.length; i++){
 		$("#inputsList").append(
-			"<li>"+nodes[inputs[i]].label+"</li>"
+			"<li class=\""+nodes[inputs[i]].color +"\">"+nodes[inputs[i]].label+"</li>"
 		);
 	}
 }
