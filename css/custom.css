@@ -48,6 +48,7 @@ body {
 .color.orange{ background-color: rgb(247, 209, 111); }
 .color.red{ background-color: rgb(250, 161, 135); }
 .color.pink{ background-color: rgb(247, 158, 212); }
+.color.grey{ background-color: #DEDEDE; }
 
 .cell.blue .left { background: rgba(172, 172, 231, 0.2); }
 .cell.teal .left { background: rgba(89, 222, 239, 0.2); }
@@ -110,6 +111,7 @@ path {
 	border-radius: 10px;
 	z-index: 10;
 	cursor:move;
+	background-color: white;
 }
 
 .cell:hover{

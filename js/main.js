@@ -81,6 +81,7 @@ function clearSelectedColor(){
 		selectedCell.classList.remove('orange');
 		selectedCell.classList.remove('red');
 		selectedCell.classList.remove('pink');
+		selectedCell.classList.remove('grey');
 	}
 }
 
