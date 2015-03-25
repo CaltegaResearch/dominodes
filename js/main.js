@@ -116,7 +116,6 @@ function unselectCell(){
 		selectedCell.classList.remove("selected");
 	}
 	selectedCell = null;
-	clearSideBar();
 }
 
 function loadSideBar(id){
@@ -132,13 +131,6 @@ function loadSideBar(id){
 			"<li>"+nodes[inputs[i]].label+"</li>"
 		);
 	}
-}
-
-function clearSideBar(){
-	$("#label").html("");
-	$("#formulaInput").html("");
-	$("#formulaInput").attr("contentEditable","false");
-	$("#inputsList").html("");
 }
 
 $("#trash").droppable({
