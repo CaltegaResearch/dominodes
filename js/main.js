@@ -5,15 +5,15 @@ var selectedOutput = null;
 var cellTemplate = $('#cell-template').html();
 Mustache.parse(cellTemplate);
 
-function addCell(x,y,label,value,color){
+function createCell(x,y,color){
+	var ID = addNode();
 	var data = {
-		"label" : label,
-		"value" : value,
+		"label" : nodes[ID].label,
+		"value" : '-',
 		"color" : color
 	};
 
 	var rendered = Mustache.render(cellTemplate, data);
-	var ID = addNode();
 	var cell = $(rendered).draggable({snap:true})
 		.bind('drag', onCellDragged)
 		.attr("id", ID)
@@ -22,7 +22,6 @@ function addCell(x,y,label,value,color){
 		.click(onCellClick);
 	$(".wrapper").append(cell);
 	selectCell(cell.get(0));
-	cell.get(0).children[0].children[0].focus();
 }
 
 function onCellDragged(event, ui){
@@ -149,7 +148,7 @@ $("#trash").droppable({
     }
 });
 $(".wrapper").dblclick(function(e){
-	addCell(e.pageX - 150,e.pageY - 30);
+	createCell(e.pageX - 150,e.pageY - 30);
 });
 $(".wrapper").click(function(e){
 	unselectCell();

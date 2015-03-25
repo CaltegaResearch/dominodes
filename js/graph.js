@@ -1,10 +1,10 @@
-var uniqueNum = 0;
+var uniqueNum = 1;
 
 var nodes = {};
 
 function addNode(){
 	var data = {
-		label: "",
+		label: "Node"+uniqueNum,
 		value: "",
 		inputs: [],
 		outputs: [],
