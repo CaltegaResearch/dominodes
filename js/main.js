@@ -1,44 +1,27 @@
 var selectedCell = null;
 var selectedInput = null;
 var selectedOutput = null;
-var edges = {};
 
 var cellTemplate = $('#cell-template').html();
 Mustache.parse(cellTemplate);
 
-function addCell(x,y,label,value,color){
+function createCell(x,y,color){
+	var ID = addNode();
 	var data = {
-		"label" : label,
-		"value" : value,
+		"label" : nodes[ID].label,
+		"value" : '-',
 		"color" : color
 	};
 
 	var rendered = Mustache.render(cellTemplate, data);
-	var ID = addNode();
 	var cell = $(rendered).draggable({snap:true})
 		.bind('drag', onCellDragged)
 		.attr("id", ID)
 		.css("top", y)
 		.css("left", x)
-		.click(onCellClick)
-		.dblclick(onCellDblClick)
-		.on('keydown',onCellKeyDown)
-		.focusout(onCellFocusOut)
-		.focusin(onCellFocusIn);
+		.click(onCellClick);
 	$(".wrapper").append(cell);
-	toggleSelected(cell.get(0));
-	cell.get(0).children[0].children[0].focus();
-}
-function onCellFocusIn(e){
-	e.currentTarget.children[1].children[0].innerHTML = nodes[selectedCell.id].formula;
-}
-
-function onCellFocusOut(e){
-	var cell = e.currentTarget;
-	var id = cell.id;
-	setLabel(id, cell.children[0].children[0].innerHTML);
-	setFormula(id, cell.children[1].children[0].innerHTML);
-	setValue(id, cell.children[1].children[0].innerHTML);
+	selectCell(cell.get(0));
 }
 
 function onCellDragged(event, ui){
@@ -105,11 +88,11 @@ function onInputClicked(element){
 		var diff= (inX-outX)/2;
 		var dstr = "M"+outX+","+outY+" C"+(outX+diff)+","+outY+" "+(inX-diff)+","+inY+" "+inX+","+inY;
 		var path = "<path id=\""+selectedOutput+selectedInput+"\" d=\""+dstr+"\" />";
-		edges[selectedOutput+selectedInput] = path;
 		var edge = document.createElementNS("http://www.w3.org/2000/svg", "path");
 		edge.setAttribute('d',dstr);
 		edge.setAttribute('id',selectedOutput+selectedInput);
 		$("#edgesSvg").append(edge);
+		refreshGraph();
 	}
 	selectedInput = null;
 	selectedOutput = null;
@@ -120,54 +103,60 @@ function onOutputClicked(element){
 }
 
 function onCellClick(e){
-	if(selectedCell == e.currentTarget){
-		onCellDblClick(e);
-	}else{
-		e.stopPropagation();
-		toggleSelected(e.currentTarget);
-	}
-}
-function onCellDblClick(e){
+	selectCell(e.currentTarget);
 	e.stopPropagation();
-	var pointX = e.pageX - e.currentTarget.style.left.split("px")[0];
-	var pointY = e.pageY - e.currentTarget.style.top.split("px")[0];
-	if(pointX < 150){
-		e.currentTarget.children[0].children[0].focus();
-	}else{
-		e.currentTarget.children[1].children[0].focus();
-		e.currentTarget.children[1].children[0].innerHTML = nodes[selectedCell.id].formula;
-	}
-}
-function onCellKeyDown(e){
-	if (e.which == 13) {
-	  	e.stopPropagation();
-		clearFocus();
-		clearSelected();
-		return false;
-	}
 }
 
-function clearFocus(){
-	if ("activeElement" in document){
-		document.activeElement.blur();
-		refreshGraph();
-	}
-}
-
-function toggleSelected(cell){
-	var tmp = selectedCell;
-	clearSelected();
-	clearFocus();
-	cell.classList.add("selected");
-	selectedCell = cell;
-}
-function clearSelected(){
+function selectCell(cell){
 	if(selectedCell){
 		selectedCell.classList.remove("selected");
-		refreshGraph();
 	}
-	selectedCell = null;
+	cell.classList.add("selected");
+	selectedCell = cell;
+	loadSideBar(selectedCell.id);
 }
+
+function unselectCell(){
+	if(selectedCell){
+		selectedCell.classList.remove("selected");
+	}
+}
+
+function loadSideBar(id){
+	var label = nodes[id].label;
+	var formula = nodes[id].formula;
+	var inputs = nodes[id].inputs;
+	$("#label").html(label);
+	$("#formulaInput").html(formula);
+	$("#inputsList").html("");
+	for(var i=0; i<inputs.length; i++){
+		$("#inputsList").append(
+			"<li>"+nodes[inputs[i]].label+"</li>"
+		);
+	}
+}
+
+$("#label").keydown(function(e){
+	if(e.which == 13){
+		e.stopPropagation();
+		e.currentTarget.blur();
+	}
+});
+$("#label").keyup(function(e){
+	if($("#label").html().indexOf("<br>") != -1){
+		$("#label").html($("#label").html().replace("<br>",""));
+	}
+	setLabel(selectedCell.id, $("#label").html());
+});
+$("#formulaInput").keydown(function(e){
+	if(e.which == 13){
+		e.stopPropagation();
+		e.currentTarget.blur();
+	}
+})
+$("#formulaInput").keyup(function(e){
+	setFormula(selectedCell.id, $("#formulaInput").html());
+});
 
 $("#trash").droppable({
 	hoverClass: "not-transparent",
@@ -176,15 +165,15 @@ $("#trash").droppable({
     }
 });
 $(".wrapper").dblclick(function(e){
-	addCell(e.pageX - 150,e.pageY - 30);
+	createCell(e.pageX - 150,e.pageY - 30);
 });
 $(".wrapper").click(function(e){
-	clearSelected();
+	unselectCell();
 })
 $(document).keypress(function(e) {
-  if(e.which == 13) {
-  	e.stopPropagation();
-    window.blur();
-    clearSelected();
-  }
+	if(e.which == 13) {
+ 	 	e.stopPropagation();
+ 		window.blur();
+	    unselectCell();
+ 	}
 });

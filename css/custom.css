@@ -8,7 +8,7 @@ body {
 	left:0;
 	right:0;
 	bottom:0;
-	width:100%;
+	width:80%;
 	height:100%;
 }
 
@@ -16,7 +16,8 @@ body {
     position: absolute;
     bottom:0;
     left:0;
-    right: 200px;
+    right: 20%;
+    margin-right: 200px;
     margin-bottom: 30px;
 }
 
@@ -77,7 +78,7 @@ body {
 	margin:30px;
 	position:absolute;
 	bottom:0;
-	right:0;
+	right:20%;
 	background-size: cover;
 	opacity: 0.5;
 
@@ -99,7 +100,60 @@ path {
 	left:0;
 	right:0;
 	bottom:0;
+	width:80%;
 	overflow: hidden;
+}
+
+.sidebar {
+	position: absolute;
+	top:0;
+	left:80%;
+	right:0;
+	bottom:0;
+	overflow:hidden;
+	border: 1px solid grey;
+	background-color:#DEDEDE;
+	padding:10px;
+}
+#formulaInput {
+	border-bottom: 1px solid black;
+	min-height:28px;
+	background: rgba(1,1,1,0.1);
+	border-radius: 8px;
+	line-height: 25px;
+	font-size: 25px;
+	padding: 6px 5px;
+	text-align: center;
+}
+
+#label {
+	background-color:#F5F5F5;
+	padding-left: 5px;
+	border: 1px solid grey;
+	border-radius: 8px;
+	min-height: 42px;
+}
+
+#inputsList {
+	list-style: none;
+}
+#inputsList li {
+	margin-right: 10px;
+	padding: 5px;
+	border: 3px solid #444;
+	border-radius: 7px;
+	cursor: pointer;
+	display: inline;
+}
+#inputsList li:hover{
+	border-color:#118adb;
+}
+
+.sidebar > div:not(:last-child) {
+	border-bottom: 1px solid rgb(194, 194, 194);
+}
+.sidebar > div:not(:first-child){
+	min-height: 105px;
 }
 
 .cell {
@@ -143,7 +197,6 @@ path {
 
 .cell.selected {
 	border: 3px solid #118adb;
-	cursor: text;
 }
 
 .cell .left{
