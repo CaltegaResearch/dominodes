@@ -1,10 +1,10 @@
-var uniqueNum = 0;
+var uniqueNum = 1;
 
 var nodes = {};
 
 function addNode(){
 	var data = {
-		label: "",
+		label: "Node"+uniqueNum,
 		value: "",
 		inputs: [],
 		outputs: [],
@@ -23,15 +23,14 @@ function removeNode(id){
 	for(var i=0; i<n.inputs.length; i++){
 		nodes[n.inputs[i]].outputs.splice(nodes[n.inputs[i]].outputs.indexOf(id),1);
 		$("#"+n.inputs[i]+id).remove();
-		delete edges[n.inputs[i] + id];
 	}
 	for(var i=0; i<n.outputs.length; i++){
 		nodes[n.outputs[i]].inputs.splice(nodes[n.outputs[i]].inputs.indexOf(id),1);
 		$("#"+id+n.outputs[i]).remove();
-		delete edges[id+n.outputs[i]];
 	}
 	delete nodes.id;
 	$("#"+id).remove();
+	refreshGraph();
 }
 
 function refreshGraph(){
@@ -43,10 +42,16 @@ function refreshGraph(){
 
 function setLabel(id, label){
 	nodes[id].label = label;
+	$("#"+id+" .left p").html(label);
+	refreshGraph();
 }
 function setValue(id, value){
 	nodes[id].value = value;
-	$("#"+id+" .right p").html(nodes[id].value);
+	$("#"+id+" .right p").html(value);
+}
+function setFormula(id, formula){
+	nodes[id].formula = formula;
+	refreshGraph();
 }
 function addInput(id, id2){
 	nodes[id].inputs.push(id2);
@@ -56,12 +61,11 @@ function addOutput(id, id2){
 }
 function removeInput(id, id2){
 	nodes[id].inputs.splice(nodes[id].inputs.indexOf(id2),1);
+	refreshGraph();
 }
 function removeOutput(id, id2){
 	nodes[id].outputs.splice(nodes[id].outputs.indexOf(id2),1);
-}
-function setFormula(id, formula){
-	nodes[id].formula = formula;
+	refreshGraph();
 }
 function setColor(id, color){
 	nodes[id].color = color;
@@ -88,20 +92,18 @@ function evalFormula(id){
 }
 
 function evalGraph(){
-	visited = [];
-	notYet = Object.keys(nodes);
+	var visited = [];
+	var notYet = Object.keys(nodes);
 	function traverse(cell){
-
 		nodes[cell].inputs.forEach(function(next){
-			if (visited.indexOf(next) !== -1){
-				return traverse(next);
+			if (visited.indexOf(next) == -1){
+				traverse(next);
 			}
 		});
 
 		setValue(cell, evalFormula(cell));
-		visited.push(notYet.splice(notYet.indexOf(cell), 1));
+		visited.push(notYet.splice(notYet.indexOf(cell), 1)[0]);
 	}
-
 	while(notYet.length > 0){
 		traverse(notYet[0]);
 	}
