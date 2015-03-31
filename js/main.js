@@ -19,6 +19,7 @@ function createCell(x,y,color){
 		.attr("id", ID)
 		.css("top", y)
 		.css("left", x)
+		.dblclick(onCellDblClick)
 		.click(onCellClick);
 	$(".wrapper").append(cell);
 	selectCell(cell.get(0));
@@ -104,6 +105,9 @@ function onOutputClicked(element){
 
 function onCellClick(e){
 	selectCell(e.currentTarget);
+	e.stopPropagation();
+}
+function onCellDblClick(e){
 	e.stopPropagation();
 }
 
