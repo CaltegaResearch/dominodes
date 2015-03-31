@@ -28,6 +28,8 @@ function createCell(x,y,color){
 function onCellDragged(event, ui){
 	var id = event.currentTarget.id;
 	var offset = ui.offset;
+	var cellWidth = parseInt($("#"+id).css("width").split("px")[0]);
+	var cellHeight = parseInt($("#"+id).css("height").split("px")[0]);
 	for(var i=0; i<nodes[id].inputs.length;i++){
 		var pathid = nodes[id].inputs[i]+id;
 		var path = document.getElementById(pathid);
