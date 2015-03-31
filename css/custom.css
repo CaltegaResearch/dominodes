@@ -146,8 +146,8 @@ path {
 
 .cell {
 	position: absolute !important;
-	width: 250px;
-	height: 50px;
+	width: 12vw !important;
+	height: 2.4vw !important;
 	overflow: visible;
 	border: 3px solid #888;
 	border-radius: 10px;
@@ -213,15 +213,10 @@ path {
 
 .cell p {
 	text-align: center;
-	font-size: 1.6em;
+	font-size: 1.3vw;
 	margin:0px;
 	height:100%;
-}
-
-.cell .left p {
 	padding: 0px 9px;
-	word-break: break-word;
-	font-size: 1.1em;
 }
 
 .clear {
