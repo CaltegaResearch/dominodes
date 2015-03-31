@@ -33,17 +33,17 @@ function onCellDragged(event, ui){
 		var path = document.getElementById(pathid);
 		var ds = path.getAttribute("d").split(" ");
 		ds[1] = "C"+((offset.left+parseInt(ds[0].split("M")[1].split(",")[0]))/2)+","+ds[1].split(",")[1];
-		ds[2] = ((offset.left+parseInt(ds[0].split("M")[1].split(",")[0]))/2)+","+(offset.top+25);
-		ds[3] = offset.left+","+(offset.top+25);
+		ds[2] = ((offset.left+parseInt(ds[0].split("M")[1].split(",")[0]))/2)+","+(offset.top+cellHeight/2);
+		ds[3] = offset.left+","+(offset.top+cellHeight/2);
 		path.setAttribute('d',ds.join(" "));
 	}
 	for(var i=0; i<nodes[id].outputs.length;i++){
 		var pathid = id+nodes[id].outputs[i];
 		var path = document.getElementById(pathid);
 		var ds = path.getAttribute("d").split(" ");
-		ds[0] = "M"+(offset.left+250)+","+(offset.top+25);
-		ds[1] = "C"+((offset.left+250+parseInt(ds[3].split(",")[0]))/2)+","+(offset.top+25);
-		ds[2] = ((offset.left+250+parseInt(ds[3].split(",")[0]))/2)+","+ds[2].split(",")[1];
+		ds[0] = "M"+(offset.left+cellWidth)+","+(offset.top+cellHeight/2);
+		ds[1] = "C"+((offset.left+cellWidth+parseInt(ds[3].split(",")[0]))/2)+","+(offset.top+cellHeight/2);
+		ds[2] = ((offset.left+cellWidth+parseInt(ds[3].split(",")[0]))/2)+","+ds[2].split(",")[1];
 		path.setAttribute('d',ds.join(" "));
 	}
 }
