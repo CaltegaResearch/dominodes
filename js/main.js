@@ -80,12 +80,14 @@ function onInputClicked(element){
 	else if(selectedOutput!==selectedInput){
 		addInput(selectedInput,selectedOutput);
 		addOutput(selectedOutput,selectedInput);
+		var cellHeight = parseInt($("#"+selectedInput).css('height').split(".")[0]);
+		var cellWidth = parseInt($("#"+selectedInput).css('width').split(".")[0]);
 		var inOff = $("#"+selectedInput).offset();
 		var outOff = $("#"+selectedOutput).offset();
-		var outX = outOff.left+250;
-		var outY = outOff.top+25;
+		var outX = outOff.left+cellWidth;
+		var outY = outOff.top+cellHeight/2;
 		var inX = inOff.left;
-		var inY = inOff.top+25;
+		var inY = inOff.top+cellHeight/2;
 		var diff= (inX-outX)/2;
 		var dstr = "M"+outX+","+outY+" C"+(outX+diff)+","+outY+" "+(inX-diff)+","+inY+" "+inX+","+inY;
 		var path = "<path id=\""+selectedOutput+selectedInput+"\" d=\""+dstr+"\" />";
