@@ -14,7 +14,7 @@ function createCell(x,y,color){
 	};
 
 	var rendered = Mustache.render(cellTemplate, data);
-	var cell = $(rendered).draggable({snap:true})
+	var cell = $(rendered).draggable({snap:true, containment: "parent"})
 		.bind('drag', onCellDragged)
 		.attr("id", ID)
 		.css("top", y)
