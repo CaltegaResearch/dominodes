@@ -131,7 +131,7 @@ path {
 	border: 3px solid #444;
 	border-radius: 7px;
 	cursor: pointer;
-	display: inline;
+	display: inline-block;
 }
 #inputsList li:hover{
 	border-color:#118adb;
