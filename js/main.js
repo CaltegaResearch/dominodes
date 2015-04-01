@@ -14,11 +14,12 @@ function createCell(x,y,color){
 	};
 
 	var rendered = Mustache.render(cellTemplate, data);
-	var cell = $(rendered).draggable({snap:true})
+	var cell = $(rendered).draggable({snap:true, containment: "parent"})
 		.bind('drag', onCellDragged)
 		.attr("id", ID)
 		.css("top", y)
 		.css("left", x)
+		.dblclick(onCellDblClick)
 		.click(onCellClick);
 	$(".wrapper").append(cell);
 	selectCell(cell.get(0));
@@ -27,22 +28,24 @@ function createCell(x,y,color){
 function onCellDragged(event, ui){
 	var id = event.currentTarget.id;
 	var offset = ui.offset;
+	var cellWidth = parseInt($("#"+id).css("width").split("px")[0]);
+	var cellHeight = parseInt($("#"+id).css("height").split("px")[0]);
 	for(var i=0; i<nodes[id].inputs.length;i++){
 		var pathid = nodes[id].inputs[i]+id;
 		var path = document.getElementById(pathid);
 		var ds = path.getAttribute("d").split(" ");
 		ds[1] = "C"+((offset.left+parseInt(ds[0].split("M")[1].split(",")[0]))/2)+","+ds[1].split(",")[1];
-		ds[2] = ((offset.left+parseInt(ds[0].split("M")[1].split(",")[0]))/2)+","+(offset.top+25);
-		ds[3] = offset.left+","+(offset.top+25);
+		ds[2] = ((offset.left+parseInt(ds[0].split("M")[1].split(",")[0]))/2)+","+(offset.top+cellHeight/2);
+		ds[3] = offset.left+","+(offset.top+cellHeight/2);
 		path.setAttribute('d',ds.join(" "));
 	}
 	for(var i=0; i<nodes[id].outputs.length;i++){
 		var pathid = id+nodes[id].outputs[i];
 		var path = document.getElementById(pathid);
 		var ds = path.getAttribute("d").split(" ");
-		ds[0] = "M"+(offset.left+250)+","+(offset.top+25);
-		ds[1] = "C"+((offset.left+250+parseInt(ds[3].split(",")[0]))/2)+","+(offset.top+25);
-		ds[2] = ((offset.left+250+parseInt(ds[3].split(",")[0]))/2)+","+ds[2].split(",")[1];
+		ds[0] = "M"+(offset.left+cellWidth)+","+(offset.top+cellHeight/2);
+		ds[1] = "C"+((offset.left+cellWidth+parseInt(ds[3].split(",")[0]))/2)+","+(offset.top+cellHeight/2);
+		ds[2] = ((offset.left+cellWidth+parseInt(ds[3].split(",")[0]))/2)+","+ds[2].split(",")[1];
 		path.setAttribute('d',ds.join(" "));
 	}
 }
@@ -79,12 +82,14 @@ function onInputClicked(element){
 	else if(selectedOutput!==selectedInput){
 		addInput(selectedInput,selectedOutput);
 		addOutput(selectedOutput,selectedInput);
+		var cellHeight = parseInt($("#"+selectedInput).css('height').split(".")[0]);
+		var cellWidth = parseInt($("#"+selectedInput).css('width').split(".")[0]);
 		var inOff = $("#"+selectedInput).offset();
 		var outOff = $("#"+selectedOutput).offset();
-		var outX = outOff.left+250;
-		var outY = outOff.top+25;
+		var outX = outOff.left+cellWidth;
+		var outY = outOff.top+cellHeight/2;
 		var inX = inOff.left;
-		var inY = inOff.top+25;
+		var inY = inOff.top+cellHeight/2;
 		var diff= (inX-outX)/2;
 		var dstr = "M"+outX+","+outY+" C"+(outX+diff)+","+outY+" "+(inX-diff)+","+inY+" "+inX+","+inY;
 		var path = "<path id=\""+selectedOutput+selectedInput+"\" d=\""+dstr+"\" />";
@@ -104,6 +109,9 @@ function onOutputClicked(element){
 
 function onCellClick(e){
 	selectCell(e.currentTarget);
+	e.stopPropagation();
+}
+function onCellDblClick(e){
 	e.stopPropagation();
 }
 
