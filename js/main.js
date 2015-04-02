@@ -27,6 +27,14 @@ function createCell(x,y,color){
 	$("#label").select();
 }
 
+function destroyCell(id){
+	removeNode(id);
+	$("#formulaInput").val("");
+	$("#label").val("");
+	$("#inputsList").html("");
+	$("#formulaInput").blur();
+}
+
 function onCellDragged(event, ui){
 	var id = event.currentTarget.id;
 	selectCell(event.currentTarget);
@@ -183,7 +191,7 @@ $("#formulaInput").keyup(function(e){
 $("#trash").droppable({
 	hoverClass: "not-transparent",
     drop: function( event, ui ) {
-    	removeNode(ui.draggable.get(0).id);
+    	destroyCell(ui.draggable.get(0).id);
     }
 });
 $(".wrapper").dblclick(function(e){
