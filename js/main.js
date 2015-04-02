@@ -23,10 +23,14 @@ function createCell(x,y,color){
 		.click(onCellClick);
 	$(".wrapper").append(cell);
 	selectCell(cell.get(0));
+	$("#label").focus();
+	$("#label").select();
 }
 
 function onCellDragged(event, ui){
 	var id = event.currentTarget.id;
+	selectCell(event.currentTarget);
+	$("#formulaInput").focus();
 	var offset = ui.offset;
 	var cellWidth = parseInt($("#"+id).css("width").split("px")[0]);
 	var cellHeight = parseInt($("#"+id).css("height").split("px")[0]);
@@ -109,6 +113,7 @@ function onOutputClicked(element){
 
 function onCellClick(e){
 	selectCell(e.currentTarget);
+	$("#formulaInput").focus();
 	e.stopPropagation();
 }
 function onCellDblClick(e){
@@ -131,17 +136,21 @@ function unselectCell(){
 }
 
 function addToFormula(text){
+	var cursorPos = document.getElementById("formulaInput").selectionStart;
 	var id = selectedCell.id;
-	setFormula(id,nodes[id].formula+text);
-	$("#formulaInput").html(nodes[id].formula);
+	var oldFormula = nodes[id].formula;
+	var newFormula = oldFormula.substring(0,cursorPos)+text+oldFormula.substring(cursorPos);
+	setFormula(id,newFormula);
+	$("#formulaInput").val(newFormula);
+	$("#formulaInput").focus();
 }
 
 function loadSideBar(id){
 	var label = nodes[id].label;
 	var formula = nodes[id].formula;
 	var inputs = nodes[id].inputs;
-	$("#label").html(label);
-	$("#formulaInput").html(formula);
+	$("#label").val(label);
+	$("#formulaInput").val(formula);
 	$("#inputsList").html("");
 	for(var i=0; i<inputs.length; i++){
 		var c = nodes[inputs[i]].color;
@@ -159,10 +168,7 @@ $("#label").keydown(function(e){
 	}
 });
 $("#label").keyup(function(e){
-	if($("#label").html().indexOf("<br>") != -1){
-		$("#label").html($("#label").html().replace("<br>",""));
-	}
-	setLabel(selectedCell.id, $("#label").html());
+	setLabel(selectedCell.id, $("#label").val());
 });
 $("#formulaInput").keydown(function(e){
 	if(e.which == 13){
@@ -171,7 +177,7 @@ $("#formulaInput").keydown(function(e){
 	}
 })
 $("#formulaInput").keyup(function(e){
-	setFormula(selectedCell.id, $("#formulaInput").html());
+	setFormula(selectedCell.id, $("#formulaInput").val());
 });
 
 $("#trash").droppable({
