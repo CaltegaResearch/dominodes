@@ -123,6 +123,11 @@ path {
 	font-size: 2em;
 }
 
+.disabled {
+	opacity: .5;
+	cursor: not-allowed;
+}
+
 #inputsList {
 	list-style: none;
 }

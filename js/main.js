@@ -84,6 +84,9 @@ function clearSelectedColor(){
 }
 
 function onInputClicked(element){
+	if(selectedOutput == null){
+		return;
+	}
 	selectedInput = element.parentNode.id;
 	if(nodes[selectedOutput].outputs.indexOf(selectedInput) !== -1){
 		nodes[selectedInput].inputs.splice(nodes[selectedInput].inputs.indexOf(selectedOutput),1);
@@ -91,7 +94,7 @@ function onInputClicked(element){
 		$("#"+selectedOutput+selectedInput).remove();
 		delete edges[selectedOutput+selectedInput];
 	}
-	else if(selectedOutput!==selectedInput){
+	else if(!willFormCycle(selectedOutput).has(selectedInput)){
 		addInput(selectedInput,selectedOutput);
 		addOutput(selectedOutput,selectedInput);
 		var cellHeight = parseInt($("#"+selectedInput).css('height').split(".")[0]);
@@ -117,12 +120,30 @@ function onInputClicked(element){
 function onOutputClicked(element){
 	selectedInput = null;
 	selectedOutput = element.parentNode.id;
+	var cycleNodes = willFormCycle(selectedOutput);
+	for(var node of cycleNodes){
+		$('#'+node).addClass("disabled");
+	}
+	$(".wrapper").on("click",function(e){
+		if(e.originalEvent.originalTarget.className != "port port-right"){
+			selectedOutput = null;
+			resetDisabled();
+			$(this).off(e);
+		}
+	});
+}
+
+function resetDisabled(){
+	var keys = Object.keys(nodes);
+	for(var i=0; i<keys.length;i++){
+		$("#"+keys[i]).removeClass("disabled");
+	}
 }
 
 function onCellClick(e){
 	selectCell(e.currentTarget);
 	$("#formulaInput").focus();
-	e.stopPropagation();
+	//e.stopPropagation();
 }
 function onCellDblClick(e){
 	e.stopPropagation();
@@ -198,7 +219,10 @@ $(".wrapper").dblclick(function(e){
 	createCell(e.pageX - 150,e.pageY - 30);
 });
 $(".wrapper").click(function(e){
-	unselectCell();
+	console.log(e);
+	if(e.originalEvent.originalTarget.className == "wrapper"){
+		unselectCell();
+	}
 })
 $(document).keypress(function(e) {
 	if(e.which == 13) {
