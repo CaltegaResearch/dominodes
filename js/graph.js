@@ -1,3 +1,5 @@
+var jsonFile = require('jsonfile');
+
 var uniqueNum = 1;
 
 var nodes = {};
@@ -114,4 +116,23 @@ function evalGraph(){
 	while(notYet.length > 0){
 		traverse(notYet[0]);
 	}
+}
+
+function save(graphName){
+	jsonFile.writeFile('graphs/'+graphName+'.dominodes', nodes, function(err){
+		console.log(err);
+		alert("Save failed: "+err);
+	});
+}
+
+function load(graphName){
+	jsonFile.readFile('graphs/'+graphName+'.dominodes', function(err,obj){
+		if(!err){
+			nodes = obj;
+		}
+		else{
+			console.log(err);
+			alert("Load failed: "+err);
+		}
+	});
 }

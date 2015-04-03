@@ -12,5 +12,8 @@
     "min_height": 500,
     "width": 800,
     "height": 500
+  },
+  "dependencies": {
+    "jsonfile": "^2.0.0"
   }
 }
