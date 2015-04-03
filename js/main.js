@@ -117,6 +117,10 @@ function onInputClicked(element){
 function onOutputClicked(element){
 	selectedInput = null;
 	selectedOutput = element.parentNode.id;
+	for(var node of willFormCycle(selectedOutput)){
+		// $('#'+node)
+		// jQuery/CSS stuff goes here
+	}
 }
 
 function onCellClick(e){
