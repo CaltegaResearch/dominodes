@@ -91,7 +91,7 @@ function onInputClicked(element){
 		$("#"+selectedOutput+selectedInput).remove();
 		delete edges[selectedOutput+selectedInput];
 	}
-	else if(selectedOutput!==selectedInput){
+	else if(!willFormCycle(selectedOutput).has(selectedInput)){
 		addInput(selectedInput,selectedOutput);
 		addOutput(selectedOutput,selectedInput);
 		var cellHeight = parseInt($("#"+selectedInput).css('height').split(".")[0]);
