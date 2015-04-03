@@ -22,9 +22,17 @@ function createCell(x,y,color){
 		.dblclick(onCellDblClick)
 		.click(onCellClick);
 	$(".wrapper").append(cell);
+
+	saveCellPos(ID);
 	selectCell(cell.get(0));
 	$("#label").focus();
 	$("#label").select();
+}
+
+function saveCellPos(id){
+	var VW = window.innerWidth/100;
+	nodes[id].left = (parseInt($("#"+id).css("left").split("px")[0])/VW) + "vw";
+	nodes[id].top = (parseInt($("#"+id).css("top").split("px")[0])/VW) + "vw";
 }
 
 function destroyCell(id){
@@ -42,6 +50,9 @@ function onCellDragged(event, ui){
 	var offset = ui.offset;
 	var cellWidth = parseInt($("#"+id).css("width").split("px")[0]);
 	var cellHeight = parseInt($("#"+id).css("height").split("px")[0]);
+
+	saveCellPos(id);
+
 	for(var i=0; i<nodes[id].inputs.length;i++){
 		var pathid = nodes[id].inputs[i]+id;
 		var path = document.getElementById(pathid);
@@ -89,7 +100,6 @@ function onInputClicked(element){
 		nodes[selectedInput].inputs.splice(nodes[selectedInput].inputs.indexOf(selectedOutput),1);
 		nodes[selectedOutput].outputs.splice(nodes[selectedOutput].outputs.indexOf(selectedInput),1);
 		$("#"+selectedOutput+selectedInput).remove();
-		delete edges[selectedOutput+selectedInput];
 	}
 	else if(selectedOutput!==selectedInput){
 		addInput(selectedInput,selectedOutput);

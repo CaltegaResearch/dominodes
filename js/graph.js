@@ -14,7 +14,9 @@ function addNode(){
 		outputs: [],
 		formula: "",
 		color: "grey",
-		comment: ""
+		comment: "",
+		top:"0",
+		left:"0"
 	};
 
 	var id = "n"+uniqueNum;
