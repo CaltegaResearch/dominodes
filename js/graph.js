@@ -115,3 +115,16 @@ function evalGraph(){
 		traverse(notYet[0]);
 	}
 }
+
+function willFormCycle(origin){
+	var visited = new Set();
+	var toVisit = [origin];
+	while(toVisit.length>0){
+		var x = toVisit.pop();
+		if (!visited.has(x)){
+			visited.add(x);
+			toVisit = toVisit.concat(nodes[x].inputs);
+		}
+	}
+	return visited;
+}
