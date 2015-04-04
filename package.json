@@ -12,5 +12,12 @@
     "min_height": 500,
     "width": 800,
     "height": 500
+  },
+  "license": "MIT",
+  "repository" :
+  { "type" : "git",
+    "url" : "https://github.com/hDeraj/Dominodes.git"
   }
+
+
 }
