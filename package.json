@@ -26,6 +26,8 @@
     "mocha": "latest"
   },
   "scripts": {
-    "lint": "jshint **.js"
+    "lint": "jshint js",
+    "start": "nw .",
+    "prestart": "npm install"
   }
 }
