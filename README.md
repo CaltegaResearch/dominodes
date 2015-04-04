@@ -1,7 +1,7 @@
 # Dominodes
 Project for HackFSU 2015
 
-[Live Demo](http://hderaj.github.io/Dominodes)
+[Live Demo](http://dominodes.github.io/dominodes/)
 
 ![Example Sheet](/Example_Sheet.png)
 
