@@ -36,5 +36,13 @@
     "start": "nw .",
     "prestart": "npm install",
     "test": "mocha"
+  },
+  "jshintConfig": {
+    "eqeqeq": true,
+    "curly": true,
+    "eqnull": true,
+    "esnext": true,
+    "evil": true,
+    "node": true
   }
 }
