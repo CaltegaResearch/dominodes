@@ -66,7 +66,12 @@ function loadGraph(graphName){
 				var value = nodes[id].value;
 				createCell(x,y,color,id,value);
 			}
-			console.log(obj);
+			for(var i=0; i<keys.length; i++){
+				var id = keys[i];
+				for(var j=0; j<nodes[id].outputs.length; j++){
+					createEdge(id,nodes[id].outputs[j]);
+				}
+			}	
 		}
 		else{
 			console.log(err);

@@ -32,8 +32,6 @@ function createCell(x,y,color,id,value){
 }
 
 function createEdge(from,to){
-	addInput(to,from);
-	addOutput(from,to);
 	var cellHeight = parseInt($("#"+to).css('height').split(".")[0]);
 	var cellWidth = parseInt($("#"+to).css('width').split(".")[0]);
 	var inOff = $("#"+to).offset();
@@ -124,6 +122,8 @@ function onInputClicked(element){
 		$("#"+selectedOutput+selectedInput).remove();
 	}
 	else if(selectedOutput!==selectedInput){
+		addInput(selectedInput,selectedOutput);
+		addOutput(selectedOutput,selectedInput);
 		createEdge(selectedOutput,selectedInput);
 		refreshGraph();
 	}
