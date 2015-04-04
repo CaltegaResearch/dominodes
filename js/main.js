@@ -226,7 +226,6 @@ function loadSideBar(id){
 }
 
 $( ".wrapper" ).selectable({
-	distance: 4,
   stop: function() {
   	boxSelectedCells = [];
   	unselectCell();
