@@ -67,11 +67,15 @@ function onCellDragged(event, ui){
 	var id = event.currentTarget.id;
 	selectCell(event.currentTarget);
 	$("#formulaInput").focus();
-	var offset = ui.offset;
+	console.log(ui.offset);
+	saveCellPos(id);
+	updateEdges(id);
+}
+
+function updateEdges(id){
+	var offset = $("#"+id).offset();
 	var cellWidth = parseInt($("#"+id).css("width").split("px")[0]);
 	var cellHeight = parseInt($("#"+id).css("height").split("px")[0]);
-
-	saveCellPos(id);
 
 	for(var i=0; i<nodes[id].inputs.length;i++){
 		var pathid = nodes[id].inputs[i]+id;
@@ -205,6 +209,16 @@ function loadSideBar(id){
 		);
 	}
 }
+
+$(window).resize(function(){
+	var keys = Object.keys(nodes);
+	for(var i=0; i<keys.length; i++){
+		var id = keys[i];
+		$("#"+id).css('top',nodes[id].top);
+		$("#"+id).css('left',nodes[id].left);
+		updateEdges(id);
+	}
+});
 
 $("#label").keydown(function(e){
 	if(e.which == 13){
