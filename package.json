@@ -16,7 +16,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/hDeraj/Dominodes.git"
+    "url": "https://github.com/dominodes/dominodes.git"
   },
   "dependencies": {
     "jquery": "^2.1.3",
