@@ -20,5 +20,12 @@
   },
   "dependencies": {
     "jsonfile": "^2.0.0"
+  },
+  "devDependencies": {
+    "jshint": "latest",
+    "mocha": "latest"
+  },
+  "scripts": {
+    "lint": "jshint **.js"
   }
 }
