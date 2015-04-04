@@ -19,7 +19,8 @@
     "url" : "https://github.com/hDeraj/Dominodes.git"
   },
   "dependencies": {
-    "jsonfile": "^2.0.0"
+    "jsonfile": "^2.0.0",
+    "nw": "latest"
   },
   "devDependencies": {
     "jshint": "latest",
@@ -28,6 +29,7 @@
   "scripts": {
     "lint": "jshint js",
     "start": "nw .",
-    "prestart": "npm install"
+    "prestart": "npm install",
+    "test": "mocha"
   }
 }
