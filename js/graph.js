@@ -1,5 +1,7 @@
 /*jshint esnext: true */
 'use strict';
+var $ = require('jquery');
+var Math = require('mathjs');
 var uniqueNum = 1;
 var nodes = {};
 const ERRORSTRING = "---";
@@ -94,7 +96,7 @@ function evalFormula(id){
 	}
 
 	try{
-		return math.eval(replaced);
+		return Math.eval(replaced);
 	}
 	catch(err){
 		return ERRORSTRING;

@@ -1,4 +1,10 @@
 /*jshint esnext: true */
+global.document = window.document;
+global.navigator = window.navigator;
+var $ = require('jquery');
+require('jquery-ui');
+var Mustache = require('mustache');
+
 var selectedCell = null;
 var selectedInput = null;
 var selectedOutput = null;

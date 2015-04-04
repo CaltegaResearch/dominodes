@@ -1,5 +1,6 @@
 var jsonFile = require('jsonfile');
 var gui = require('nw.gui');
+var $ = require('jquery');
 
 var win = gui.Window.get();
 
@@ -96,7 +97,7 @@ function loadGraph(graphName){
 				for(var j=0; j<nodes[id].outputs.length; j++){
 					createEdge(id,nodes[id].outputs[j]);
 				}
-			}	
+			}
 		}
 		else{
 			console.log(err);
