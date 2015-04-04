@@ -31,8 +31,24 @@ function createCell(x,y,color,id,value){
 	$("#label").select();
 }
 
-function createEdge(){
-	
+function createEdge(from,to){
+	addInput(to,from);
+	addOutput(from,to);
+	var cellHeight = parseInt($("#"+to).css('height').split(".")[0]);
+	var cellWidth = parseInt($("#"+to).css('width').split(".")[0]);
+	var inOff = $("#"+to).offset();
+	var outOff = $("#"+from).offset();
+	var outX = outOff.left+cellWidth;
+	var outY = outOff.top+cellHeight/2;
+	var inX = inOff.left;
+	var inY = inOff.top+cellHeight/2;
+	var diff= (inX-outX)/2;
+	var dstr = "M"+outX+","+outY+" C"+(outX+diff)+","+outY+" "+(inX-diff)+","+inY+" "+inX+","+inY;
+	var path = "<path id=\""+from+to+"\" d=\""+dstr+"\" />";
+	var edge = document.createElementNS("http://www.w3.org/2000/svg", "path");
+	edge.setAttribute('d',dstr);
+	edge.setAttribute('id',from+to);
+	$("#edgesSvg").append(edge);
 }
 
 function saveCellPos(id){
@@ -108,23 +124,7 @@ function onInputClicked(element){
 		$("#"+selectedOutput+selectedInput).remove();
 	}
 	else if(selectedOutput!==selectedInput){
-		addInput(selectedInput,selectedOutput);
-		addOutput(selectedOutput,selectedInput);
-		var cellHeight = parseInt($("#"+selectedInput).css('height').split(".")[0]);
-		var cellWidth = parseInt($("#"+selectedInput).css('width').split(".")[0]);
-		var inOff = $("#"+selectedInput).offset();
-		var outOff = $("#"+selectedOutput).offset();
-		var outX = outOff.left+cellWidth;
-		var outY = outOff.top+cellHeight/2;
-		var inX = inOff.left;
-		var inY = inOff.top+cellHeight/2;
-		var diff= (inX-outX)/2;
-		var dstr = "M"+outX+","+outY+" C"+(outX+diff)+","+outY+" "+(inX-diff)+","+inY+" "+inX+","+inY;
-		var path = "<path id=\""+selectedOutput+selectedInput+"\" d=\""+dstr+"\" />";
-		var edge = document.createElementNS("http://www.w3.org/2000/svg", "path");
-		edge.setAttribute('d',dstr);
-		edge.setAttribute('id',selectedOutput+selectedInput);
-		$("#edgesSvg").append(edge);
+		createEdge(selectedOutput,selectedInput);
 		refreshGraph();
 	}
 	selectedInput = null;
