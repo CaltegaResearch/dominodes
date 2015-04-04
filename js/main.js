@@ -5,12 +5,14 @@ var selectedOutput = null;
 var cellTemplate = $('#cell-template').html();
 Mustache.parse(cellTemplate);
 
-function createCell(x,y,color){
-	var ID = addNode();
+function createCell(x,y,color,id,value){
+	var ID = id || addNode();
+	color = color || "grey";
+	value = value || '-';
 	var data = {
 		"label" : nodes[ID].label,
-		"value" : '-',
-		"color" : 'grey'
+		"value" : value,
+		"color" : color
 	};
 
 	var rendered = Mustache.render(cellTemplate, data);
@@ -27,6 +29,10 @@ function createCell(x,y,color){
 	selectCell(cell.get(0));
 	$("#label").focus();
 	$("#label").select();
+}
+
+function createEdge(){
+	
 }
 
 function saveCellPos(id){
