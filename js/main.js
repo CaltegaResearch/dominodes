@@ -141,7 +141,7 @@ function onOutputClicked(element){
 		$('#'+node).addClass("disabled");
 	}
 	$(".wrapper").on("click",function(e){
-		if(e.originalEvent.originalTarget.className != "port port-right"){
+		if(e.originalEvent.target.className != "port port-right"){
 			selectedOutput = null;
 			resetDisabled();
 			$(this).off(e);
@@ -236,7 +236,7 @@ $(".wrapper").dblclick(function(e){
 });
 $(".wrapper").click(function(e){
 	console.log(e);
-	if(e.originalEvent.originalTarget.className == "wrapper"){
+	if(e.originalEvent.target.className == "wrapper"){
 		unselectCell();
 	}
 })
