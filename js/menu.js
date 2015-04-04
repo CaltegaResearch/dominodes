@@ -9,23 +9,18 @@ function initMenu(){
 	fileMenu.append(new gui.MenuItem({
 	    label: 'New',
 	    click: function() {
+	    	clearGraph();
 	    }
 	}));
 	fileMenu.append(new gui.MenuItem({
 	    label: 'Open',
 	    click: function() {
-	    	$("#openFileDialog").change(function(key){
-	    		loadGraph($(this).val());
-	    	});
 	    	$("#openFileDialog").trigger("click");
 	    }
 	}));
 	fileMenu.append(new gui.MenuItem({
 	    label: 'Save',
 	    click: function() {
-	    	$("#saveFileDialog").change(function(key){
-	    		saveGraph($(this).val());
-	    	});
 	    	$("#saveFileDialog").trigger("click");
 	    }
 	}));
@@ -40,7 +35,32 @@ function initMenu(){
 	win.menu = menubar;
 }
 
+$("#openFileDialog").change(function(key){
+	loadGraph($(this).val());
+	$("#openFileDialog").val("");
+});
+$("#saveFileDialog").change(function(key){
+	saveGraph($(this).val());
+	$("#saveFileDialog").val("");
+});
+
+
+
 initMenu();
+
+function clearGraph(){
+	var keys = Object.keys(nodes);
+	for(var i=0; i<keys.length; i++){
+		$("#"+keys[i]).remove();
+		if(nodes[keys[i]].outputs){
+			for(var j=0; j<nodes[keys[i]].outputs.length; j++){
+				$("#"+keys[i]+nodes[keys[i]].outputs[j]).remove();
+			}
+		}
+	}
+	nodes = {};
+	uniqueNum = 1;
+}
 
 function saveGraph(graphName){
 	jsonFile.writeFile(graphName, nodes, function(err){
@@ -52,10 +72,15 @@ function saveGraph(graphName){
 }
 
 function loadGraph(graphName){
+	if(graphName == ""){
+		return;
+	}
+	clearGraph();
 	console.log(graphName);
 	jsonFile.readFile(graphName, function(err,obj){
 		if(!err){
 			nodes = obj;
+			console.log(Object.keys(obj));
 			var keys = Object.keys(nodes);
 			uniqueNum = keys.length + 1;
 			for(var i=0; i<keys.length; i++){
