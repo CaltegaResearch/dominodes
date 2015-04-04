@@ -196,7 +196,7 @@ path {
 	border: 3px solid #EF4F4F;
 }
 
-.cell.selected {
+.cell.selected, .cell.ui-selected {
 	border: 3px solid #118adb;
 }
 

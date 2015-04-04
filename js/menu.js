@@ -76,11 +76,9 @@ function loadGraph(graphName){
 		return;
 	}
 	clearGraph();
-	console.log(graphName);
 	jsonFile.readFile(graphName, function(err,obj){
 		if(!err){
 			nodes = obj;
-			console.log(Object.keys(obj));
 			var keys = Object.keys(nodes);
 			uniqueNum = keys.length + 1;
 			for(var i=0; i<keys.length; i++){

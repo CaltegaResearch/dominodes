@@ -1,6 +1,7 @@
 var selectedCell = null;
 var selectedInput = null;
 var selectedOutput = null;
+var boxSelectedCells = [];
 
 var cellTemplate = $('#cell-template').html();
 Mustache.parse(cellTemplate);
@@ -57,6 +58,10 @@ function saveCellPos(id){
 
 function destroyCell(id){
 	removeNode(id);
+	clearSideBar();
+}
+
+function clearSideBar(){
 	$("#formulaInput").val("");
 	$("#label").val("");
 	$("#inputsList").html("");
@@ -99,19 +104,31 @@ function setSelectedColor(color){
 		selectedCell.classList.add(color);
 		setColor(selectedCell.id,color);
 	}
+	if(boxSelectedCells.length > 0){
+		for(var i=0; i<boxSelectedCells.length; i++){
+			clearColor(boxSelectedCells[i]);
+			document.getElementById(boxSelectedCells[i]).classList.add(color);
+			setColor(boxSelectedCells[i],color);
+		}
+	}
 }
 
 function clearSelectedColor(){
 	if(selectedCell){
-		selectedCell.classList.remove('blue');
-		selectedCell.classList.remove('teal');
-		selectedCell.classList.remove('green');
-		selectedCell.classList.remove('yellow');
-		selectedCell.classList.remove('orange');
-		selectedCell.classList.remove('red');
-		selectedCell.classList.remove('pink');
-		selectedCell.classList.remove('grey');
+		clearColor(selectedCell.id);
 	}
+}
+
+function clearColor(id){
+	var cell = document.getElementById(id);
+	cell.classList.remove('blue');
+	cell.classList.remove('teal');
+	cell.classList.remove('green');
+	cell.classList.remove('yellow');
+	cell.classList.remove('orange');
+	cell.classList.remove('red');
+	cell.classList.remove('pink');
+	cell.classList.remove('grey');
 }
 
 function onInputClicked(element){
@@ -177,6 +194,8 @@ function selectCell(cell){
 function unselectCell(){
 	if(selectedCell){
 		selectedCell.classList.remove("selected");
+		clearSideBar();
+		selectedCell = null;
 	}
 }
 
@@ -205,6 +224,21 @@ function loadSideBar(id){
 		);
 	}
 }
+
+$( ".wrapper" ).selectable({
+  stop: function() {
+  	boxSelectedCells = [];
+  	unselectCell();
+    var cells = $(".ui-selected.cell");
+    if(cells.length == 1){
+    	selectCell(document.getElementById(cells[0].id));
+    }else{
+	    for(var i=0; i<cells.length; i++){
+	    	boxSelectedCells.push(cells[i].id);
+	    }
+	}
+  }
+});
 
 $("#label").keydown(function(e){
 	if(e.which == 13){
@@ -235,7 +269,6 @@ $(".wrapper").dblclick(function(e){
 	createCell(e.pageX - 150,e.pageY - 30);
 });
 $(".wrapper").click(function(e){
-	console.log(e);
 	if(e.originalEvent.target.className == "wrapper"){
 		unselectCell();
 	}
