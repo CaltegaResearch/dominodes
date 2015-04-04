@@ -14,13 +14,18 @@
     "height": 500
   },
   "license": "MIT",
-  "repository" :{
-    "type" : "git",
-    "url" : "https://github.com/hDeraj/Dominodes.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hDeraj/Dominodes.git"
   },
   "dependencies": {
+    "jquery": "^2.1.3",
+    "jquery-ui": "^1.10.5",
     "jsonfile": "^2.0.0",
-    "nw": "latest"
+    "mathjs": "^1.5.0",
+    "mustache": "^2.0.0",
+    "nw": "latest",
+    "virtual-dom": "^2.0.1"
   },
   "devDependencies": {
     "jshint": "latest",

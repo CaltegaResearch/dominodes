@@ -1,3 +1,4 @@
+/*jshint esnext: true */
 var selectedCell = null;
 var selectedInput = null;
 var selectedOutput = null;
