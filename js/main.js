@@ -6,7 +6,6 @@ var boxSelectedCells = [];
 var cellTemplate = $('#cell-template').html();
 Mustache.parse(cellTemplate);
 
-
 function createCell(x,y,color,id,value){
 	var ID = id || addNode();
 	color = color || "grey";
@@ -16,26 +15,9 @@ function createCell(x,y,color,id,value){
 		"value" : value,
 		"color" : color
 	};
-	var draggableOptions = {
-		drag: function(event, ui) {
-	        var currentLoc = $(this).position();
-	        var prevLoc = $(this).data('prevLoc');
-	        if (!prevLoc) {
-	            prevLoc = ui.originalPosition;
-	        }
-
-	        var offsetLeft = currentLoc.left-prevLoc.left;
-	        var offsetTop = currentLoc.top-prevLoc.top;
-
-	        moveSelected(offsetLeft, offsetTop);
-	        $(this).data('prevLoc', currentLoc);
-	    },
-	    snap:true, 
-	    containment: "parent"
-	}	
 
 	var rendered = Mustache.render(cellTemplate, data);
-	var cell = $(rendered).draggable(draggableOptions)
+	var cell = $(rendered).draggable({snap:true, containment: "parent"})
 		.bind('drag', onCellDragged)
 		.attr("id", ID)
 		.css("top", y)
@@ -66,19 +48,6 @@ function createEdge(from,to){
 	edge.setAttribute('d',dstr);
 	edge.setAttribute('id',from+to);
 	$("#edgesSvg").append(edge);
-}
-
-function moveSelected(ol, ot){
-    var selectedObjs = $(".cell.ui-selected");
-    selectedObjs.each(function(){
-        $this =$(this);
-        var p = $this.position();
-        var l = p.left;
-        var t = p.top;
-
-        $this.css('left', l+ol);
-        $this.css('top', t+ot);
-    })
 }
 
 function saveCellPos(id){
@@ -228,12 +197,6 @@ function unselectCell(){
 		clearSideBar();
 		selectedCell = null;
 	}
-	if(boxSelectedCells.length > 0){
-		for(var i=0; i<boxSelectedCells.length; i++){
-			$("#"+boxSelectedCells[i]).removeClass("ui-selected");
-			$("#"+boxSelectedCells[i]).removeClass("selected");
-		}
-	}
 }
 
 function addToFormula(text){
@@ -307,8 +270,7 @@ $(".wrapper").dblclick(function(e){
 	createCell(e.pageX - 150,e.pageY - 30);
 });
 $(".wrapper").click(function(e){
-	console.log(e);
-	if(e.originalEvent.target.className == "wrapper ui-selectable"){
+	if(e.originalEvent.target.className == "wrapper"){
 		unselectCell();
 	}
 })
