@@ -1,8 +1,8 @@
+/*jshint esnext: true */
+'use strict';
 var uniqueNum = 1;
-
 var nodes = {};
-
-var ERRORSTRING = "---";
+const ERRORSTRING = "---";
 
 function addNode(){
 	var data = {
@@ -22,15 +22,16 @@ function addNode(){
 	uniqueNum += 1;
 	return id;
 }
+
 function removeNode(id){
 	var n = nodes[id];
-	for(var i=0; i<n.inputs.length; i++){
-		nodes[n.inputs[i]].outputs.splice(nodes[n.inputs[i]].outputs.indexOf(id),1);
-		$("#"+n.inputs[i]+id).remove();
+	for(let i of n.inputs){
+		nodes[i].outputs.splice(nodes[i].outputs.indexOf(id),1);
+		$("#"+i+id).remove();
 	}
-	for(var i=0; i<n.outputs.length; i++){
-		nodes[n.outputs[i]].inputs.splice(nodes[n.outputs[i]].inputs.indexOf(id),1);
-		$("#"+id+n.outputs[i]).remove();
+	for(let i of n.outputs){
+		nodes[i].inputs.splice(nodes[i].inputs.indexOf(id),1);
+		$("#"+id+i).remove();
 	}
 	delete nodes.id;
 	$("#"+id).remove();
@@ -39,9 +40,9 @@ function removeNode(id){
 
 function refreshGraph(){
 	evalGraph();
-	Object.keys(nodes).forEach(function(key){
+	for(let key of Object.keys(nodes)){
 		$("#"+key+" .right p").html(nodes[key].value);
-	});
+	}
 }
 
 function setLabel(id, label){
@@ -86,11 +87,11 @@ function setComment(id, comment){
 function evalFormula(id){
 	var replaced = nodes[id].formula;
 
-	nodes[id].inputs.forEach(function(cell){
+	for(let cell of nodes[id].inputs){
 		if(nodes[cell].value === ERRORSTRING) return ERRORSTRING;
-		var re = new RegExp(nodes[cell].label, "gi");
+		let re = new RegExp(nodes[cell].label, "gi");
 		replaced = replaced.replace(re, nodes[cell].value);
-	});
+	}
 
 	try{
 		return math.eval(replaced);
@@ -104,12 +105,9 @@ function evalGraph(){
 	var visited = [];
 	var notYet = Object.keys(nodes);
 	function traverse(cell){
-		nodes[cell].inputs.forEach(function(next){
-			if (visited.indexOf(next) == -1){
-				traverse(next);
-			}
-		});
-
+		for(let next of nodes[cell].inputs){
+			if (visited.indexOf(next) == -1) traverse(next);
+		}
 		setValue(cell, evalFormula(cell));
 		visited.push(notYet.splice(notYet.indexOf(cell), 1)[0]);
 	}
@@ -122,7 +120,7 @@ function willFormCycle(origin){
 	var visited = new Set();
 	var toVisit = [origin];
 	while(toVisit.length>0){
-		var x = toVisit.pop();
+		let x = toVisit.pop();
 		if (!visited.has(x)){
 			visited.add(x);
 			toVisit = toVisit.concat(nodes[x].inputs);
