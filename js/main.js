@@ -5,12 +5,14 @@ var selectedOutput = null;
 var cellTemplate = $('#cell-template').html();
 Mustache.parse(cellTemplate);
 
-function createCell(x,y,color){
-	var ID = addNode();
+function createCell(x,y,color,id,value){
+	var ID = id || addNode();
+	color = color || "grey";
+	value = value || '-';
 	var data = {
 		"label" : nodes[ID].label,
-		"value" : '-',
-		"color" : 'grey'
+		"value" : value,
+		"color" : color
 	};
 
 	var rendered = Mustache.render(cellTemplate, data);
@@ -22,9 +24,35 @@ function createCell(x,y,color){
 		.dblclick(onCellDblClick)
 		.click(onCellClick);
 	$(".wrapper").append(cell);
+
+	saveCellPos(ID);
 	selectCell(cell.get(0));
 	$("#label").focus();
 	$("#label").select();
+}
+
+function createEdge(from,to){
+	var cellHeight = parseInt($("#"+to).css('height').split(".")[0]);
+	var cellWidth = parseInt($("#"+to).css('width').split(".")[0]);
+	var inOff = $("#"+to).offset();
+	var outOff = $("#"+from).offset();
+	var outX = outOff.left+cellWidth;
+	var outY = outOff.top+cellHeight/2;
+	var inX = inOff.left;
+	var inY = inOff.top+cellHeight/2;
+	var diff= (inX-outX)/2;
+	var dstr = "M"+outX+","+outY+" C"+(outX+diff)+","+outY+" "+(inX-diff)+","+inY+" "+inX+","+inY;
+	var path = "<path id=\""+from+to+"\" d=\""+dstr+"\" />";
+	var edge = document.createElementNS("http://www.w3.org/2000/svg", "path");
+	edge.setAttribute('d',dstr);
+	edge.setAttribute('id',from+to);
+	$("#edgesSvg").append(edge);
+}
+
+function saveCellPos(id){
+	var VW = window.innerWidth/100;
+	nodes[id].left = (parseInt($("#"+id).css("left").split("px")[0])/VW) + "vw";
+	nodes[id].top = (parseInt($("#"+id).css("top").split("px")[0])/VW) + "vw";
 }
 
 function destroyCell(id){
@@ -42,6 +70,9 @@ function onCellDragged(event, ui){
 	var offset = ui.offset;
 	var cellWidth = parseInt($("#"+id).css("width").split("px")[0]);
 	var cellHeight = parseInt($("#"+id).css("height").split("px")[0]);
+
+	saveCellPos(id);
+
 	for(var i=0; i<nodes[id].inputs.length;i++){
 		var pathid = nodes[id].inputs[i]+id;
 		var path = document.getElementById(pathid);
@@ -92,26 +123,11 @@ function onInputClicked(element){
 		nodes[selectedInput].inputs.splice(nodes[selectedInput].inputs.indexOf(selectedOutput),1);
 		nodes[selectedOutput].outputs.splice(nodes[selectedOutput].outputs.indexOf(selectedInput),1);
 		$("#"+selectedOutput+selectedInput).remove();
-		delete edges[selectedOutput+selectedInput];
 	}
 	else if(!willFormCycle(selectedOutput).has(selectedInput)){
 		addInput(selectedInput,selectedOutput);
 		addOutput(selectedOutput,selectedInput);
-		var cellHeight = parseInt($("#"+selectedInput).css('height').split(".")[0]);
-		var cellWidth = parseInt($("#"+selectedInput).css('width').split(".")[0]);
-		var inOff = $("#"+selectedInput).offset();
-		var outOff = $("#"+selectedOutput).offset();
-		var outX = outOff.left+cellWidth;
-		var outY = outOff.top+cellHeight/2;
-		var inX = inOff.left;
-		var inY = inOff.top+cellHeight/2;
-		var diff= (inX-outX)/2;
-		var dstr = "M"+outX+","+outY+" C"+(outX+diff)+","+outY+" "+(inX-diff)+","+inY+" "+inX+","+inY;
-		var path = "<path id=\""+selectedOutput+selectedInput+"\" d=\""+dstr+"\" />";
-		var edge = document.createElementNS("http://www.w3.org/2000/svg", "path");
-		edge.setAttribute('d',dstr);
-		edge.setAttribute('id',selectedOutput+selectedInput);
-		$("#edgesSvg").append(edge);
+		createEdge(selectedOutput,selectedInput);
 		refreshGraph();
 	}
 	selectedInput = null;

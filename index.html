@@ -50,6 +50,8 @@
     <div class="color red" onclick="setSelectedColor('red');"></div>
     <div class="color pink" onclick="setSelectedColor('pink');"></div>
   </div>
+  <input id="openFileDialog" type="file" accept=".dominodes"/>
+  <input id="saveFileDialog" type="file" nwsaveas="mygraph.dominodes"/>
 
   <script id="cell-template" type="x-tmpl-mustache">
     <div class="draggable cell {{color}}">
@@ -70,6 +72,7 @@
   <script type="text/javascript" src="js/mustache.min.js"></script>
   <script type="text/javascript" src="js/math.min.js"></script>
   <script type="text/javascript" src="js/graph.js"></script>
+  <script type="text/javascript" src="js/menu.js"></script>
   <script type="text/javascript" src="js/main.js"></script>
 </body>
 </html>

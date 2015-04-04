@@ -2,6 +2,10 @@ body {
 	font-family: Consolas,monaco,monospace;
 }
 
+#openFileDialog,#saveFileDialog {
+	display: none;
+}
+
 #edgesSvg {
 	position:absolute;
 	top:0;
