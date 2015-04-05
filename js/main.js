@@ -156,7 +156,7 @@ function onOutputClicked(id){
 
 	//temp function that removes disabled classes for cycle detection
 	$('.wrapper').on('click',function(e){
-		if(e.originalEvent.target.className.indexOf('port-right') > -1){
+		if(e.originalEvent.target.className.indexOf('port-right') === -1){
 			selectedOutput = null;
 			resetDisabled();
 			//remove this click event
