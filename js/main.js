@@ -119,14 +119,14 @@ function setSelectedColor(color){
 		$("#"+selectedCell).addClass(color);
 		setColor(selectedCell,color);
 	}
-}
+}	
 
-function onInputClicked(element){
+function onInputClicked(id){
 	if(!selectedOutput){
 		//only add/remove edge if output was clicked first
 		return;
 	}
-	selectedInput = element.parentNode.id;
+	selectedInput = id;
 	if(nodes[selectedOutput].outputs.indexOf(selectedInput) !== -1){
 		//edge exists: need to remove
 		nodes[selectedInput].inputs.splice(nodes[selectedInput].inputs.indexOf(selectedOutput),1);
@@ -145,9 +145,9 @@ function onInputClicked(element){
 	selectedInput = null;
 	selectedOutput = null;
 }
-function onOutputClicked(element){
+function onOutputClicked(id){
 	selectedInput = null;
-	selectedOutput = element.parentNode.id;
+	selectedOutput = id;
 	var cycleNodes = willFormCycle(selectedOutput);
 	//add disabled classes to nodes that will form a cycle
 	for(let node of cycleNodes){
