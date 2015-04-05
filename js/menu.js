@@ -1,3 +1,4 @@
+"use strict";
 var jsonFile = require('jsonfile');
 var gui = require('nw.gui');
 var $ = require('jquery');

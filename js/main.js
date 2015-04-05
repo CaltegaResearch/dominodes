@@ -1,13 +1,18 @@
 "use strict";
+//globals for jquery-ui
 global.document = window.document;
 global.navigator = window.navigator;
+
 var $ = require('jquery');
 require('jquery-ui');
 var Mustache = require('mustache');
 
-var selectedCell = null;
-var selectedInput = null;
-var selectedOutput = null;
+//viewport width/100; may change if window is resized
+var VW = window.innerWidth/100;
+
+var selectedCell;
+var selectedInput;
+var selectedOutput;
 var nodes;
 
 var cellTemplate = $('#cell-template').html();
@@ -58,7 +63,6 @@ function createEdge(from,to){
 }
 
 function saveCellPos(id){
-	var VW = window.innerWidth/100;
 	nodes[id].left = (parseInt($("#"+id).css("left").split("px")[0])/VW) + "vw";
 	nodes[id].top = (parseInt($("#"+id).css("top").split("px")[0])/VW) + "vw";
 }
@@ -252,7 +256,7 @@ $("#trash").droppable({
     }
 });
 $(".wrapper").dblclick(function(e){
-	createCell(e.pageX - 150,e.pageY - 30);
+	createCell(e.pageX, e.pageY);
 });
 $(".wrapper").click(function(e){
 	if(e.originalEvent.target.className === "wrapper"){
