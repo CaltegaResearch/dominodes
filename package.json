@@ -23,20 +23,19 @@
     "jquery-ui": "^1.10.5",
     "jsonfile": "^2.0.0",
     "mathjs": "^1.5.0",
-    "mustache": "^2.0.0",
-    "nw": "latest"
+    "mustache": "^2.0.0"
   },
   "devDependencies": {
     "jshint": "latest",
     "mocha": "latest",
-    "node-webkit-builder": "latest"
+    "node-webkit-builder": "latest",
+    "nw": "latest"
   },
   "scripts": {
     "lint": "jshint js",
     "start": "nw .",
     "test": "mocha",
-    "build": "nwbuild -p win32,win64,osx32,osx64,linux32,linux64 .",
-    "prebuild": "npm test"
+    "build": "nwbuild -p win32,win64,osx32,osx64,linux32,linux64 ."
   },
   "jshintConfig": {
     "eqeqeq": true,
