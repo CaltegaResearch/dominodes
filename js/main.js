@@ -1,4 +1,4 @@
-/*jshint esnext: true */
+"use strict";
 global.document = window.document;
 global.navigator = window.navigator;
 var $ = require('jquery');
@@ -8,6 +8,7 @@ var Mustache = require('mustache');
 var selectedCell = null;
 var selectedInput = null;
 var selectedOutput = null;
+var nodes;
 
 var cellTemplate = $('#cell-template').html();
 Mustache.parse(cellTemplate);
@@ -84,19 +85,19 @@ function updateEdges(id){
 	var cellWidth = parseInt($("#"+id).css("width").split("px")[0]);
 	var cellHeight = parseInt($("#"+id).css("height").split("px")[0]);
 
-	for(var i=0; i<nodes[id].inputs.length;i++){
-		var pathid = nodes[id].inputs[i]+id;
-		var path = document.getElementById(pathid);
-		var ds = path.getAttribute("d").split(" ");
+	for(let i=0; i<nodes[id].inputs.length;i++){
+		let pathid = nodes[id].inputs[i]+id;
+		let path = document.getElementById(pathid);
+		let ds = path.getAttribute("d").split(" ");
 		ds[1] = "C"+((offset.left+parseInt(ds[0].split("M")[1].split(",")[0]))/2)+","+ds[1].split(",")[1];
 		ds[2] = ((offset.left+parseInt(ds[0].split("M")[1].split(",")[0]))/2)+","+(offset.top+cellHeight/2);
 		ds[3] = offset.left+","+(offset.top+cellHeight/2);
 		path.setAttribute('d',ds.join(" "));
 	}
-	for(var i=0; i<nodes[id].outputs.length;i++){
-		var pathid = id+nodes[id].outputs[i];
-		var path = document.getElementById(pathid);
-		var ds = path.getAttribute("d").split(" ");
+	for(let i=0; i<nodes[id].outputs.length;i++){
+		let pathid = id+nodes[id].outputs[i];
+		let path = document.getElementById(pathid);
+		let ds = path.getAttribute("d").split(" ");
 		ds[0] = "M"+(offset.left+cellWidth)+","+(offset.top+cellHeight/2);
 		ds[1] = "C"+((offset.left+cellWidth+parseInt(ds[3].split(",")[0]))/2)+","+(offset.top+cellHeight/2);
 		ds[2] = ((offset.left+cellWidth+parseInt(ds[3].split(",")[0]))/2)+","+ds[2].split(",")[1];
@@ -152,7 +153,7 @@ function onOutputClicked(element){
 		$('#'+node).addClass("disabled");
 	}
 	$(".wrapper").on("click",function(e){
-		if(e.originalEvent.target.className != "port port-right"){
+		if(e.originalEvent.target.className !== "port port-right"){
 			selectedOutput = null;
 			resetDisabled();
 			$(this).off(e);
@@ -162,7 +163,7 @@ function onOutputClicked(element){
 
 function resetDisabled(){
 	var keys = Object.keys(nodes);
-	for(var i=0; i<keys.length;i++){
+	for(let i=0; i<keys.length;i++){
 		$("#"+keys[i]).removeClass("disabled");
 	}
 }
@@ -208,9 +209,9 @@ function loadSideBar(id){
 	$("#label").val(label);
 	$("#formulaInput").val(formula);
 	$("#inputsList").html("");
-	for(var i=0; i<inputs.length; i++){
-		var c = nodes[inputs[i]].color;
-		var l = nodes[inputs[i]].label;
+	for(let i=0; i<inputs.length; i++){
+		let c = nodes[inputs[i]].color;
+		let l = nodes[inputs[i]].label;
 		$("#inputsList").append(
 			"<li onclick=\"addToFormula('"+l+"')\" class=\""+c+"\">"+l+"</li>"
 		);
@@ -219,8 +220,8 @@ function loadSideBar(id){
 
 $(window).resize(function(){
 	var keys = Object.keys(nodes);
-	for(var i=0; i<keys.length; i++){
-		var id = keys[i];
+	for(let i=0; i<keys.length; i++){
+		let id = keys[i];
 		$("#"+id).css('top',nodes[id].top);
 		$("#"+id).css('left',nodes[id].left);
 		updateEdges(id);
@@ -228,7 +229,7 @@ $(window).resize(function(){
 });
 
 $("#label").keydown(function(e){
-	if(e.which == 13){
+	if(e.which === 13){
 		e.stopPropagation();
 		e.currentTarget.blur();
 	}
@@ -237,11 +238,11 @@ $("#label").keyup(function(e){
 	setLabel(selectedCell.id, $("#label").val());
 });
 $("#formulaInput").keydown(function(e){
-	if(e.which == 13){
+	if(e.which === 13){
 		e.stopPropagation();
 		e.currentTarget.blur();
 	}
-})
+});
 $("#formulaInput").keyup(function(e){
 	setFormula(selectedCell.id, $("#formulaInput").val());
 });
@@ -257,12 +258,12 @@ $(".wrapper").dblclick(function(e){
 });
 $(".wrapper").click(function(e){
 	console.log(e);
-	if(e.originalEvent.target.className == "wrapper"){
+	if(e.originalEvent.target.className === "wrapper"){
 		unselectCell();
 	}
-})
+});
 $(document).keypress(function(e) {
-	if(e.which == 13) {
+	if(e.which === 13) {
  	 	e.stopPropagation();
  		window.blur();
 	    unselectCell();
