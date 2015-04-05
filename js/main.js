@@ -179,7 +179,7 @@ function resetDisabled(){
 }
 
 function onCellClick(e){
-	selectCell(e.currentTarget);
+	selectCell(e.currentTarget.id);
 	$("#formulaInput").focus();
 }
 function onCellDblClick(e){
@@ -188,11 +188,11 @@ function onCellDblClick(e){
 
 function selectCell(id){
 	if(selectedCell){
-		$("#"+selectedCell).removeClass("selected");
+		$("#"+selectedCell.id).removeClass("selected");
 	}
 	$("#"+id).addClass("selected");
 	selectedCell = document.getElementById(id);
-	loadSideBar(selectedCell);
+	loadSideBar(selectedCell.id);
 }
 
 function unselectCell(){
