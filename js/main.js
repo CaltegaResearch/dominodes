@@ -42,7 +42,7 @@ function createCell(x,y,color,id,value){
 	$(".wrapper").append(cell);
 
 	saveCellPos(ID);
-	selectCell(cell.get(0));
+	selectCell(ID);
 	$("#label").focus();
 	$("#label").select();
 }
@@ -77,7 +77,7 @@ function destroyCell(id){
 
 function onCellDragged(event, ui){
 	var id = event.currentTarget.id;
-	selectCell(event.currentTarget);
+	selectCell(id);
 	$("#formulaInput").focus();
 	saveCellPos(id);
 	updateEdges(id);
@@ -186,13 +186,13 @@ function onCellDblClick(e){
 	e.stopPropagation();
 }
 
-function selectCell(cell){
+function selectCell(id){
 	if(selectedCell){
-		selectedCell.classList.remove("selected");
+		$("#"+selectedCell).removeClass("selected");
 	}
-	cell.classList.add("selected");
-	selectedCell = cell;
-	loadSideBar(selectedCell.id);
+	$("#"+id).addClass("selected");
+	selectedCell = document.getElementById(id);
+	loadSideBar(selectedCell);
 }
 
 function unselectCell(){
