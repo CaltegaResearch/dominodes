@@ -45,16 +45,14 @@ $("#saveFileDialog").change(function(key){
 	$("#saveFileDialog").val("");
 });
 
-
-
 initMenu();
 
 function clearGraph(){
 	var keys = Object.keys(nodes);
-	for(var i=0; i<keys.length; i++){
+	for(let i=0; i<keys.length; i++){
 		$("#"+keys[i]).remove();
 		if(nodes[keys[i]].outputs){
-			for(var j=0; j<nodes[keys[i]].outputs.length; j++){
+			for(let j=0; j<nodes[keys[i]].outputs.length; j++){
 				$("#"+keys[i]+nodes[keys[i]].outputs[j]).remove();
 			}
 		}
@@ -73,28 +71,26 @@ function saveGraph(graphName){
 }
 
 function loadGraph(graphName){
-	if(graphName == ""){
+	if(!graphName){
 		return;
 	}
 	clearGraph();
-	console.log(graphName);
 	jsonFile.readFile(graphName, function(err,obj){
 		if(!err){
 			nodes = obj;
-			console.log(Object.keys(obj));
 			var keys = Object.keys(nodes);
 			uniqueNum = keys.length + 1;
-			for(var i=0; i<keys.length; i++){
-				var id = keys[i];
-				var x = nodes[id].left;
-				var y = nodes[id].top;
-				var color = nodes[id].color;
-				var value = nodes[id].value;
+			for(let i=0; i<keys.length; i++){
+				let id = keys[i];
+				let x = nodes[id].left;
+				let y = nodes[id].top;
+				let color = nodes[id].color;
+				let value = nodes[id].value;
 				createCell(x,y,color,id,value);
 			}
-			for(var i=0; i<keys.length; i++){
-				var id = keys[i];
-				for(var j=0; j<nodes[id].outputs.length; j++){
+			for(let i=0; i<keys.length; i++){
+				let id = keys[i];
+				for(let j=0; j<nodes[id].outputs.length; j++){
 					createEdge(id,nodes[id].outputs[j]);
 				}
 			}

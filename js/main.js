@@ -126,7 +126,7 @@ function clearSelectedColor(){
 }
 
 function onInputClicked(element){
-	if(selectedOutput == null){
+	if(!selectedOutput){
 		return;
 	}
 	selectedInput = element.parentNode.id;
