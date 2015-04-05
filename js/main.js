@@ -7,6 +7,8 @@ var $ = require('jquery');
 require('jquery-ui');
 var Mustache = require('mustache');
 
+const COLORS = ['blue','teal','green','yellow','orange','red','pink','grey'];
+
 //viewport width/100; may change if window is resized
 var VW = window.innerWidth/100;
 
@@ -110,22 +112,12 @@ function updateEdges(id){
 
 function setSelectedColor(color){
 	if(selectedCell){
-		clearSelectedColor();
+		//clear any color class it already has
+		for(let color of COLORS){
+			$("#"+selectedCell).removeClass(color);
+		}
 		$("#"+selectedCell).addClass(color);
 		setColor(selectedCell,color);
-	}
-}
-
-function clearSelectedColor(){
-	if(selectedCell){
-		$("#"+selectedCell).removeClass('blue');
-		$("#"+selectedCell).removeClass('teal');
-		$("#"+selectedCell).removeClass('green');
-		$("#"+selectedCell).removeClass('yellow');
-		$("#"+selectedCell).removeClass('orange');
-		$("#"+selectedCell).removeClass('red');
-		$("#"+selectedCell).removeClass('pink');
-		$("#"+selectedCell).removeClass('grey');
 	}
 }
 
