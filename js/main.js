@@ -19,21 +19,24 @@ var cellTemplate = $('#cell-template').html();
 Mustache.parse(cellTemplate);
 
 function createCell(x,y,color,id,value){
+	//default options
 	var ID = id || addNode();
 	color = color || "grey";
 	value = value || '-';
+
 	var data = {
 		"label" : nodes[ID].label,
 		"value" : value,
-		"color" : color
+		"color" : color,
+		"top" : y + "px",
+		"left" : x + "px",
+		"id" : ID
 	};
 
 	var rendered = Mustache.render(cellTemplate, data);
-	var cell = $(rendered).draggable({snap:true, containment: "parent"})
+	var cell = $(rendered)
+		.draggable({snap: true, containment: "parent"})
 		.bind('drag', onCellDragged)
-		.attr("id", ID)
-		.css("top", y)
-		.css("left", x)
 		.dblclick(onCellDblClick)
 		.click(onCellClick);
 	$(".wrapper").append(cell);
@@ -202,7 +205,10 @@ function addToFormula(text){
 	var cursorPos = document.getElementById("formulaInput").selectionStart;
 	var id = selectedCell.id;
 	var oldFormula = nodes[id].formula;
-	var newFormula = oldFormula.substring(0,cursorPos)+text+oldFormula.substring(cursorPos);
+	var newFormula = oldFormula.substring(0,cursorPos) +
+					 text +
+					 oldFormula.substring(cursorPos);
+
 	setFormula(id,newFormula);
 	$("#formulaInput").val(newFormula);
 	$("#formulaInput").focus();

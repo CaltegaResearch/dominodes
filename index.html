@@ -54,7 +54,7 @@
   <input id="saveFileDialog" type="file" nwsaveas="mygraph.dominodes"/>
 
   <script id="cell-template" type="x-tmpl-mustache">
-    <div class="draggable cell {{color}}">
+    <div id="{{ id }}" style="top:{{ top }};left:{{ left }};" class="draggable cell {{color}}">
       <div class="left">
         <p>{{ label }}</p>
       </div>
