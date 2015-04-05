@@ -75,7 +75,6 @@ function onCellDragged(event, ui){
 	var id = event.currentTarget.id;
 	selectCell(event.currentTarget);
 	$("#formulaInput").focus();
-	console.log(ui.offset);
 	saveCellPos(id);
 	updateEdges(id);
 }
@@ -171,7 +170,6 @@ function resetDisabled(){
 function onCellClick(e){
 	selectCell(e.currentTarget);
 	$("#formulaInput").focus();
-	//e.stopPropagation();
 }
 function onCellDblClick(e){
 	e.stopPropagation();
@@ -257,7 +255,6 @@ $(".wrapper").dblclick(function(e){
 	createCell(e.pageX - 150,e.pageY - 30);
 });
 $(".wrapper").click(function(e){
-	console.log(e);
 	if(e.originalEvent.target.className === "wrapper"){
 		unselectCell();
 	}
