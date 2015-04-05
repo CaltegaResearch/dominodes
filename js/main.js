@@ -85,8 +85,8 @@ function updateEdges(id){
 	var cellWidth = parseInt($("#"+id).css("width").split("px")[0]);
 	var cellHeight = parseInt($("#"+id).css("height").split("px")[0]);
 
-	for(let i=0; i<nodes[id].inputs.length;i++){
-		let pathid = nodes[id].inputs[i]+id;
+	for(let inputId of nodes[id].inputs){
+		let pathid = inputId+id;
 		let path = document.getElementById(pathid);
 		let ds = path.getAttribute("d").split(" ");
 		ds[1] = "C"+((offset.left+parseInt(ds[0].split("M")[1].split(",")[0]))/2)+","+ds[1].split(",")[1];
@@ -94,8 +94,8 @@ function updateEdges(id){
 		ds[3] = offset.left+","+(offset.top+cellHeight/2);
 		path.setAttribute('d',ds.join(" "));
 	}
-	for(let i=0; i<nodes[id].outputs.length;i++){
-		let pathid = id+nodes[id].outputs[i];
+	for(let outputId of nodes[id].outputs){
+		let pathid = id+outputId;
 		let path = document.getElementById(pathid);
 		let ds = path.getAttribute("d").split(" ");
 		ds[0] = "M"+(offset.left+cellWidth)+","+(offset.top+cellHeight/2);
@@ -155,7 +155,7 @@ function onOutputClicked(element){
 	selectedOutput = element.parentNode.id;
 	var cycleNodes = willFormCycle(selectedOutput);
 	//add disabled classes to nodes that will form a cycle
-	for(var node of cycleNodes){
+	for(let node of cycleNodes){
 		$('#'+node).addClass("disabled");
 	}
 
@@ -170,9 +170,8 @@ function onOutputClicked(element){
 }
 
 function resetDisabled(){
-	var keys = Object.keys(nodes);
-	for(let i=0; i<keys.length;i++){
-		$("#"+keys[i]).removeClass("disabled");
+	for(let id of Object.keys(nodes)){
+		$("#"+id).removeClass("disabled");
 	}
 }
 
@@ -219,13 +218,12 @@ function clearSideBar(){
 function loadSideBar(id){
 	var label = nodes[id].label;
 	var formula = nodes[id].formula;
-	var inputs = nodes[id].inputs;
 	$("#label").val(label);
 	$("#formulaInput").val(formula);
 	$("#inputsList").html("");
-	for(let i=0; i<inputs.length; i++){
-		let c = nodes[inputs[i]].color;
-		let l = nodes[inputs[i]].label;
+	for(let id of nodes[id].inputs){
+		let c = nodes[id].color;
+		let l = nodes[id].label;
 		$("#inputsList").append(
 			"<li onclick=\"addToFormula('"+l+"')\" class=\""+c+"\">"+l+"</li>"
 		);
@@ -233,9 +231,7 @@ function loadSideBar(id){
 }
 
 $(window).resize(function(){
-	var keys = Object.keys(nodes);
-	for(let i=0; i<keys.length; i++){
-		let id = keys[i];
+	for(let id of Object.keys(nodes)){
 		$("#"+id).css('top',nodes[id].top);
 		$("#"+id).css('left',nodes[id].left);
 		updateEdges(id);
