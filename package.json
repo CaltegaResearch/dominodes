@@ -24,17 +24,19 @@
     "jsonfile": "^2.0.0",
     "mathjs": "^1.5.0",
     "mustache": "^2.0.0",
-    "nw": "latest",
-    "virtual-dom": "^2.0.1"
+    "nw": "latest"
   },
   "devDependencies": {
     "jshint": "latest",
-    "mocha": "latest"
+    "mocha": "latest",
+    "node-webkit-builder": "latest"
   },
   "scripts": {
     "lint": "jshint js",
     "start": "nw .",
-    "test": "mocha"
+    "test": "mocha",
+    "build": "nwbuild -p win32,win64,osx32,osx64,linux32,linux64 .",
+    "prebuild": "npm test"
   },
   "jshintConfig": {
     "eqeqeq": true,
