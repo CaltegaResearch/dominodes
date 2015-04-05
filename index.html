@@ -54,7 +54,7 @@
   <input id="saveFileDialog" type="file" nwsaveas="mygraph.dominodes"/>
 
   <script id="cell-template" type="x-tmpl-mustache">
-    <div class="draggable cell {{color}}">
+    <div id="{{ id }}" style="top:{{ top }};left:{{ left }};" class="draggable cell {{color}}">
       <div class="left">
         <p>{{ label }}</p>
       </div>
@@ -62,8 +62,8 @@
         <p>{{ value }}</p>
       </div>
       <div class="clear"></div>
-      <div class="port port-left" onclick="onInputClicked(this);"></div>
-      <div class="port port-right" onclick="onOutputClicked(this);"></div>
+      <div class="port port-left" onclick="onInputClicked(this.parentNode.id);"></div>
+      <div class="port port-right" onclick="onOutputClicked(this.parentNode.id);"></div>
     </div>
   </script>
 
