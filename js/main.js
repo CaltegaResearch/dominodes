@@ -111,21 +111,21 @@ function updateEdges(id){
 function setSelectedColor(color){
 	if(selectedCell){
 		clearSelectedColor();
-		selectedCell.classList.add(color);
-		setColor(selectedCell.id,color);
+		$("#"+selectedCell).addClass(color);
+		setColor(selectedCell,color);
 	}
 }
 
 function clearSelectedColor(){
 	if(selectedCell){
-		selectedCell.classList.remove('blue');
-		selectedCell.classList.remove('teal');
-		selectedCell.classList.remove('green');
-		selectedCell.classList.remove('yellow');
-		selectedCell.classList.remove('orange');
-		selectedCell.classList.remove('red');
-		selectedCell.classList.remove('pink');
-		selectedCell.classList.remove('grey');
+		$("#"+selectedCell).removeClass('blue');
+		$("#"+selectedCell).removeClass('teal');
+		$("#"+selectedCell).removeClass('green');
+		$("#"+selectedCell).removeClass('yellow');
+		$("#"+selectedCell).removeClass('orange');
+		$("#"+selectedCell).removeClass('red');
+		$("#"+selectedCell).removeClass('pink');
+		$("#"+selectedCell).removeClass('grey');
 	}
 }
 
@@ -188,22 +188,22 @@ function onCellDblClick(e){
 
 function selectCell(id){
 	if(selectedCell){
-		$("#"+selectedCell.id).removeClass("selected");
+		$("#"+selectedCell).removeClass("selected");
 	}
 	$("#"+id).addClass("selected");
-	selectedCell = document.getElementById(id);
-	loadSideBar(selectedCell.id);
+	selectedCell = id;
+	loadSideBar(selectedCell);
 }
 
 function unselectCell(){
 	if(selectedCell){
-		selectedCell.classList.remove("selected");
+		$("#"+selectedCell).removeClass("selected");
 	}
 }
 
 function addToFormula(text){
 	var cursorPos = document.getElementById("formulaInput").selectionStart;
-	var id = selectedCell.id;
+	var id = selectedCell;
 	var oldFormula = nodes[id].formula;
 	var newFormula = oldFormula.substring(0,cursorPos) +
 					 text +
@@ -251,7 +251,7 @@ $("#label").keydown(function(e){
 	}
 });
 $("#label").keyup(function(e){
-	setLabel(selectedCell.id, $("#label").val());
+	setLabel(selectedCell, $("#label").val());
 });
 $("#formulaInput").keydown(function(e){
 	if(e.which === 13){
@@ -260,7 +260,7 @@ $("#formulaInput").keydown(function(e){
 	}
 });
 $("#formulaInput").keyup(function(e){
-	setFormula(selectedCell.id, $("#formulaInput").val());
+	setFormula(selectedCell, $("#formulaInput").val());
 });
 
 $("#trash").droppable({
