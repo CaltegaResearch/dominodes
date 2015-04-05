@@ -8,10 +8,10 @@
   "window": {
     "toolbar": true,
     "resizable": true,
-    "min_width": 800,
-    "min_height": 500,
-    "width": 800,
-    "height": 500
+    "min_width": 1440,
+    "min_height": 810,
+    "width": 1440,
+    "height": 810
   },
   "license": "MIT",
   "repository": {
