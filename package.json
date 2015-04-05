@@ -34,7 +34,7 @@
   "scripts": {
     "lint": "jshint js",
     "start": "nw .",
-    "prestart": "npm install",
+    "prestart": "npm test",
     "test": "mocha"
   },
   "jshintConfig": {

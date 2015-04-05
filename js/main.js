@@ -69,10 +69,7 @@ function saveCellPos(id){
 
 function destroyCell(id){
 	removeNode(id);
-	$("#formulaInput").val("");
-	$("#label").val("");
-	$("#inputsList").html("");
-	$("#formulaInput").blur();
+	clearSideBar();
 }
 
 function onCellDragged(event, ui){
@@ -131,20 +128,25 @@ function clearSelectedColor(){
 
 function onInputClicked(element){
 	if(!selectedOutput){
+		//only add/remove edge if output was clicked first
 		return;
 	}
 	selectedInput = element.parentNode.id;
 	if(nodes[selectedOutput].outputs.indexOf(selectedInput) !== -1){
+		//edge exists: need to remove
 		nodes[selectedInput].inputs.splice(nodes[selectedInput].inputs.indexOf(selectedOutput),1);
 		nodes[selectedOutput].outputs.splice(nodes[selectedOutput].outputs.indexOf(selectedInput),1);
 		$("#"+selectedOutput+selectedInput).remove();
 	}
 	else if(!willFormCycle(selectedOutput).has(selectedInput)){
+		//edge doesn't exist and doesn't form cycle: need to add
 		addInput(selectedInput,selectedOutput);
 		addOutput(selectedOutput,selectedInput);
 		createEdge(selectedOutput,selectedInput);
 		refreshGraph();
 	}
+
+	//reset output and input
 	selectedInput = null;
 	selectedOutput = null;
 }
@@ -152,9 +154,12 @@ function onOutputClicked(element){
 	selectedInput = null;
 	selectedOutput = element.parentNode.id;
 	var cycleNodes = willFormCycle(selectedOutput);
+	//add disabled classes to nodes that will form a cycle
 	for(var node of cycleNodes){
 		$('#'+node).addClass("disabled");
 	}
+
+	//temp function that removes disabled classes for cycle detection
 	$(".wrapper").on("click",function(e){
 		if(e.originalEvent.target.className !== "port port-right"){
 			selectedOutput = null;
@@ -202,6 +207,13 @@ function addToFormula(text){
 	setFormula(id,newFormula);
 	$("#formulaInput").val(newFormula);
 	$("#formulaInput").focus();
+}
+
+function clearSideBar(){
+	$("#formulaInput").val("");
+	$("#label").val("");
+	$("#inputsList").html("");
+	$("#formulaInput").blur();
 }
 
 function loadSideBar(id){
@@ -259,11 +271,13 @@ $(".wrapper").dblclick(function(e){
 	createCell(e.pageX, e.pageY);
 });
 $(".wrapper").click(function(e){
+	//only unselect if they clicked blank area
 	if(e.originalEvent.target.className === "wrapper"){
 		unselectCell();
 	}
 });
 $(document).keypress(function(e) {
+	//pressing enter deselects cell
 	if(e.which === 13) {
  	 	e.stopPropagation();
  		window.blur();
