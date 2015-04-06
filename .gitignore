@@ -1,3 +1,4 @@
 *.dominodes
 node_modules/
 *.log
+build/
