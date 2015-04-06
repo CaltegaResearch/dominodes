@@ -83,8 +83,8 @@ function loadGraph(graphName){
 			uniqueNum = keys.length + 1;
 			for(let i=0; i<keys.length; i++){
 				let id = keys[i];
-				let x = nodes[id].left;
-				let y = nodes[id].top;
+				let x = parseInt(nodes[id].left.split('vw'))*VW;
+				let y = parseInt(nodes[id].top.split('vw'))*VW;
 				let color = nodes[id].color;
 				let value = nodes[id].value;
 				createCell(x,y,color,id,value);
