@@ -1,7 +1,11 @@
- language: node_js
- node_js:
-   - "stable"
+language: node_js
+node_js:
+  - "stable"
 
- branches:
-   only:
-     - "master"
+branches:
+  only:
+    - "master"
+
+cache:
+  directories:
+    - node_modules
