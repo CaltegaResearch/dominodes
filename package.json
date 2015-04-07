@@ -35,7 +35,9 @@
     "lint": "jshint js",
     "start": "nw .",
     "test": "mocha",
-    "build": "nwbuild -p win32,win64,osx32,osx64,linux32,linux64 ."
+    "build": "nwbuild -p win32,win64,osx32,osx64,linux32,linux64 .",
+    "prebuild": "npm test",
+    "pretest": "npm run lint"
   },
   "jshintConfig": {
     "eqeqeq": true,
@@ -43,6 +45,7 @@
     "eqnull": true,
     "esnext": true,
     "evil": true,
-    "node": true
+    "node": true,
+    "browser": true
   }
 }

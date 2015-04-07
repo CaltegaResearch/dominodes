@@ -1,0 +1,9 @@
+{
+  "eqeqeq": true,
+  "curly": true,
+  "eqnull": true,
+  "esnext": true,
+  "evil": true,
+  "node": true,
+  "browser": true
+}

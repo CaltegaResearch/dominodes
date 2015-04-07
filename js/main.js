@@ -1,3 +1,6 @@
+
+/* global addNode,removeNode,setColor,setLabel,setFormula,willFormCycle,
+   addInput,addOutput,refreshGraph */
 'use strict';
 //globals for jquery-ui
 global.document = window.document;
@@ -113,13 +116,13 @@ function updateEdges(id){
 function setSelectedColor(color){
 	if(selectedCell){
 		//clear any color class it already has
-		for(let color of COLORS){
-			$('#'+selectedCell).removeClass(color);
+		for(let possibleColor of COLORS){
+			$('#'+selectedCell).removeClass(possibleColor);
 		}
 		$('#'+selectedCell).addClass(color);
 		setColor(selectedCell,color);
 	}
-}	
+}
 
 function onInputClicked(id){
 	if(!selectedOutput){
@@ -221,9 +224,9 @@ function loadSideBar(id){
 	$('#label').val(label);
 	$('#formulaInput').val(formula);
 	$('#inputsList').html('');
-	for(let id of nodes[id].inputs){
-		let c = nodes[id].color;
-		let l = nodes[id].label;
+	for(let inputId of nodes[id].inputs){
+		let c = nodes[inputId].color;
+		let l = nodes[inputId].label;
 		$('#inputsList').append(
 			'<li onclick="addToFormula(\''+l+'\')" class="'+c+'">'+l+'</li>'
 		);

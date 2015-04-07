@@ -1,7 +1,7 @@
 /*jshint esnext: true */
 'use strict';
 var $ = require('jquery');
-var Math = require('mathjs');
+var math = require('mathjs');
 var uniqueNum = 1;
 var nodes = {};
 const ERRORSTRING = "---";
@@ -95,13 +95,15 @@ function evalFormula(id){
 	var replaced = nodes[id].formula;
 
 	for(let cell of nodes[id].inputs){
-		if(nodes[cell].value === ERRORSTRING) return ERRORSTRING;
+		if(nodes[cell].value === ERRORSTRING){
+			 return ERRORSTRING;
+		}
 		let re = new RegExp(nodes[cell].label, "gi");
 		replaced = replaced.replace(re, nodes[cell].value);
 	}
 
 	try{
-		return Math.eval(replaced) || '-';
+		return math.eval(replaced) || '-';
 	}
 	catch(err){
 		return ERRORSTRING;
@@ -113,7 +115,9 @@ function evalGraph(){
 	var notYet = Object.keys(nodes);
 	function traverse(cell){
 		for(let next of nodes[cell].inputs){
-			if (visited.indexOf(next) === -1) traverse(next);
+			if (visited.indexOf(next) === -1){
+				traverse(next);
+			}
 		}
 		setValue(cell, evalFormula(cell));
 		visited.push(notYet.splice(notYet.indexOf(cell), 1)[0]);

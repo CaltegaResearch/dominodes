@@ -1,3 +1,4 @@
+/* global nodes,uniqueNum,alert,VW,createCell,createEdge */
 "use strict";
 var jsonFile = require('jsonfile');
 var gui = require('nw.gui');
@@ -58,8 +59,8 @@ function clearGraph(){
 			}
 		}
 	}
-	nodes = {};
-	uniqueNum = 1;
+	nodes = {}; // jshint ignore:line
+	uniqueNum = 1; // jshint ignore:line
 }
 
 function saveGraph(graphName){
@@ -78,9 +79,9 @@ function loadGraph(graphName){
 	clearGraph();
 	jsonFile.readFile(graphName, function(err,obj){
 		if(!err){
-			nodes = obj;
+			nodes = obj; // jshint ignore:line
 			var keys = Object.keys(nodes);
-			uniqueNum = keys.length + 1;
+			uniqueNum = keys.length + 1; // jshint ignore:line
 			for(let i=0; i<keys.length; i++){
 				let id = keys[i];
 				let x = parseInt(nodes[id].left.split('vw'))*VW;
