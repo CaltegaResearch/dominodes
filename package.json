@@ -6,7 +6,7 @@
   "author": "Nick Munoz-McDonald & Jared Harkins",
   "nodejs": true,
   "window": {
-    "toolbar": false,
+    "toolbar": true,
     "resizable": true,
     "min_width": 1440,
     "min_height": 810,

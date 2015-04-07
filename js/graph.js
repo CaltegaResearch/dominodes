@@ -51,11 +51,16 @@ function setLabel(id, label){
 	nodes[id].label = label;
 	$("#"+id+" .left p").html(label);
 	refreshGraph();
+	if(label === ''){
+		$("#"+id).addClass("error");
+	}else{
+		$("#"+id).removeClass("error");
+	}
 }
 function setValue(id, value){
 	nodes[id].value = value;
 	$("#"+id+" .right p").html(value);
-	if(value == ERRORSTRING){
+	if(value === ERRORSTRING){
 		$("#"+id).addClass("error");
 	}else{
 		$("#"+id).removeClass("error");
@@ -96,7 +101,7 @@ function evalFormula(id){
 	}
 
 	try{
-		return Math.eval(replaced);
+		return Math.eval(replaced) || '-';
 	}
 	catch(err){
 		return ERRORSTRING;
@@ -108,7 +113,7 @@ function evalGraph(){
 	var notYet = Object.keys(nodes);
 	function traverse(cell){
 		for(let next of nodes[cell].inputs){
-			if (visited.indexOf(next) == -1) traverse(next);
+			if (visited.indexOf(next) === -1) traverse(next);
 		}
 		setValue(cell, evalFormula(cell));
 		visited.push(notYet.splice(notYet.indexOf(cell), 1)[0]);
