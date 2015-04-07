@@ -9,3 +9,9 @@ branches:
 cache:
   directories:
     - node_modules
+
+notifications:
+  email:
+    recipients:
+      - jharkins67@gmail.com
+      - nmun2615@gmail.com
