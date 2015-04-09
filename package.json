@@ -24,7 +24,8 @@
     "jquery-ui": "^1.10.5",
     "jsonfile": "^2.0.0",
     "mathjs": "^1.5.0",
-    "mustache": "^2.0.0"
+    "mustache": "^2.0.0",
+    "node-uuid": "^1.4.3"
   },
   "devDependencies": {
     "jshint": "latest",
