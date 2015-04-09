@@ -5,6 +5,8 @@ var app = app || {};
 var $ = require('jquery');
 var Backbone = require('backbone');
 Backbone.$ = $;
+var NodeView = require('./js/views/node.js');
+var Dominodes = require('./js/models/graph.js');
 
 var GraphView = Backbone.View.extend({
 	el: '#wrapper',
@@ -36,4 +38,5 @@ var GraphView = Backbone.View.extend({
 	onClick : function(){}
 });
 
-var graphview = new GraphView();
+var graph = new Dominodes.Graph();
+var graphview = new GraphView({collection: graph});

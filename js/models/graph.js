@@ -16,7 +16,7 @@
 			top:"0",
 			left:"0"
 		},
-		initialize:{
+		initialize: function(){
 			this.set({
 				id: uuid.v4(),
 				label: "Node"+(uniqueNum++)
