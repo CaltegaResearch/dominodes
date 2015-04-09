@@ -27,3 +27,5 @@ var NodeView = Backbone.View.extend({
 	onInputClicked : function(){},
 	onOutputClicked : function(){}
 });
+
+module.exports = NodeView;
