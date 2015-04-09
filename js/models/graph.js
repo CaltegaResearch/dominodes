@@ -27,4 +27,7 @@
 	var Graph = Backbone.Collection.extend({
 	  model: Node
 	});
+
+	module.exports.Node = Node;
+	module.exports.Graph = Graph;
 })();
