@@ -22,7 +22,7 @@ var GraphView = Backbone.View.extend({
 	},
 
 	render: function(){
-		this.$el.html('success');
+		this.$el.html();
 	},
 
 	onDblClick : function(){},

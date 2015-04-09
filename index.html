@@ -39,17 +39,7 @@
       <input id="formulaInput"/>
     </div>
   </div>
-  <div id="trash"></div>
-  <div class="colorBar">
-    <div class="color blue" onclick="setSelectedColor('blue');"></div>
-    <div class="color teal" onclick="setSelectedColor('teal');"></div>
-    <div class="color green" onclick="setSelectedColor('green');"></div>
-    <div class="color grey" onclick="setSelectedColor('grey');"></div>
-    <div class="color yellow" onclick="setSelectedColor('yellow');"></div>
-    <div class="color orange" onclick="setSelectedColor('orange');"></div>
-    <div class="color red" onclick="setSelectedColor('red');"></div>
-    <div class="color pink" onclick="setSelectedColor('pink');"></div>
-  </div>
+  <div id="toolbar"></div>
   <input id="openFileDialog" type="file" accept=".dominodes"/>
   <input id="saveFileDialog" type="file" nwsaveas="mygraph.dominodes"/>
 
@@ -78,11 +68,25 @@
       <input id="formulaInput"/>
     </div>
   </script>
+  <script id="toolbar-template" type="x-tmpl-mustache">
+    <div id="trash"></div>
+    <div class="colorBar">
+      <div class="color blue" onclick="setSelectedColor('blue');"></div>
+      <div class="color teal" onclick="setSelectedColor('teal');"></div>
+      <div class="color green" onclick="setSelectedColor('green');"></div>
+      <div class="color grey" onclick="setSelectedColor('grey');"></div>
+      <div class="color yellow" onclick="setSelectedColor('yellow');"></div>
+      <div class="color orange" onclick="setSelectedColor('orange');"></div>
+      <div class="color red" onclick="setSelectedColor('red');"></div>
+      <div class="color pink" onclick="setSelectedColor('pink');"></div>
+    </div>
+  </script>
 
   <script type="text/javascript" src="js/graph.js"></script>
   <script type="text/javascript" src="js/menu.js"></script>
   <script type="text/javascript" src="js/main.js"></script>
   <script type="text/javascript" src="js/views/graph.js"></script>
   <script type="text/javascript" src="js/views/sidebar.js"></script>
+  <script type="text/javascript" src="js/views/toolbar.js"></script>
 </body>
 </html>
