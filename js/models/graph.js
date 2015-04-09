@@ -20,7 +20,7 @@
 		}
 	});
 
-	var Nodes = Backbone.Collection.extend({
+	var Graph = Backbone.Collection.extend({
 	  model: Node
 	});
 })();
