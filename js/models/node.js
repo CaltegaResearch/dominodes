@@ -20,7 +20,7 @@
 			this.set({
 				id: uuid.v4(),
 				label: "Node"+(uniqueNum++)
-			})
+			});
 		}
 	});
 
