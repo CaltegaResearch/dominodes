@@ -1,7 +1,7 @@
-
 /* global addNode,removeNode,setColor,setLabel,setFormula,willFormCycle,
    addInput,addOutput,refreshGraph */
 'use strict';
+
 //globals for jquery-ui
 global.document = window.document;
 global.navigator = window.navigator;
@@ -9,6 +9,7 @@ global.navigator = window.navigator;
 var $ = require('jquery');
 require('jquery-ui');
 var Mustache = require('mustache');
+var Backbone = require('backbone');
 
 const COLORS = ['blue','teal','green','yellow','orange','red','pink','grey'];
 

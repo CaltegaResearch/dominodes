@@ -1,10 +1,12 @@
 /*jshint esnext: true */
 'use strict';
+
 var $ = require('jquery');
 var math = require('mathjs');
+var Backbone = require('backbone');
 var uniqueNum = 1;
 var nodes = {};
-const ERRORSTRING = "---";
+const ERRORSTRING = "---";	
 
 function addNode(){
 	var data = {
