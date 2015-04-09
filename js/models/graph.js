@@ -3,12 +3,10 @@
 	'use strict';
 	var Backbone = require('backbone');
 	var uuid = require('node-uuid');
-	var uniqueNum = 1;
+	var uniqueNum = 0;
 
 	var Node = Backbone.Model.extend({
 		defaults:{
-			id: uuid.v4(),
-			label: "Node"+uniqueNum,
 			value: "",
 			inputs: [],
 			outputs: [],
@@ -17,6 +15,12 @@
 			comment: "",
 			top:"0",
 			left:"0"
+		},
+		initialize:{
+			this.set({
+				id: uuid.v4(),
+				label: "Node"+(uniqueNum++)
+			})
 		}
 	});
 
