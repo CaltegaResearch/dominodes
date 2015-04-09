@@ -11,25 +11,29 @@ var GraphView = Backbone.View.extend({
 
 	events: {
 		'dblclick' : 'onDblClick',
-		'click' : 'onClick',
-		'click .cell' : 'onCellClick',
-		'click .cell .port-left' : 'onInputClicked',
-		'click .cell .port-right' : 'onOutputClicked'
+		'click' : 'onClick'
 	},
 
 	initialize: function(){
 		this.render();
+		this.listenTo(this.collection, 'add', this.addNode);
 	},
 
 	render: function(){
-		this.$el.html();
+		this.collection.each(function(node){
+			var nodeView = new NodeView({ model: node });
+			this.$el.append(nodeView.render().el);
+		}, this);
+		return this;
+	},
+
+	addNode: function(node){
+		var nodeView = new NodeView({ model: node });
+		this.$el.append(nodeView.render().el);
 	},
 
 	onDblClick : function(){},
-	onClick : function(){},
-	onCellClick : function(){},
-	onInputClicked : function(){},
-	onOutputClicked : function(){}
+	onClick : function(){}
 });
 
 var graphview = new GraphView();
