@@ -33,8 +33,10 @@ var GraphView = Backbone.View.extend({
 		this.$el.append(nodeView.render().el);
 	},
 
-	onDblClick : function(){
-		this.addNode(new NodeModel());
+	onDblClick : function(event){
+		var x = event.pageX + "px";
+		var y = event.pageY + "px";
+		this.collection.add(new NodeModel({top: y, left: x}));
 	},
 	onClick : function(){}
 });
