@@ -33,4 +33,4 @@ var SidebarView = Backbone.View.extend({
 	formulaKeyup: function(){}
 });
 
-var sidebarview = new SidebarView();
+module.exports = SidebarView;

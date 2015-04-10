@@ -25,4 +25,4 @@ var ToolbarView = Backbone.View.extend({
 
 });
 
-var toolbarview = new ToolbarView();
+module.exports = ToolbarView;

@@ -6,7 +6,6 @@ var $ = require('jquery');
 var Backbone = require('backbone');
 Backbone.$ = $;
 var NodeView = require('../../js/views/node.js');
-var Graph = require('../../js/collections/graph.js');
 
 var GraphView = Backbone.View.extend({
 	el: '#wrapper',
@@ -38,5 +37,4 @@ var GraphView = Backbone.View.extend({
 	onClick : function(){}
 });
 
-var graph = new Graph();
-var graphview = new GraphView({collection: graph});
+module.exports = GraphView;
