@@ -1,7 +1,6 @@
 /* jshint esnext: true */
 'use strict';
 
-var app = app || {};
 var Mustache = require('mustache');
 var $ = require('jquery');
 var Backbone = require('backbone');

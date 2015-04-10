@@ -1,11 +1,11 @@
 /* jshint esnext: true */
 'use strict';
 
-var app = app || {};
 var $ = require('jquery');
 var Backbone = require('backbone');
 Backbone.$ = $;
 var NodeView = require('../../js/views/node.js');
+var NodeModel = require('../../js/models/node.js');
 
 var GraphView = Backbone.View.extend({
 	el: '#wrapper',
@@ -33,7 +33,9 @@ var GraphView = Backbone.View.extend({
 		this.$el.append(nodeView.render().el);
 	},
 
-	onDblClick : function(){},
+	onDblClick : function(){
+		this.addNode(new NodeModel());
+	},
 	onClick : function(){}
 });
 
