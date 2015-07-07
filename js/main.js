@@ -18,6 +18,7 @@ var VW = window.innerWidth/100;
 var selectedCell;
 var selectedInput;
 var selectedOutput;
+var graph = new Graph();
 var nodes = nodes || {};
 
 var cellTemplate = $('#cell-template').html();
@@ -27,7 +28,7 @@ function createCell(x,y,color,id,value){
 	//default options
 
 	var n = new Dominode(x+"px",y+"px",color,id,value);
-	nodes[n.id] = n;
+	graph.nodes[n.id] = n;
 
 	var rendered = Mustache.render(cellTemplate, n);
 	var cell = $(rendered)
@@ -129,8 +130,8 @@ function onInputClicked(id){
 	}
 	else if(!willFormCycle(selectedOutput).has(selectedInput)){
 		//edge doesn't exist and doesn't form cycle: need to add
-		addInput(selectedInput,selectedOutput);
-		addOutput(selectedOutput,selectedInput);
+		nodes[selectedInput].inputs.push(selectedOutput);
+		nodes[selectedOutput].outputs.push(selectedInput);
 		createEdge(selectedOutput,selectedInput);
 		refreshGraph();
 	}
