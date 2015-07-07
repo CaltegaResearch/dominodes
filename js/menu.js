@@ -1,4 +1,4 @@
-/* global nodes,uniqueNum,alert,VW,createCell,createEdge */
+/* global graph,nodes,uniqueNum,alert,VW,createCell,createEdge */
 "use strict";
 var jsonFile = require('jsonfile');
 var gui = require('nw.gui');
