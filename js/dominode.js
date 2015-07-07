@@ -1,6 +1,8 @@
 /*jshint esnext: true */
 'use strict';
+var $ = require('jquery');
 var uniqueNum = 1;
+const ERRORSTRING = "---";
 
 class Dominode{
 	constructor(x,y,color,id,value){

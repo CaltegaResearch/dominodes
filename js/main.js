@@ -1,5 +1,5 @@
 
-/* global Dominode,removeNode,setColor,setLabel,setFormula,willFormCycle,
+/* global Graph,Dominode,removeNode,setColor,setLabel,setFormula,willFormCycle,
    addInput,addOutput,refreshGraph */
 'use strict';
 //globals for jquery-ui
@@ -19,7 +19,6 @@ var selectedCell;
 var selectedInput;
 var selectedOutput;
 var graph = new Graph();
-var nodes = nodes || {};
 
 var cellTemplate = $('#cell-template').html();
 Mustache.parse(cellTemplate);
@@ -27,8 +26,7 @@ Mustache.parse(cellTemplate);
 function createCell(x,y,color,id,value){
 	//default options
 
-	var n = new Dominode(x+"px",y+"px",color,id,value);
-	graph.nodes[n.id] = n;
+	var n = graph.addNode(x+"px",y+"px",color,id,value);
 
 	var rendered = Mustache.render(cellTemplate, n);
 	var cell = $(rendered)
@@ -63,12 +61,12 @@ function createEdge(from,to){
 }
 
 function saveCellPos(id){
-	nodes[id].left = (parseInt($('#'+id).css('left').split('px')[0])/VW) + 'vw';
-	nodes[id].top = (parseInt($('#'+id).css('top').split('px')[0])/VW) + 'vw';
+	graph.nodes[id].left = (parseInt($('#'+id).css('left').split('px')[0])/VW) + 'vw';
+	graph.nodes[id].top = (parseInt($('#'+id).css('top').split('px')[0])/VW) + 'vw';
 }
 
 function destroyCell(id){
-	removeNode(id);
+	graph.removeNode(id);
 	clearSideBar();
 }
 
@@ -85,7 +83,7 @@ function updateEdges(id){
 	var cellWidth = parseInt($('#'+id).css('width').split('px')[0]);
 	var cellHeight = parseInt($('#'+id).css('height').split('px')[0]);
 
-	for(let inputId of nodes[id].inputs){
+	for(let inputId of graph.nodes[id].inputs){
 		let pathid = inputId+id;
 		let path = document.getElementById(pathid);
 		let ds = path.getAttribute('d').split(' ');
@@ -94,7 +92,7 @@ function updateEdges(id){
 		ds[3] = offset.left+','+(offset.top+cellHeight/2);
 		path.setAttribute('d',ds.join(' '));
 	}
-	for(let outputId of nodes[id].outputs){
+	for(let outputId of graph.nodes[id].outputs){
 		let pathid = id+outputId;
 		let path = document.getElementById(pathid);
 		let ds = path.getAttribute('d').split(' ');
@@ -111,8 +109,7 @@ function setSelectedColor(color){
 		for(let possibleColor of COLORS){
 			$('#'+selectedCell).removeClass(possibleColor);
 		}
-		$('#'+selectedCell).addClass(color);
-		setColor(selectedCell,color);
+		graph.nodes[selectedCell].setColor(color);
 	}
 }
 
@@ -122,18 +119,18 @@ function onInputClicked(id){
 		return;
 	}
 	selectedInput = id;
-	if(nodes[selectedOutput].outputs.indexOf(selectedInput) !== -1){
+	if(graph.nodes[selectedOutput].outputs.indexOf(selectedInput) !== -1){
 		//edge exists: need to remove
-		nodes[selectedInput].inputs.splice(nodes[selectedInput].inputs.indexOf(selectedOutput),1);
-		nodes[selectedOutput].outputs.splice(nodes[selectedOutput].outputs.indexOf(selectedInput),1);
+		graph.nodes[selectedInput].removeInput(selectedOutput);
+		graph.nodes[selectedOutput].removeOutput(selectedInput);
 		$('#'+selectedOutput+selectedInput).remove();
 	}
-	else if(!willFormCycle(selectedOutput).has(selectedInput)){
+	else if(!graph.willFormCycle(selectedOutput).has(selectedInput)){
 		//edge doesn't exist and doesn't form cycle: need to add
-		nodes[selectedInput].inputs.push(selectedOutput);
-		nodes[selectedOutput].outputs.push(selectedInput);
+		graph.nodes[selectedInput].addInput(selectedOutput);
+		graph.nodes[selectedOutput].addOutput(selectedInput);
 		createEdge(selectedOutput,selectedInput);
-		refreshGraph();
+		graph.refresh();
 	}
 
 	//reset output and input
@@ -143,7 +140,7 @@ function onInputClicked(id){
 function onOutputClicked(id){
 	selectedInput = null;
 	selectedOutput = id;
-	var cycleNodes = willFormCycle(selectedOutput);
+	var cycleNodes = graph.willFormCycle(selectedOutput);
 	//add disabled classes to nodes that will form a cycle
 	for(let node of cycleNodes){
 		$('#'+node).addClass('disabled');
@@ -161,7 +158,7 @@ function onOutputClicked(id){
 }
 
 function resetDisabled(){
-	for(let id of Object.keys(nodes)){
+	for(let id of Object.keys(graph.nodes)){
 		$('#'+id).removeClass('disabled');
 	}
 }
@@ -192,13 +189,13 @@ function unselectCell(){
 function addToFormula(text){
 	var cursorPos = document.getElementById('formulaInput').selectionStart;
 	var id = selectedCell;
-	var oldFormula = nodes[id].formula;
+	var oldFormula = graph.nodes[id].formula;
 	//insert text at cursor
 	var newFormula = oldFormula.substring(0,cursorPos) +
 					 text +
 					 oldFormula.substring(cursorPos);
 
-	setFormula(id,newFormula);
+	graph.nodes[id].setFormula(newFormula);
 	$('#formulaInput').val(newFormula);
 	$('#formulaInput').focus();
 }
@@ -211,14 +208,14 @@ function clearSideBar(){
 }
 
 function loadSideBar(id){
-	var label = nodes[id].label;
-	var formula = nodes[id].formula;
+	var label = graph.nodes[id].label;
+	var formula = graph.nodes[id].formula;
 	$('#label').val(label);
 	$('#formulaInput').val(formula);
 	$('#inputsList').html('');
-	for(let inputId of nodes[id].inputs){
-		let c = nodes[inputId].color;
-		let l = nodes[inputId].label;
+	for(let inputId of graph.nodes[id].inputs){
+		let c = graph.nodes[inputId].color;
+		let l = graph.nodes[inputId].label;
 		$('#inputsList').append(
 			'<li onclick="addToFormula(\''+l+'\')" class="'+c+'">'+l+'</li>'
 		);
@@ -226,9 +223,9 @@ function loadSideBar(id){
 }
 
 $(window).resize(function(){
-	for(let id of Object.keys(nodes)){
-		$('#'+id).css('top',nodes[id].top);
-		$('#'+id).css('left',nodes[id].left);
+	for(let id of Object.keys(graph.nodes)){
+		$('#'+id).css('top',graph.nodes[id].top);
+		$('#'+id).css('left',graph.nodes[id].left);
 		updateEdges(id);
 	}
 });
@@ -240,7 +237,7 @@ $('#label').keydown(function(e){
 	}
 });
 $('#label').keyup(function(e){
-	setLabel(selectedCell, $('#label').val());
+	graph.nodes[selectedCell].setLabel($('#label').val());
 });
 $('#formulaInput').keydown(function(e){
 	if(e.which === 13){
@@ -249,7 +246,7 @@ $('#formulaInput').keydown(function(e){
 	}
 });
 $('#formulaInput').keyup(function(e){
-	setFormula(selectedCell, $('#formulaInput').val());
+	graph.nodes[selectedCell].setFormula($('#formulaInput').val());
 });
 
 $('#trash').droppable({

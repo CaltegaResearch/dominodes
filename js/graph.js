@@ -1,8 +1,7 @@
-/*jshint esnext: true */
+/* global Dominode,ERRORSTRING *//*jshint esnext: true */
 'use strict';
 var $ = require('jquery');
 var math = require('mathjs');
-const ERRORSTRING = "---";
 
 class Graph{
 	constructor(){
@@ -13,10 +12,12 @@ class Graph{
 		let n = new Dominode(x,y,color,id,value);
 		n.setParentGraph(this);
 		this.nodes[n.id] = n;
+
+		return n;
 	}
 
 	refresh() {
-		this.evaluate()
+		this.evaluate();
 		for(let key of Object.keys(this.nodes)){
 			$("#"+key+" .right p").html(this.nodes[key].value);
 		}
@@ -42,17 +43,17 @@ class Graph{
 	evaluate(){
 		var visited = [];
 		var notYet = Object.keys(this.nodes);
-		function traverse(cell){
+		let traverse = function traverse(cell){
 			for(let next of this.nodes[cell].inputs){
 				if (visited.indexOf(next) === -1){
-					traverse(next);
+					traverse.call(this,next);
 				}
 			}
-			setValue(cell, this.evalFormula(cell));
+			this.nodes[cell].setValue(this.evaluateFormula(cell));
 			visited.push(notYet.splice(notYet.indexOf(cell), 1)[0]);
-		}
+		};
 		while(notYet.length > 0){
-			traverse(notYet[0]);
+			traverse.call(this,notYet[0]);
 		}
 	}
 
