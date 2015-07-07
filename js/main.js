@@ -18,27 +18,18 @@ var VW = window.innerWidth/100;
 var selectedCell;
 var selectedInput;
 var selectedOutput;
-var nodes;
+var nodes = nodes || {};
 
 var cellTemplate = $('#cell-template').html();
 Mustache.parse(cellTemplate);
 
 function createCell(x,y,color,id,value){
 	//default options
-	var ID = id || addNode();
-	color = color || 'grey';
-	value = value || '-';
 
-	var data = {
-		'label' : nodes[ID].label,
-		'value' : value,
-		'color' : color,
-		'top' : y + 'px',
-		'left' : x + 'px',
-		'id' : ID
-	};
+	var n = new Dominode(x+"px",y+"px",color,id,value);
+	nodes[n.id] = n;
 
-	var rendered = Mustache.render(cellTemplate, data);
+	var rendered = Mustache.render(cellTemplate, n);
 	var cell = $(rendered)
 		.draggable({snap: true, containment: 'parent'})
 		.bind('drag', onCellDragged)
@@ -46,8 +37,8 @@ function createCell(x,y,color,id,value){
 		.click(onCellClick);
 	$('.wrapper').append(cell);
 
-	saveCellPos(ID);
-	selectCell(ID);
+	saveCellPos(n.id);
+	selectCell(n.id);
 	$('#label').focus();
 	$('#label').select();
 }

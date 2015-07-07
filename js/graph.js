@@ -2,7 +2,6 @@
 'use strict';
 var $ = require('jquery');
 var math = require('mathjs');
-var uniqueNum = 1;
 var nodes = {};
 const ERRORSTRING = "---";
 
@@ -21,7 +20,6 @@ function addNode(){
 
 	var id = "n"+uniqueNum;
 	nodes[id] = data;
-	uniqueNum += 1;
 	return id;
 }
 
