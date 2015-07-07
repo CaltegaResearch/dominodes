@@ -50,21 +50,25 @@ $("#saveFileDialog").change(function(key){
 initMenu();
 
 function clearGraph(){
-	var keys = Object.keys(nodes);
+	var keys = Object.keys(graph.nodes);
 	for(let i=0; i<keys.length; i++){
 		$("#"+keys[i]).remove();
-		if(nodes[keys[i]].outputs){
-			for(let j=0; j<nodes[keys[i]].outputs.length; j++){
-				$("#"+keys[i]+nodes[keys[i]].outputs[j]).remove();
+		if(graph.nodes[keys[i]].outputs){
+			for(let j=0; j<graph.nodes[keys[i]].outputs.length; j++){
+				$("#"+keys[i]+graph.nodes[keys[i]].outputs[j]).remove();
 			}
 		}
 	}
-	nodes = {}; // jshint ignore:line
+	graph.nodes = {}; // jshint ignore:line
 	uniqueNum = 1; // jshint ignore:line
 }
 
 function saveGraph(graphName){
-	jsonFile.writeFile(graphName, nodes, function(err){
+	var toSave = {};
+	for(let key of Object.keys(graph.nodes)){
+		toSave[key] = graph.nodes[key].getSaveData();
+	}
+	jsonFile.writeFile(graphName, toSave, function(err){
 		if(err){
 			console.log(err);
 			alert("Save failed: "+err);
@@ -79,21 +83,24 @@ function loadGraph(graphName){
 	clearGraph();
 	jsonFile.readFile(graphName, function(err,obj){
 		if(!err){
-			nodes = obj; // jshint ignore:line
-			var keys = Object.keys(nodes);
+			graph.nodes = {}; // jshint ignore:line
+			var keys = Object.keys(obj);
 			uniqueNum = keys.length + 1; // jshint ignore:line
 			for(let i=0; i<keys.length; i++){
 				let id = keys[i];
-				let x = parseInt(nodes[id].left.split('vw'))*VW;
-				let y = parseInt(nodes[id].top.split('vw'))*VW;
-				let color = nodes[id].color;
-				let value = nodes[id].value;
+				let x = parseInt(obj[id].left.split('vw'))*VW;
+				let y = parseInt(obj[id].top.split('vw'))*VW;
+				let color = obj[id].color;
+				let value = obj[id].value;
 				createCell(x,y,color,id,value);
+				graph.nodes[id].outputs = obj[id].outputs;
+				graph.nodes[id].inputs = obj[id].inputs;
+				graph.nodes[id].label = obj[id].label;
 			}
 			for(let i=0; i<keys.length; i++){
 				let id = keys[i];
-				for(let j=0; j<nodes[id].outputs.length; j++){
-					createEdge(id,nodes[id].outputs[j]);
+				for(let j=0; j<graph.nodes[id].outputs.length; j++){
+					createEdge(id,graph.nodes[id].outputs[j]);
 				}
 			}
 		}

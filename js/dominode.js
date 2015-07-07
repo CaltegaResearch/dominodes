@@ -19,6 +19,20 @@ class Dominode{
 		uniqueNum += 1;
 	}
 
+	getSaveData(){
+		return {
+			id: this.id,
+			label: this.label,
+			value: this.value,
+			inputs: this.inputs.slice(),
+			outputs: this.outputs.slice(),
+			formula: this.formula,
+			color: this.color,
+			top: this.top,
+			left: this.left
+		};
+	}
+
 	setParentGraph(g){
 		this.parentGraph = g;
 	}
