@@ -5,24 +5,6 @@ var math = require('mathjs');
 var nodes = {};
 const ERRORSTRING = "---";
 
-function addNode(){
-	var data = {
-		label: "Node"+uniqueNum,
-		value: "",
-		inputs: [],
-		outputs: [],
-		formula: "",
-		color: "grey",
-		comment: "",
-		top:"0",
-		left:"0"
-	};
-
-	var id = "n"+uniqueNum;
-	nodes[id] = data;
-	return id;
-}
-
 function removeNode(id){
 	var n = nodes[id];
 	for(let i of n.inputs){

@@ -1,5 +1,5 @@
 
-/* global addNode,removeNode,setColor,setLabel,setFormula,willFormCycle,
+/* global Dominode,removeNode,setColor,setLabel,setFormula,willFormCycle,
    addInput,addOutput,refreshGraph */
 'use strict';
 //globals for jquery-ui
