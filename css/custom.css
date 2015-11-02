@@ -1,5 +1,102 @@
-body {
-	font-family: Consolas,monaco,monospace;
+* {
+	box-sizing: border-box;
+	font-family: Helvetica, Arial;
+	font-weight: 300;
+	margin:0px;
+	padding:0px;
+}
+
+.container {
+	max-width: 1000px;
+	width: 100%;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+header {
+	height:100px;
+	background: #FFF;
+	position:relative;
+}
+
+header .title {
+	position: absolute;
+	top:0;
+	left:0;
+	right:0;
+	bottom:70px;
+	background:white;
+}
+
+.title h1 {
+	line-height: 20px;
+	font-size: 20px;
+	padding-top: 10px;
+	margin: 0px;
+	font-weight: 400;
+}
+
+header .menubar {
+	position:absolute;
+	bottom:40px;
+	top:30px;
+	left:0;
+	right:0;
+	background:white;
+}
+
+.menu-items li, .menu-item {
+	display: inline;
+}
+
+.menu-items .menu-item {
+	height: 30px;
+
+}
+
+header .toolbar {
+	position:absolute;
+	bottom:0;
+	left:0;
+	right:0;
+	height:40px;
+	box-sizing: border-box;
+	box-shadow: 0px 1px 0px 0px rgba(254, 247, 247, 0.5) inset;
+	border-top: 1px solid #D1D1D1;
+	border-bottom: 1px solid #D1D1D1;
+	background: transparent -moz-linear-gradient(center top , rgba(245, 245, 245, 0.83), rgba(238, 238, 238, 0.82)) repeat scroll 0% 0%;
+}
+
+.tools > * {
+	display: inline-block;
+	margin: 4px;
+	padding: 2px;
+	cursor: pointer;
+	border-radius: 2px;
+	border: 1px solid rgba(0,0,0,0);
+}
+.tools > *:hover {
+	border: 1px solid #BDBDBD;
+	background: transparent -moz-linear-gradient(center top , rgba(245, 245, 245, 0.83), rgba(238, 238, 238, 0.82)) repeat scroll 0% 0%;
+	box-shadow: 0px 0px 3px 0px rgb(167, 167, 167)
+}
+
+.tools li > * {
+	width: 26px;
+	height: 26px;
+}
+
+.tools #trashcan {
+	background-image: url("../trash.png");
+	background-size: cover;
+}
+
+.main {
+	position:absolute;
+	top:100px;
+	bottom:0;
+	right:0;
+	left:0;
 }
 
 #edgesSvg {
@@ -8,38 +105,14 @@ body {
 	left:0;
 	right:0;
 	bottom:0;
-	width:80%;
+	width:100%;
 	height:100%;
-}
-
-.colorBar {
-    position: absolute;
-    bottom:0;
-    left:0;
-    right: 20%;
-    margin-right: 200px;
-    margin-bottom: 30px;
-}
-
-.colorBar .color{
-	height: 50px;
-    margin-right: 15px;
-    width: 50px;
-    float:right;
-    cursor:pointer;
+	background: url("../geometry.png");
 }
 
 .color{
 	transition: background-color 0.8s ease;
 	    -webkit-transition: background-color 500ms ease-out 1s;
-}
-
-.color:hover:before{
-	content: "";
-	display: block;
-	width:50px;
-	height:50px;
-	background: rgba(0,0,0, 0.1);
 }
 
 .cell { background-color: white; }
@@ -53,26 +126,8 @@ body {
 .pink{ background-color: rgb(247, 158, 212); }
 .grey{ background-color: #DEDEDE; }
 
-.cell .left { background: rgba(255,255,255, 0.8); }
-
 .not-transparent {
 	opacity: 0.8 !important;
-}
-
-#trash {
-	background-image: url("../trash.png");
-	width:128px;
-	height:128px;
-	margin:30px;
-	position:absolute;
-	bottom:0;
-	right:20%;
-	background-size: cover;
-	opacity: 0.5;
-
-}
-#trash:hover{
-	opacity: 0.8;
 }
 
 path {
@@ -88,61 +143,7 @@ path {
 	left:0;
 	right:0;
 	bottom:0;
-	width:80%;
 	overflow: hidden;
-}
-
-.sidebar {
-	position: absolute;
-	top:0;
-	left:80%;
-	right:0;
-	bottom:0;
-	overflow:hidden;
-	border: 1px solid grey;
-	background-color:#DEDEDE;
-	padding:10px;
-}
-#formulaInput {
-	border:none;
-	border-bottom: 1px solid black;
-	background: rgba(1,1,1,0.1);
-	border-radius: 8px;
-	font-size: 2em;
-	width: 96%;
-	text-align: center;
-	word-wrap:break-word;
-}
-
-#label {
-	background-color:#F5F5F5;
-	border: 1px solid grey;
-	border-radius: 8px;
-	width: 96%;
-	word-wrap:break-word;
-	font-size: 2em;
-}
-
-#inputsList {
-	list-style: none;
-}
-#inputsList li {
-	margin-right: 10px;
-	padding: 5px;
-	border: 3px solid #444;
-	border-radius: 7px;
-	cursor: pointer;
-	display: inline-block;
-}
-#inputsList li:hover{
-	border-color:#118adb;
-}
-
-.sidebar > div:not(:last-child) {
-	border-bottom: 1px solid rgb(194, 194, 194);
-}
-.sidebar > div:not(:first-child){
-	min-height: 105px;
 }
 
 .cell {
@@ -150,54 +151,35 @@ path {
 	width: 12vw !important;
 	height: 2.4vw !important;
 	overflow: visible;
-	border: 3px solid #888;
+	border: 1px solid #888;
 	border-radius: 10px;
 	z-index: 10;
-	cursor:move;
+	cursor: move;
+	box-shadow: 0px 1px 0px 0px rgba(254, 247, 247, 0.5) inset;
 }
 
 .cell:hover{
 	border-color:#666;
 }
 
-.cell .port {
-    position: absolute;
-    z-index: 8;
-    height: .8vw;
-    width: .8vw;
-    top: .7vw;
-    cursor: pointer;
-    border-radius: 10px;
-    border: inherit;
-}
-
-.cell .port-left {
-	background: white;
-	left: -.6vw;
-}
-
-.cell .port-right {
-	right: -.6vw;
-	width:0px;
-	height:0px;
-	border-width: .6vw;
-}
-
 .cell.error {
-	border: 3px solid #EF4F4F;
+	border-color: #EF4F4F;
 }
 
 .cell.selected {
-	border: 3px solid #118adb;
+	border-color: #118adb;
 }
 
 .cell .left{
 	float:left;
 	width:50%;
 	height:100%;
-	border-top-left-radius: 6px;
-	border-bottom-left-radius: 6px;
-	overflow:hidden;
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+	overflow: hidden;
+	background: rgba(255,255,255, 0.8);
+	box-shadow: 0px 1px 0px 0px rgba(255, 255, 255, 0.5) inset;
+	background: transparent -moz-linear-gradient(center top , rgba(245, 245, 245, 0.83), rgba(238, 238, 238, 0.82)) repeat scroll 0% 0%;
 }
 
 .cell .right{
@@ -206,22 +188,22 @@ path {
 	height:100%;
 	border-left: 2px solid grey;
 	margin-left: -2px;
-	border-top-right-radius: 6px;
-	border-bottom-right-radius: 6px;
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
 	overflow:hidden;
 	white-space: nowrap;
 }
 
 .cell p {
 	text-align: center;
-	font-size: 1.3vw;
+	font-size: 100%;
 	margin:0px;
 	height:100%;
 	padding: 0px 9px;
+	line-height: 28px;
 }
 
 .cell .left p {
-	font-size: 0.8vw;
 	word-wrap: break-word;
 }
 
