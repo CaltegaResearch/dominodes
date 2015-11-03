@@ -43,8 +43,7 @@
                             <li>Make a Copy</li>
                             <li>Move to Trash</li>
                         </ul>
-                    </li>
-                    <li>
+                    </li><li>
                         Edit
                         <ul class="sub-menu">
                             <li>Undo</li>
@@ -54,8 +53,7 @@
                             <li>Paste</li>
                             <li>Delete</li>
                         </ul>
-                    </li>
-                    <li>
+                    </li><li>
                         View
                         <ul class="sub-menu">
                             <li>Freeze</li>
@@ -65,16 +63,14 @@
                             <li>Zoom In</li>
                             <li>Zoom Out</li>
                         </ul>
-                    </li>
-                    <li>
+                    </li><li>
                         Insert
                         <ul class="sub-menu">
                             <li>New Node</li>
                             <li>New Sheet</li>
                             <li>Comment</li>
                         </ul>
-                    </li>
-                    <li>
+                    </li><li>
                         Tools
                         <ul class="sub-menu">
                             <li>Collapse</li>
@@ -83,8 +79,7 @@
                             <li>Auto-Graph</li>
                             <li>Smart Solve</li>
                         </ul>
-                    </li>
-                    <li>
+                    </li><li>
                         Help
                         <ul class="sub-menu">
                             <li>Dominodes Help</li>
@@ -99,31 +94,12 @@
             <div class="container">
                 <ul class="tools">
                     <li>
-                        <div id="trashcan"></div>
-                    </li>
-                    <li>
-                        <div class="color blue" onclick="setSelectedColor('blue');"></div>
-                    </li>
-                    <li>
-                        <div class="color teal" onclick="setSelectedColor('teal');"></div>
-                    </li>
-                    <li>
-                        <div class="color green" onclick="setSelectedColor('green');"></div>
-                    </li>
-                    <li>
-                        <div class="color grey" onclick="setSelectedColor('grey');"></div>
-                    </li>
-                    <li>
-                        <div class="color yellow" onclick="setSelectedColor('yellow');"></div>
-                    </li>
-                    <li>
-                        <div class="color orange" onclick="setSelectedColor('orange');"></div>
-                    </li>
-                    <li>
-                        <div class="color red" onclick="setSelectedColor('red');"></div>
-                    </li>
-                    <li>
-                        <div class="color pink" onclick="setSelectedColor('pink');"></div>
+                        <div id="trashcan" onclick="deleteCell()"></div>
+                    </li><li class="divider">
+                    </li><li class="tool-menu">
+                        <div>Color</div>
+                        <div class="color grey"></div>
+                    </li><li class="divider">
                     </li>
                 </ul>
             </div>

@@ -35,6 +35,7 @@ header .title {
 	padding-top: 10px;
 	margin: 0px;
 	font-weight: 400;
+	padding-left: 12px;
 }
 
 header .menubar {
@@ -61,6 +62,7 @@ header .menubar {
 
 .sub-menu > li {
 	padding: 6px 30px;
+	cursor: default;
 }
 
 .menu-items > li {
@@ -72,15 +74,20 @@ header .menubar {
 	font-weight: 400;
 	position: relative;
 	height: 30px;
-	z-index: 1;
+	z-index: 12;
+	cursor: default;
 }
 
 .menu-items > li:hover {
 	background: rgb(68, 117, 221);
 }
 
-.menu-items > li:hover > ul {
+.menu-items > li:hover > .sub-menu {
 	display: block;
+}
+
+.sub-menu > li:hover {
+	background:#253C6C;
 }
 
 header .toolbar {
@@ -91,9 +98,9 @@ header .toolbar {
 	height:40px;
 	box-sizing: border-box;
 	box-shadow: 0px 1px 0px 0px rgba(254, 247, 247, 0.19) inset;
-	border-top: 1px solid rgb(53, 70, 105);
-	border-bottom: 1px solid rgb(53, 70, 105);
-	background: transparent -moz-linear-gradient(center top , rgba(40, 82, 171, 0.8), rgba(7, 57, 131, 0.8)) repeat scroll 0% 0%;
+	border-top: 1px solid #2D4372;
+	border-bottom: 1px solid #2D4372;
+	background: transparent -moz-linear-gradient(center top , rgba(15, 62, 162, 0.8), rgba(7, 57, 131, 0.8)) repeat scroll 0% 0%;
 }
 
 .tools > * {
@@ -103,15 +110,48 @@ header .toolbar {
 	cursor: pointer;
 	border-radius: 2px;
 	border: 1px solid rgba(0,0,0,0);
+	overflow: hidden;
+	color:white;
 }
-.tools > *:hover {
-	border: 1px solid #BDBDBD;
-	box-shadow: 0px 0px 3px 0px white inset;
+.tools > *:not(.divider):hover {
+	background: rgb(37, 60, 108) none repeat scroll 0% 0%;
+}
+
+.tools > .divider {
+	width:0px;
+	height:40px;
+	border-left: 1px solid #2D4372;
+	border-right: 1px solid rgba(255, 255, 255, 0.13);
+	padding: 0px;
+	cursor: default;
+	margin-top:0px;
+	margin-bottom: 0px;
 }
 
 .tools li > * {
 	width: 26px;
 	height: 26px;
+}
+
+.tools .tool-menu {
+	width: 93px;
+	padding-left: 10px;
+	padding-right: 5px;
+}
+
+.tools .tool-menu > :nth-child(1) {
+	width: 50px;
+	line-height: 26px;
+}
+
+.tools .tool-menu > * {
+	float: left;
+}
+
+.tools .tool-menu .color {
+	width: 20px;
+	height: 20px;
+	margin: 3px;
 }
 
 .tools #trashcan {
@@ -135,6 +175,7 @@ header .toolbar {
 	bottom:0;
 	width:100%;
 	height:100%;
+	 /* Background pattern from subtlepatterns.com */
 	background: url("../geometry.png");
 }
 
@@ -207,7 +248,7 @@ path {
 	overflow: hidden;
 	background: rgba(255,255,255, 0.8);
 	box-shadow: 0px 1px 0px 0px rgba(255, 255, 255, 0.5) inset;
-	background: transparent -moz-linear-gradient(center top , rgba(245, 245, 245, 0.83), rgba(238, 238, 238, 0.82)) repeat scroll 0% 0%;
+	background: transparent -moz-linear-gradient(center top , rgba(255, 255, 255, 0.93), rgba(255, 253, 253, 0.83)) repeat scroll 0% 0%;
 }
 
 .cell .right{

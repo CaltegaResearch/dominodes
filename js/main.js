@@ -5,6 +5,13 @@ var selectedOutput = null;
 var cellTemplate = $('#cell-template').html();
 Mustache.parse(cellTemplate);
 
+function deleteCell(){
+	if(selectedCell){
+		removeNode(selectedCell.id);
+		selectedCell = undefined;
+	}
+}
+
 function createCell(x,y,color){
 	var ID = addNode();
 	var data = {
