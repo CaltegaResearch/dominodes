@@ -55,7 +55,7 @@ header .menubar {
 	top: 30px;
 	background: rgb(68, 117, 221);
 	width: 180px;
-	box-shadow: 0px 7px 8px -4px black;
+	box-shadow: 0px 7px 8px -4px #777;
 	border: 1px solid rgb(68, 100, 215);
 	list-style: none;
 }
