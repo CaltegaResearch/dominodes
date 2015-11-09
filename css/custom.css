@@ -1,5 +1,13 @@
+* {
+	box-sizing: border-box;
+	font-family: Helvetica, Arial;
+	font-weight: 300;
+	margin:0px;
+	padding:0px;
+}
+
 body {
-	font-family: Consolas,monaco,monospace;
+	font-family: Helvetica, Arial;
 }
 
 #edgesSvg {
@@ -10,6 +18,7 @@ body {
 	bottom:0;
 	width:80%;
 	height:100%;
+	background: url("../geometry.png");
 }
 
 .colorBar {
@@ -99,28 +108,10 @@ path {
 	right:0;
 	bottom:0;
 	overflow:hidden;
-	border: 1px solid grey;
-	background-color:#DEDEDE;
-	padding:10px;
-}
-#formulaInput {
-	border:none;
-	border-bottom: 1px solid black;
-	background: rgba(1,1,1,0.1);
-	border-radius: 8px;
-	font-size: 2em;
-	width: 96%;
-	text-align: center;
-	word-wrap:break-word;
-}
-
-#label {
-	background-color:#F5F5F5;
-	border: 1px solid grey;
-	border-radius: 8px;
-	width: 96%;
-	word-wrap:break-word;
-	font-size: 2em;
+	background-color:rgb(14, 68, 128);
+	padding:0;
+	color: white;
+	box-shadow: 0px 0px 2px 0px rgb(14, 22, 44);
 }
 
 #inputsList {
@@ -138,11 +129,42 @@ path {
 	border-color:#118adb;
 }
 
+.sidebar div {
+	padding: 10px;
+}
+
+.sidebar div p {
+	margin-bottom: 5px;
+}
+
+.sidebar div input {
+	background: rgb(255, 255, 255);
+	border-radius: 3px;
+	color: rgb(32, 32, 32);
+	padding: 3px;
+	font-size: 1em;
+	border: none;
+	width: 96%;
+	word-wrap:break-word;
+	margin-bottom: 1.5rem;
+}
+
+.sidebar > div:first-child {
+	background: rgb(3, 33, 66) none repeat scroll 0% 0%;
+	text-align: center;
+}
+.sidebar > div:first-child h3 {
+	margin-bottom: 0;
+	line-height: 45px;
+	font-size: 35px;
+	text-align: center;
+}
+
 .sidebar > div:not(:last-child) {
-	border-bottom: 1px solid rgb(194, 194, 194);
+	border-bottom: 1px solid rgba(0, 0, 0, 0.26);
 }
 .sidebar > div:not(:first-child){
-	min-height: 105px;
+	border-top: 1px solid rgba(255, 253, 253, 0.13);
 }
 
 .cell {
@@ -150,54 +172,35 @@ path {
 	width: 12vw !important;
 	height: 2.4vw !important;
 	overflow: visible;
-	border: 3px solid #888;
+	border: 1px solid #888;
 	border-radius: 10px;
 	z-index: 10;
-	cursor:move;
+	cursor: move;
+	box-shadow: 0px 1px 0px 0px rgba(254, 247, 247, 0.5) inset;
 }
 
 .cell:hover{
 	border-color:#666;
 }
 
-.cell .port {
-    position: absolute;
-    z-index: 8;
-    height: .8vw;
-    width: .8vw;
-    top: .7vw;
-    cursor: pointer;
-    border-radius: 10px;
-    border: inherit;
-}
-
-.cell .port-left {
-	background: white;
-	left: -.6vw;
-}
-
-.cell .port-right {
-	right: -.6vw;
-	width:0px;
-	height:0px;
-	border-width: .6vw;
-}
-
 .cell.error {
-	border: 3px solid #EF4F4F;
+	border-color: #EF4F4F;
 }
 
 .cell.selected {
-	border: 3px solid #118adb;
+	border-color: #118adb;
 }
 
 .cell .left{
 	float:left;
 	width:50%;
 	height:100%;
-	border-top-left-radius: 6px;
-	border-bottom-left-radius: 6px;
-	overflow:hidden;
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+	overflow: hidden;
+	background: rgba(255,255,255, 0.8);
+	box-shadow: 0px 1px 0px 0px rgba(255, 255, 255, 0.5) inset;
+	background: transparent -moz-linear-gradient(center top , rgba(255, 255, 255, 0.93), rgba(255, 253, 253, 0.83)) repeat scroll 0% 0%;
 }
 
 .cell .right{
@@ -206,22 +209,22 @@ path {
 	height:100%;
 	border-left: 2px solid grey;
 	margin-left: -2px;
-	border-top-right-radius: 6px;
-	border-bottom-right-radius: 6px;
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
 	overflow:hidden;
 	white-space: nowrap;
 }
 
 .cell p {
 	text-align: center;
-	font-size: 1.3vw;
+	font-size: 100%;
 	margin:0px;
 	height:100%;
 	padding: 0px 9px;
+	line-height: 28px;
 }
 
 .cell .left p {
-	font-size: 0.8vw;
 	word-wrap: break-word;
 }
 
