@@ -79,6 +79,27 @@ a:hover {
 
 .cell .left { background: rgba(255,255,255, 0.8); }
 
+.cell .port {
+    position: absolute;
+    z-index: 8;
+    height: 1vw;
+    width: 1vw;
+    top: .7vw;
+    cursor: pointer;
+    border-radius: 10px;
+    border: inherit;
+}
+
+.cell .port-left {
+	background: white;
+	left: -.6vw;
+}
+
+.cell .port-right {
+	right: -.6vw;
+	background: #888;
+}
+
 .not-transparent {
 	opacity: 0.8 !important;
 }
