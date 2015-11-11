@@ -47,7 +47,6 @@ function onCellDragged(event, ui){
 	 */
 	var id = event.currentTarget.id;
 	selectCell(event.currentTarget);
-	$("#formulaInput").focus();
 	var offset = ui.offset;
 	var cellWidth = parseInt($("#"+id).css("width").split("px")[0]);
 	var cellHeight = parseInt($("#"+id).css("height").split("px")[0]);
@@ -146,10 +145,8 @@ function onOutputClicked(element){
 function onCellClick(e){
 	/*
 	Selects the clicked cell.
-	Focuses the formula input box.
 	 */
 	selectCell(e.currentTarget);
-	$("#formulaInput").focus();
 	e.stopPropagation();
 }
 
@@ -162,9 +159,8 @@ function onCellDblClick(e){
 
 function selectCell(cell){
 	/*
-	Sets the selected cell as the given cell.
-	Adds the selected class to the given cell.
-	Loads the sidebar for the given cell.
+	Unselects the previously selected cell,
+		and sets the selected cell as the given cell.
 	 */
 	unselectCell();
 
@@ -174,7 +170,7 @@ function selectCell(cell){
 
 function unselectCell(){
 	/*
-	Removes the selected class from the current selected cell.
+	Removes the "selected" class from the current selected cell.
 	 */
 	if(selectedCell){
 		if(editingLabel){
@@ -192,6 +188,7 @@ function unselectCell(){
 function addToFormula(text){
 	/*
 	Inserts the given text into the formula input box at the cursor location.
+	TODO: Update to no longer use the removed/deprecated formulaInput.
 	 */
 	var cursorPos = document.getElementById("formulaInput").selectionStart;
 	var id = selectedCell.id;
