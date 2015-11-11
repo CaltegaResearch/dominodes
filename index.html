@@ -5,7 +5,7 @@
   <!-- Basic Page Needs
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
   <meta charset="utf-8">
-  <title>HackFSU 2015</title>
+  <title>Dominodes</title>
   <meta name="description" content="">
   <meta name="author" content="">
 
@@ -39,7 +39,6 @@
       <input id="formulaInput">
     </div>
   </div>
-  <div id="trash"></div>
   <div class="colorBar">
     <div class="color blue" onclick="setSelectedColor('blue');"></div>
     <div class="color teal" onclick="setSelectedColor('teal');"></div>
@@ -54,14 +53,12 @@
   <script id="cell-template" type="x-tmpl-mustache">
     <div class="draggable cell {{color}}">
       <div class="left">
-        <p>{{ label }}</p>
+        <p contentEditable="true">{{ label }}</p>
       </div>
       <div class="right">
-        <p>{{ value }}</p>
+        <p contentEditable="true">{{ value }}</p>
       </div>
       <div class="clear"></div>
-      <div class="port port-left" onclick="onInputClicked(this);"></div>
-      <div class="port port-right" onclick="onOutputClicked(this);"></div>
     </div>
   </script>
 

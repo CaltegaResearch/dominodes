@@ -30,7 +30,7 @@ function removeNode(id){
 		nodes[n.outputs[i]].inputs.splice(nodes[n.outputs[i]].inputs.indexOf(id),1);
 		$("#"+id+n.outputs[i]).remove();
 	}
-	delete nodes.id;
+	delete nodes[id];
 	$("#"+id).remove();
 	refreshGraph();
 }

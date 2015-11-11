@@ -179,23 +179,21 @@ $("#formulaInput").keydown(function(e){
 $("#formulaInput").keyup(function(e){
 	setFormula(selectedCell.id, $("#formulaInput").val());
 });
-
-$("#trash").droppable({
-	hoverClass: "not-transparent",
-    drop: function( event, ui ) {
-    	removeNode(ui.draggable.get(0).id);
-    }
-});
 $(".wrapper").dblclick(function(e){
 	createCell(e.pageX - 150,e.pageY - 30);
 });
 $(".wrapper").click(function(e){
 	unselectCell();
-})
+});
 $(document).keypress(function(e) {
 	if(e.which == 13) {
  	 	e.stopPropagation();
  		window.blur();
 	    unselectCell();
  	}
+	if(e.which == 8){
+		e.stopPropagation();
+		removeNode(selectedCell.id);
+		window.blur();
+	}
 });

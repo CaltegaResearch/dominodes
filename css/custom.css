@@ -26,7 +26,7 @@ body {
     bottom:0;
     left:0;
     right: 20%;
-    margin-right: 200px;
+    margin-right: 0px;
     margin-bottom: 30px;
 }
 
@@ -66,22 +66,6 @@ body {
 
 .not-transparent {
 	opacity: 0.8 !important;
-}
-
-#trash {
-	background-image: url("../trash.png");
-	width:128px;
-	height:128px;
-	margin:30px;
-	position:absolute;
-	bottom:0;
-	right:20%;
-	background-size: cover;
-	opacity: 0.5;
-
-}
-#trash:hover{
-	opacity: 0.8;
 }
 
 path {
