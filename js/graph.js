@@ -61,7 +61,6 @@ function setLabel(id, label){
 		and refreshes the graph.
 	 */
 	nodes[id].label = label;
-	$("#"+id+" .left p").html(label);
 	refreshGraph();
 }
 
@@ -70,7 +69,6 @@ function setValue(id, value){
 	Sets the value of the cell with the given id.
 	 */
 	nodes[id].value = value;
-	$("#"+id+" .right p").html(value);
 	if(value == ERRORSTRING){
 		$("#"+id).addClass("error");
 	}else{

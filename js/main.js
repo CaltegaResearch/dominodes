@@ -1,5 +1,8 @@
 var selectedCell = null;
 
+var editingLabel = false;
+var editingFormula = false;
+
 // TODO: DEPRECATE
 var selectedInput = null;
 var selectedOutput = null;
@@ -27,10 +30,15 @@ function createCell(x,y,color){
 		.css("left", x)
 		.dblclick(onCellDblClick)
 		.click(onCellClick);
+
 	$(".wrapper").append(cell);
 	selectCell(cell.get(0));
-	$("#label").focus();
-	$("#label").select();
+
+	$("#"+ID+" .left p").dblclick(onCellLabelDoubleClicked);
+	$("#"+ID+" .left p").keydown(unSelectOnEnter);
+
+	$("#"+ID+" .right p").dblclick(onCellValueDoubleClicked);
+	$("#"+ID+" .right p").keydown(unSelectOnEnter);
 }
 
 function onCellDragged(event, ui){
@@ -158,12 +166,10 @@ function selectCell(cell){
 	Adds the selected class to the given cell.
 	Loads the sidebar for the given cell.
 	 */
-	if(selectedCell){
-		selectedCell.classList.remove("selected");
-	}
+	unselectCell();
+
 	cell.classList.add("selected");
 	selectedCell = cell;
-	loadSideBar(selectedCell.id);
 }
 
 function unselectCell(){
@@ -171,6 +177,14 @@ function unselectCell(){
 	Removes the selected class from the current selected cell.
 	 */
 	if(selectedCell){
+		if(editingLabel){
+			editingLabel = false;
+			setLabel(selectedCell.id, $("#"+selectedCell.id+" .left p").html());
+		}
+		if(editingFormula){
+			editingFormula = false;
+			setFormula(selectedCell.id, $("#"+selectedCell.id+" .right p").html());
+		}
 		selectedCell.classList.remove("selected");
 	}
 }
@@ -188,59 +202,41 @@ function addToFormula(text){
 	$("#formulaInput").focus();
 }
 
-function loadSideBar(id){
+function onCellLabelDoubleClicked(e){
 	/*
-	Loads the sidebar info for the given cell id.
-	TODO: DEPRECATE
+	Focuses and selects the label of the double-clicked cell.
 	 */
-	var label = nodes[id].label;
-	var formula = nodes[id].formula;
-	var inputs = nodes[id].inputs;
-	$("#label").val(label);
-	$("#formulaInput").val(formula);
-	$("#inputsList").html("");
-	for(var i=0; i<inputs.length; i++){
-		var c = nodes[inputs[i]].color;
-		var l = nodes[inputs[i]].label;
-		$("#inputsList").append(
-			"<li onclick=\"addToFormula('"+l+"')\" class=\""+c+"\">"+l+"</li>"
-		);
-	}
+	e.stopPropagation();
+	var id = e.currentTarget.parentNode.parentNode.id;
+	selectCell(e.currentTarget.parentNode.parentNode);
+	$("#"+id+" .left p").focus();
+	document.execCommand('selectAll', false, null);
+	window.editingLabel = true;
 }
 
-$("#label").keydown(function(e){
+function onCellValueDoubleClicked(e){
 	/*
-	Checks to see if the enter key is pressed, and then blurs the input.
+	Focuses and selects the value of the double-clicked cell.
+	Replaces the value with the cell's formula for editing.
+	 */
+	e.stopPropagation();
+	var id = e.currentTarget.parentNode.parentNode.id;
+	selectCell(e.currentTarget.parentNode.parentNode);
+	$("#"+id+" .right p").html(nodes[id].formula);
+	$("#"+id+" .right p").focus();
+	document.execCommand('selectAll', false, null);
+	window.editingFormula = true;
+}
+
+function unSelectOnEnter(e){
+	/*
+	Checks to see if the enter key is pressed, and if so deselects the cell.
 	 */
 	if(e.which == 13){
-		e.stopPropagation();
 		e.currentTarget.blur();
-	}
-});
-
-$("#label").keyup(function(e){
-	/*
-	Sets the label of the selected cell every time the input changes.
-	 */
-	setLabel(selectedCell.id, $("#label").val());
-});
-
-$("#formulaInput").keydown(function(e){
-	/*
-	Checks to see if the enter key is pressed, and then blurs the input.
-	 */
-	if(e.which == 13){
-		e.stopPropagation();
-		e.currentTarget.blur();
-	}
-})
-
-$("#formulaInput").keyup(function(e){
-	/*
-	Sets the formula of the currently selected cell to the value of the input.
-	 */
-	setFormula(selectedCell.id, $("#formulaInput").val());
-});
+		unselectCell();
+ 	}
+}
 
 $(".wrapper").dblclick(function(e){
 	/*
@@ -269,7 +265,8 @@ $(document).keypress(function(e) {
  		window.blur();
 	    unselectCell();
  	}
-	if(e.which == 8 && selectedCell){
+	console.log(window.editingLabel);
+	if(e.which == 8 && selectedCell && !window.editingLabel && !window.editingFormula){
 		e.stopPropagation();
 		removeNode(selectedCell.id);
 		window.blur();
