@@ -82,9 +82,9 @@ a:hover {
 .cell .port {
     position: absolute;
     z-index: 8;
-    height: 1vw;
-    width: 1vw;
-    top: .7vw;
+    height: 12px;
+    width: 12px;
+    top: 13px;
     cursor: pointer;
     border-radius: 10px;
     border: inherit;
@@ -180,14 +180,15 @@ path {
 
 .cell {
 	position: absolute !important;
-	width: 12vw !important;
-	height: 2.4vw !important;
+	width: 165px !important;
+	height: 40px !important;
 	overflow: visible;
 	border: 1px solid #515151;
 	border-radius: 10px;
 	z-index: 10;
 	cursor: move;
 	box-shadow: 0px 1px 0px 0px rgba(254, 247, 247, 0.5) inset;
+	text-align: center;
 }
 
 .cell:hover{
@@ -203,6 +204,7 @@ path {
 }
 
 .cell .left{
+	display: table;
 	float:left;
 	width:50%;
 	height:100%;
@@ -215,6 +217,7 @@ path {
 }
 
 .cell .right{
+	display: table;
 	float:right;
 	width:50%;
 	height:100%;
@@ -227,16 +230,23 @@ path {
 }
 
 .cell p {
+	display: table-cell;
 	text-align: center;
 	font-size: 100%;
 	margin:0px;
-	padding: 0px 9px;
 	line-height: 30px;
-	height: 30px;
 }
 
 .cell .left p {
 	word-wrap: break-word;
+	font-size: 14px;
+	line-height: 16px;
+	vertical-align: middle;
+}
+
+.cell .right p {
+	font-size: 20px;
+	line-height: 36px;
 }
 
 .clear {
