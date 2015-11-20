@@ -1,4 +1,9 @@
 var selectedCell = null;
+
+var editingLabel = false;
+var editingFormula = false;
+
+// TODO: DEPRECATE
 var selectedInput = null;
 var selectedOutput = null;
 
@@ -6,6 +11,10 @@ var cellTemplate = $('#cell-template').html();
 Mustache.parse(cellTemplate);
 
 function createCell(x,y,color){
+	/*
+	Creates a cell and adds it to the graph.
+	Selects the created cell.
+	 */
 	var ID = addNode();
 	var data = {
 		"label" : nodes[ID].label,
@@ -21,16 +30,23 @@ function createCell(x,y,color){
 		.css("left", x)
 		.dblclick(onCellDblClick)
 		.click(onCellClick);
+
 	$(".wrapper").append(cell);
 	selectCell(cell.get(0));
-	$("#label").focus();
-	$("#label").select();
+
+	$("#"+ID+" .left p").dblclick(onCellLabelDoubleClicked);
+	$("#"+ID+" .left p").keydown(unSelectOnEnter);
+
+	$("#"+ID+" .right p").dblclick(onCellValueDoubleClicked);
+	$("#"+ID+" .right p").keydown(unSelectOnEnter);
 }
 
 function onCellDragged(event, ui){
+	/*
+	Updates the edges between nodes when one node is dragged.
+	 */
 	var id = event.currentTarget.id;
 	selectCell(event.currentTarget);
-	$("#formulaInput").focus();
 	var offset = ui.offset;
 	var cellWidth = parseInt($("#"+id).css("width").split("px")[0]);
 	var cellHeight = parseInt($("#"+id).css("height").split("px")[0]);
@@ -55,6 +71,9 @@ function onCellDragged(event, ui){
 }
 
 function setSelectedColor(color){
+	/*
+	Changes the color of the selected cell to the given color.
+	 */
 	if(selectedCell){
 		clearSelectedColor();
 		selectedCell.classList.add(color);
@@ -63,6 +82,9 @@ function setSelectedColor(color){
 }
 
 function clearSelectedColor(){
+	/*
+	Removes every color class from the selected cell.
+	 */
 	if(selectedCell){
 		selectedCell.classList.remove('blue');
 		selectedCell.classList.remove('teal');
@@ -76,6 +98,10 @@ function clearSelectedColor(){
 }
 
 function onInputClicked(element){
+	/*
+	Connects the clicked cell to the previously clicked output cell.
+	TODO: DEPRECATE
+	 */
 	selectedInput = element.parentNode.id;
 	if(nodes[selectedOutput].outputs.indexOf(selectedInput) !== -1){
 		nodes[selectedInput].inputs.splice(nodes[selectedInput].inputs.indexOf(selectedOutput),1);
@@ -106,36 +132,69 @@ function onInputClicked(element){
 	selectedInput = null;
 	selectedOutput = null;
 }
+
 function onOutputClicked(element){
+	/*
+	Sets the current cell as the selected ouput cell.
+	TODO: DEPRECATE
+	 */
 	selectedInput = null;
 	selectedOutput = element.parentNode.id;
 }
 
 function onCellClick(e){
+	/*
+	Selects the clicked cell.
+	 */
 	selectCell(e.currentTarget);
-	$("#formulaInput").focus();
 	e.stopPropagation();
 }
+
 function onCellDblClick(e){
+	/*
+	Stops the event from bubbling to prevent new cell from being created.
+	 */
 	e.stopPropagation();
 }
 
 function selectCell(cell){
-	if(selectedCell){
-		selectedCell.classList.remove("selected");
-	}
+	/*
+	Unselects the previously selected cell,
+		and sets the selected cell as the given cell.
+	 */
+	unselectCell();
+
 	cell.classList.add("selected");
 	selectedCell = cell;
-	loadSideBar(selectedCell.id);
 }
 
 function unselectCell(){
+	/*
+	Removes the "selected" class from the current selected cell.
+	Updates the label or formula of the selected cell if it was being edited.
+	 */
 	if(selectedCell){
+		if(editingLabel){
+			editingLabel = false;
+			var newLabel = $("#"+selectedCell.id+" .left p").html();
+			newLabel = newLabel.replace("<br>","");
+			setLabel(selectedCell.id, newLabel);
+		}
+		if(editingFormula){
+			editingFormula = false;
+			var newFormula = $("#"+selectedCell.id+" .right p").html();
+			newFormula = newFormula.replace("<br>","");
+			setFormula(selectedCell.id, newFormula);
+		}
 		selectedCell.classList.remove("selected");
 	}
 }
 
 function addToFormula(text){
+	/*
+	Inserts the given text into the formula input box at the cursor location.
+	TODO: Update to no longer use the removed/deprecated formulaInput.
+	 */
 	var cursorPos = document.getElementById("formulaInput").selectionStart;
 	var id = selectedCell.id;
 	var oldFormula = nodes[id].formula;
@@ -145,57 +204,74 @@ function addToFormula(text){
 	$("#formulaInput").focus();
 }
 
-function loadSideBar(id){
-	var label = nodes[id].label;
-	var formula = nodes[id].formula;
-	var inputs = nodes[id].inputs;
-	$("#label").val(label);
-	$("#formulaInput").val(formula);
-	$("#inputsList").html("");
-	for(var i=0; i<inputs.length; i++){
-		var c = nodes[inputs[i]].color;
-		var l = nodes[inputs[i]].label;
-		$("#inputsList").append(
-			"<li onclick=\"addToFormula('"+l+"')\" class=\""+c+"\">"+l+"</li>"
-		);
-	}
+function onCellLabelDoubleClicked(e){
+	/*
+	Focuses and selects the label of the double-clicked cell.
+	 */
+	e.stopPropagation();
+	var id = e.currentTarget.parentNode.parentNode.id;
+	selectCell(e.currentTarget.parentNode.parentNode);
+	$("#"+id+" .left p").focus();
+	document.execCommand('selectAll', false, null);
+	window.editingLabel = true;
 }
 
-$("#label").keydown(function(e){
-	if(e.which == 13){
-		e.stopPropagation();
-		e.currentTarget.blur();
-	}
-});
-$("#label").keyup(function(e){
-	setLabel(selectedCell.id, $("#label").val());
-});
-$("#formulaInput").keydown(function(e){
-	if(e.which == 13){
-		e.stopPropagation();
-		e.currentTarget.blur();
-	}
-})
-$("#formulaInput").keyup(function(e){
-	setFormula(selectedCell.id, $("#formulaInput").val());
-});
+function onCellValueDoubleClicked(e){
+	/*
+	Focuses and selects the value of the double-clicked cell.
+	Replaces the value with the cell's formula for editing.
+	 */
+	e.stopPropagation();
+	var id = e.currentTarget.parentNode.parentNode.id;
+	selectCell(e.currentTarget.parentNode.parentNode);
+	$("#"+id+" .right p").html(nodes[id].formula);
+	$("#"+id+" .right p").focus();
+	document.execCommand('selectAll', false, null);
+	window.editingFormula = true;
+}
 
-$("#trash").droppable({
-	hoverClass: "not-transparent",
-    drop: function( event, ui ) {
-    	removeNode(ui.draggable.get(0).id);
-    }
-});
+function unSelectOnEnter(e){
+	/*
+	Checks to see if the enter key is pressed, and if so deselects the cell.
+	 */
+	if(e.which == 13){
+		e.currentTarget.blur();
+		unselectCell();
+		e.preventDefault();
+		e.stopPropagation();
+ 	}
+}
+
 $(".wrapper").dblclick(function(e){
+	/*
+	Creates a cell at the location that was double clicked.
+	Note:
+		If a cell was double clicked, the event is stopped before this is run.
+	 */
 	createCell(e.pageX - 150,e.pageY - 30);
 });
+
 $(".wrapper").click(function(e){
+	/*
+	Unselects the currently selected cell if blank space is clicked.
+	 */
 	unselectCell();
-})
+});
+
 $(document).keypress(function(e) {
+	/*
+	Checks to see if the enter key is pressed, and then blurs the input.
+	Checks to see if the backspace key is pressed,
+		and then deletes the currently selected cell.
+	 */
 	if(e.which == 13) {
  	 	e.stopPropagation();
  		window.blur();
 	    unselectCell();
  	}
+	if(e.which == 8 && selectedCell && !window.editingLabel && !window.editingFormula){
+		e.stopPropagation();
+		removeNode(selectedCell.id);
+		window.blur();
+	}
 });

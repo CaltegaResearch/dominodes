@@ -1,75 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
-  <!-- Basic Page Needs
+    <!-- Basic Page Needs
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <meta charset="utf-8">
-  <title>HackFSU 2015</title>
-  <meta name="description" content="">
-  <meta name="author" content="">
+    <meta charset="utf-8">
+    <title>Dominodes</title>
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-  <!-- FONT
+    <!-- FONT
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
 
-  <!-- CSS
+    <!-- CSS
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <link rel="stylesheet" href="css/normalize.css">
-  <link rel="stylesheet" href="css/skeleton.css">
-  <link rel="stylesheet" href="css/custom.css">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/custom.css">
 
-  <!-- Favicon
+    <!-- Favicon
   –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <!--<link rel="icon" type="image/png" href="images/favicon.png"> -->
+    <!--<link rel="icon" type="image/png" href="images/favicon.png"> -->
 
 </head>
+
 <body spellcheck="false">
-  <svg id="edgesSvg"></svg>
-  <div class="wrapper">
-  </div>
-  <div class="sidebar">
-    <div><input id="label" value="Node"/>
+    <svg id="edgesSvg"></svg>
+    <div class="wrapper">
     </div>
-    <div>
-      <h5>Inputs</h5>
-      <ul id="inputsList"></ul>
+    <div class="sidebar">
+        <a href="https://github.com/dominodes/dominodes">
+            <div class="logo">
+                <h1>Dominodes</h1>
+            </div>
+        </a>
+        <div class="dominodes-graph-info">
+            <p>@</p>
+            <h2>Untitled Graph</h2>
+            <p>Last edited 2 hours ago</p>
+            <div class="clear"></div>
+        </div>
+        <div>
+        </div>
     </div>
-    <div>
-      <h5>Formula</h5>
-      <input id="formulaInput"/>
+    <div class="colorBar">
+        <div class="color blue" onclick="setSelectedColor('blue');"></div>
+        <div class="color teal" onclick="setSelectedColor('teal');"></div>
+        <div class="color green" onclick="setSelectedColor('green');"></div>
+        <div class="color grey" onclick="setSelectedColor('grey');"></div>
+        <div class="color yellow" onclick="setSelectedColor('yellow');"></div>
+        <div class="color orange" onclick="setSelectedColor('orange');"></div>
+        <div class="color red" onclick="setSelectedColor('red');"></div>
+        <div class="color pink" onclick="setSelectedColor('pink');"></div>
     </div>
-  </div>
-  <div id="trash"></div>
-  <div class="colorBar">
-    <div class="color blue" onclick="setSelectedColor('blue');"></div>
-    <div class="color teal" onclick="setSelectedColor('teal');"></div>
-    <div class="color green" onclick="setSelectedColor('green');"></div>
-    <div class="color grey" onclick="setSelectedColor('grey');"></div>
-    <div class="color yellow" onclick="setSelectedColor('yellow');"></div>
-    <div class="color orange" onclick="setSelectedColor('orange');"></div>
-    <div class="color red" onclick="setSelectedColor('red');"></div>
-    <div class="color pink" onclick="setSelectedColor('pink');"></div>
-  </div>
 
-  <script id="cell-template" type="x-tmpl-mustache">
-    <div class="draggable cell {{color}}">
-      <div class="left">
-        <p>{{ label }}</p>
-      </div>
-      <div class="right">
-        <p>{{ value }}</p>
-      </div>
-      <div class="clear"></div>
-      <div class="port port-left" onclick="onInputClicked(this);"></div>
-      <div class="port port-right" onclick="onOutputClicked(this);"></div>
-    </div>
-  </script>
+    <script id="cell-template" type="x-tmpl-mustache">
+        <div class="draggable cell {{color}}">
+            <div class="left">
+                <p contentEditable="true">{{ label }}</p>
+            </div>
+            <div class="right">
+                <p contentEditable="true">{{ value }}</p>
+            </div>
+            <div class="clear"></div>
+            <div class="port port-left" onclick="onInputClicked(this);"></div>
+            <div class="port port-right" onclick="onOutputClicked(this);"></div>
+        </div>
+    </script>
 
-  <script type="text/javascript" src="js/jQuery.min.js"></script>
-  <script type="text/javascript" src="js/jquery-ui.min.js"></script>
-  <script type="text/javascript" src="js/mustache.min.js"></script>
-  <script type="text/javascript" src="js/math.min.js"></script>
-  <script type="text/javascript" src="js/graph.js"></script>
-  <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="js/jQuery.min.js"></script>
+    <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="js/mustache.min.js"></script>
+    <script type="text/javascript" src="js/math.min.js"></script>
+    <script type="text/javascript" src="js/graph.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
 </body>
+
 </html>

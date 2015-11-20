@@ -1,5 +1,28 @@
+* {
+	box-sizing: border-box;
+	font-family: Helvetica, Arial;
+	font-weight: 300;
+	margin:0px;
+	padding:0px;
+}
+
 body {
-	font-family: Consolas,monaco,monospace;
+	font-family: Helvetica, Arial;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+}
+
+a:hover {
+	color: rgb(99, 173, 255);
+}
+
+.clear {
+	clear: both;
+	padding: 0px !important;
+	margin: 0px !important;
 }
 
 #edgesSvg {
@@ -10,6 +33,7 @@ body {
 	bottom:0;
 	width:80%;
 	height:100%;
+	background: url("../geometry.png");
 }
 
 .colorBar {
@@ -17,7 +41,7 @@ body {
     bottom:0;
     left:0;
     right: 20%;
-    margin-right: 200px;
+    margin-right: 0px;
     margin-bottom: 30px;
 }
 
@@ -55,29 +79,34 @@ body {
 
 .cell .left { background: rgba(255,255,255, 0.8); }
 
+.cell .port {
+    position: absolute;
+    z-index: 8;
+    height: 12px;
+    width: 12px;
+    top: 13px;
+    cursor: pointer;
+    border-radius: 10px;
+    border: inherit;
+}
+
+.cell .port-left {
+	background: white;
+	left: -.6vw;
+}
+
+.cell .port-right {
+	right: -.6vw;
+	background: #888;
+}
+
 .not-transparent {
 	opacity: 0.8 !important;
 }
 
-#trash {
-	background-image: url("../trash.png");
-	width:128px;
-	height:128px;
-	margin:30px;
-	position:absolute;
-	bottom:0;
-	right:20%;
-	background-size: cover;
-	opacity: 0.5;
-
-}
-#trash:hover{
-	opacity: 0.8;
-}
-
 path {
-	stroke-width: 2px;
-	stroke: grey;
+	stroke-width: 1px;
+	stroke: rgba(0, 0, 0, 0.5);
 	stroke-linecap: round;
 	fill: none;
 }
@@ -99,130 +128,125 @@ path {
 	right:0;
 	bottom:0;
 	overflow:hidden;
-	border: 1px solid grey;
-	background-color:#DEDEDE;
-	padding:10px;
-}
-#formulaInput {
-	border:none;
-	border-bottom: 1px solid black;
-	background: rgba(1,1,1,0.1);
-	border-radius: 8px;
-	font-size: 2em;
-	width: 96%;
-	text-align: center;
-	word-wrap:break-word;
+	background-color:rgb(14, 68, 128);
+	padding:0;
+	color: white;
+	box-shadow: 0px 0px 2px 0px rgb(14, 22, 44);
 }
 
-#label {
-	background-color:#F5F5F5;
-	border: 1px solid grey;
-	border-radius: 8px;
-	width: 96%;
-	word-wrap:break-word;
-	font-size: 2em;
-}
-
-#inputsList {
-	list-style: none;
-}
-#inputsList li {
-	margin-right: 10px;
-	padding: 5px;
-	border: 3px solid #444;
-	border-radius: 7px;
-	cursor: pointer;
-	display: inline-block;
-}
-#inputsList li:hover{
-	border-color:#118adb;
+.sidebar div {
+	padding: 10px;
 }
 
 .sidebar > div:not(:last-child) {
-	border-bottom: 1px solid rgb(194, 194, 194);
+	border-bottom: 1px solid rgba(0, 0, 0, 0.26);
 }
 .sidebar > div:not(:first-child){
-	min-height: 105px;
+	border-top: 1px solid rgba(255, 253, 253, 0.13);
+}
+
+.sidebar .logo {
+	background: rgb(3, 33, 66) none repeat scroll 0% 0%;
+	text-align: center;
+	cursor: pointer;
+}
+
+.sidebar .logo h1 {
+	margin-bottom: 0;
+	margin-top: 0;
+	line-height: 45px;
+	font-size: 35px;
+	text-align: center;
+}
+
+.sidebar .dominodes-graph-info {
+	padding: 15px 10px !important;
+}
+
+.sidebar .dominodes-graph-info h2 {
+	padding-bottom: 10px;
+	float: left;
+}
+
+.sidebar .dominodes-graph-info p {
+	float: left;
+	color: rgba(255, 255, 255, 0.4);
+}
+
+.sidebar .dominodes-graph-info p:first-child {
+	float: right;
+	color: white;
 }
 
 .cell {
 	position: absolute !important;
-	width: 12vw !important;
-	height: 2.4vw !important;
+	width: 165px !important;
+	height: 40px !important;
 	overflow: visible;
-	border: 3px solid #888;
+	border: 1px solid #515151;
 	border-radius: 10px;
 	z-index: 10;
-	cursor:move;
+	cursor: move;
+	box-shadow: 0px 1px 0px 0px rgba(254, 247, 247, 0.5) inset;
+	text-align: center;
 }
 
 .cell:hover{
 	border-color:#666;
 }
 
-.cell .port {
-    position: absolute;
-    z-index: 8;
-    height: .8vw;
-    width: .8vw;
-    top: .7vw;
-    cursor: pointer;
-    border-radius: 10px;
-    border: inherit;
-}
-
-.cell .port-left {
-	background: white;
-	left: -.6vw;
-}
-
-.cell .port-right {
-	right: -.6vw;
-	width:0px;
-	height:0px;
-	border-width: .6vw;
-}
-
 .cell.error {
-	border: 3px solid #EF4F4F;
+	border-color: #EF4F4F;
 }
 
 .cell.selected {
-	border: 3px solid #118adb;
+	border-color: #118adb;
 }
 
 .cell .left{
+	display: table;
 	float:left;
 	width:50%;
 	height:100%;
-	border-top-left-radius: 6px;
-	border-bottom-left-radius: 6px;
-	overflow:hidden;
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+	overflow: hidden;
+	background: rgba(255,255,255, 0.8);
+	box-shadow: 0px 1px 0px 0px rgba(255, 255, 255, 0.5) inset;
+	background: transparent -moz-linear-gradient(center top , rgba(255, 255, 255, 0.93), rgba(255, 253, 253, 0.83)) repeat scroll 0% 0%;
 }
 
 .cell .right{
+	display: table;
 	float:right;
 	width:50%;
 	height:100%;
 	border-left: 2px solid grey;
 	margin-left: -2px;
-	border-top-right-radius: 6px;
-	border-bottom-right-radius: 6px;
+	border-top-right-radius: 10px;
+	border-bottom-right-radius: 10px;
 	overflow:hidden;
 	white-space: nowrap;
 }
 
 .cell p {
+	display: table-cell;
 	text-align: center;
-	font-size: 1.3vw;
+	font-size: 100%;
 	margin:0px;
-	height:100%;
-	padding: 0px 9px;
+	line-height: 30px;
 }
 
 .cell .left p {
-	font-size: 0.8vw;
 	word-wrap: break-word;
+	font-size: 14px;
+	line-height: 16px;
+	vertical-align: middle;
+}
+
+.cell .right p {
+	font-size: 20px;
+	line-height: 36px;
 }
 
 .clear {
