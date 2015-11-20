@@ -105,8 +105,8 @@ a:hover {
 }
 
 path {
-	stroke-width: 2px;
-	stroke: grey;
+	stroke-width: 1px;
+	stroke: rgba(0, 0, 0, 0.5);
 	stroke-linecap: round;
 	fill: none;
 }
@@ -183,7 +183,7 @@ path {
 	width: 12vw !important;
 	height: 2.4vw !important;
 	overflow: visible;
-	border: 1px solid #888;
+	border: 1px solid #515151;
 	border-radius: 10px;
 	z-index: 10;
 	cursor: move;
@@ -230,9 +230,9 @@ path {
 	text-align: center;
 	font-size: 100%;
 	margin:0px;
-	height:100%;
 	padding: 0px 9px;
-	line-height: 28px;
+	line-height: 30px;
+	height: 30px;
 }
 
 .cell .left p {

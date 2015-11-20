@@ -171,15 +171,20 @@ function selectCell(cell){
 function unselectCell(){
 	/*
 	Removes the "selected" class from the current selected cell.
+	Updates the label or formula of the selected cell if it was being edited.
 	 */
 	if(selectedCell){
 		if(editingLabel){
 			editingLabel = false;
-			setLabel(selectedCell.id, $("#"+selectedCell.id+" .left p").html());
+			var newLabel = $("#"+selectedCell.id+" .left p").html();
+			newLabel = newLabel.replace("<br>","");
+			setLabel(selectedCell.id, newLabel);
 		}
 		if(editingFormula){
 			editingFormula = false;
-			setFormula(selectedCell.id, $("#"+selectedCell.id+" .right p").html());
+			var newFormula = $("#"+selectedCell.id+" .right p").html();
+			newFormula = newFormula.replace("<br>","");
+			setFormula(selectedCell.id, newFormula);
 		}
 		selectedCell.classList.remove("selected");
 	}
@@ -232,6 +237,8 @@ function unSelectOnEnter(e){
 	if(e.which == 13){
 		e.currentTarget.blur();
 		unselectCell();
+		e.preventDefault();
+		e.stopPropagation();
  	}
 }
 
@@ -262,7 +269,6 @@ $(document).keypress(function(e) {
  		window.blur();
 	    unselectCell();
  	}
-	console.log(window.editingLabel);
 	if(e.which == 8 && selectedCell && !window.editingLabel && !window.editingFormula){
 		e.stopPropagation();
 		removeNode(selectedCell.id);
