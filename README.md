@@ -1,5 +1,7 @@
 # Dominodes
 
+[![Join the chat at https://gitter.im/dominodes/dominodes](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/dominodes/dominodes?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 A tool for "back of the envelope" calculations - from calculating your monthly expenses to modeling Fermi problems. It's spreadsheets without the baggage of spreadsheets.
 
 ##Live Demo
