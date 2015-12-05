@@ -5,7 +5,7 @@
 A tool for "back of the envelope" calculations - from calculating your monthly expenses to modeling Fermi problems. It's spreadsheets without the baggage of spreadsheets.
 
 ##Live Demo
-[Live Demo](https://dominodes.github.io/dominodes/)
+[Live Demo](https://caltegaresearch.github.io/dominodes/)
 
 **NOTE:** The demo is a stripped down version of the desktop app. It does not have every feature of the app, and will not work in all browsers.
 
